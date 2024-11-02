@@ -1,0 +1,3 @@
+site_name: 'Dumber Dungeons'
+dev_addr: 'localhost:8006'
+theme: readthedocs
