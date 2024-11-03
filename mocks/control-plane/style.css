@@ -1,0 +1,175 @@
+/** Component-level styles **/
+
+.header__wrapper {
+  text-align: center;
+  border-top: 0.25rem outset #8b9bb4;
+  background-color: #5a6988;
+  text-shadow: 1pt 1pt #3a4466;
+}
+
+.header__name {
+  font-size: 1rem;
+}
+
+.header__highlight {
+  font-size: 1.5rem;
+  text-shadow: 1pt 1pt #262b44;
+  font-weight: bolder;
+}
+
+.header__stats {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/** **/
+
+.move-input {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.125em;
+}
+
+.move-input__dir {
+  display: inline-block;
+  aspect-ratio: 1 / 1;
+
+  text-align: center;
+  vertical-align: center;
+  background-color: #5a6988;
+  border: 1rem outset #8b9bb4;
+}
+
+.move-input__dir:active {
+  border: 1rem inset #8b9bb4;
+}
+
+/** **/
+
+.tabs__wrapper {
+  display: flex;
+  background-color: #5a6988;
+
+  position: fixed;
+  bottom: 0;
+  width: 100cqw;
+  height: 25cqmin;
+}
+
+.tabs__item {
+  font-size: 2rem;
+  display: inline-block;
+  text-align: center;
+  vertical-align: bottom;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  text-overflow: ellipsis;
+
+  border-top: 0.25rem outset #8b9bb4;
+  border-left: 0.125rem solid #3a4466;
+  border-right: 0.125rem solid #3a4466;
+}
+
+.tabs__item:hover {
+  background-color: #8b9bb4;
+  color: #c0cbdc;
+  border-top: 0.25rem outset #c0cbdc;
+}
+
+/** **/
+
+.ready__wrapper {
+  text-align: center;
+  height: 33vmin;
+}
+
+.ready__button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  border: 1rem outset #8b9bb4;
+  aspect-ratio: 1 / 1;
+  height: 100%;
+
+  background-color: #5a6988;
+
+  vertical-align: middle;
+
+  font-size: 4rem;
+  color: #63c74d;
+  text-shadow: 0.25rem 0.25rem #3e8948;
+}
+
+.ready__button:active {
+  border: 1rem inset #8b9bb4;
+}
+
+/** **/
+
+.spells__item {
+  border-top: 0.25rem outset #8b9bb4;
+  border-bottom: 0.25rem outset #262b44;
+  background-color: #5a6988;
+  height: 4rem;
+}
+
+.spells__item:hover {
+  border-top: 0.25rem solid #262b44;
+  border-bottom: 0.25rem solid #8b9bb4;
+  background-color: #262b44;
+}
+
+.spells__content {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.spells__icon {
+  display: inline-block;
+}
+
+.spells__icon > img {
+  height: 4rem;
+}
+
+.spells__name {
+  font-size: 1.5rem;
+  flex: 0 0 100%;
+}
+
+.spells__stats {
+  display: inline-flex;
+  gap: 1rem;
+}
+
+/** **/
+
+.tab.inactive {
+  display: none;
+}
+
+/** Page-specific styles **/
+
+body {
+  background-color: #181425;
+  color: #8b9bb4;
+
+  padding: 0;
+  margin: 0;
+
+  font-family: Liberation Serif, serif;
+}
+
+.move-input {
+  width: 100cqmin;
+
+}
+
+.move-input__dir {
+  font-size: 4rem;
+}
+
+.move-wrapper {
+  text-align: center;
+}
