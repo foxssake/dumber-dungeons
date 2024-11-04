@@ -207,6 +207,24 @@ what's going to happen, but counter-playing the special abilities.
 * We can have more spells, since the game is turn based, but not too much to
   not overwhelm the player - somewhere between 4-8?
 
+## Tech considerations
+
+* Typescript + Bun
+* Testing + `bun:test`
+* eslint, jsdoc
+* CI / CD - GitHub Actions
+* Docker
+* Staging environment eventually
+* Don't break availability during updates
+    * Save game states to some DB, read on restart, clients reconnect
+    * State and game versioning
+
+## Workflow considerations
+
+* Conventional commits + Semver
+* Feature dev: Github issues + projects -> PR -> review -> main
+* After go-live, add a dev branch, main would autodeploy to prod
+
 [r/wizardposting]: https://www.reddit.com/r/wizardposting/
 [three.js]: https://threejs.org/
 [pixi.js]: https://pixijs.com/
