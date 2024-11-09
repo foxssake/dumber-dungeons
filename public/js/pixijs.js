@@ -6,7 +6,7 @@ function range(n) {
 
 // Init
 const app = new PIXI.Application()
-await app.init({ width: 256, height: 256 })
+await app.init({ width: 256, height: 256, backgroundAlpha: 0 })
 
 document.body.appendChild(app.canvas)
 
