@@ -20,10 +20,12 @@ const assets = {
 const background = PIXI.Sprite.from(assets.background)
 app.stage.addChild(background)
 
-const avatarCount = 16
+const avatarCount = 128
 const avatarMoveSpeed = 1
+const avatarAccelerationSpeed = 4
 const avatars = range(avatarCount).map(() => {
   const avatar = PIXI.Sprite.from(assets.necromant)
+  avatar.velocity = new PIXI.Point()
   
   avatar.position.set(
     Math.random() * app.canvas.width,
@@ -40,16 +42,42 @@ avatars.forEach(avatar => app.stage.addChild(avatar))
 // Animate
 app.ticker.add(ticker => {
   avatars.forEach(avatar => {
-    const brownian = new PIXI.Point(
+    let cohesionW = avatar.position.subtract(new PIXI.Point(128, 128)).magnitude() / 96
+    cohesionW = Math.min(1., Math.max(0., cohesionW))
+    cohesionW = Math.pow(cohesionW, 4.)
+
+    const brownainW = 1. - cohesionW
+
+    const brownianDir = new PIXI.Point(
       2. * Math.random() - 1.,
       2. * Math.random() - 1.
     )
     .normalize()
+    .multiplyScalar(brownainW)
 
-    const velocity = brownian.multiplyScalar(ticker.deltaTime * avatarMoveSpeed)
+    const cohesionDir = new PIXI.Point(
+      128 - avatar.position.x,
+      128 - avatar.position.y
+    )
+    .normalize()
+    .multiplyScalar(cohesionW)
 
-    avatar.position.x += velocity.x
-    avatar.position.y += velocity.y
+    const acceleration = new PIXI.Point()
+      .add(brownianDir)
+      .add(cohesionDir)
+      .normalize()
+      .multiplyScalar(avatarAccelerationSpeed * ticker.deltaTime)
+
+    avatar.velocity = avatar.velocity.add(acceleration)
+    if (avatar.velocity.magnitude() > avatarMoveSpeed) {
+      avatar.velocity = avatar.velocity
+        .normalize()
+        .multiplyScalar(avatarMoveSpeed)
+    }
+
+    avatar.position.x += avatar.velocity.x * ticker.deltaTime
+    avatar.position.y += avatar.velocity.y * ticker.deltaTime
+    avatar.zIndex = avatar.position.y
   })
 })
 
