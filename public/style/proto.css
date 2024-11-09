@@ -25,3 +25,10 @@ canvas {
   height: 100vmin;
   image-rendering: pixelated;
 }
+
+#fps {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 1em;
+}
