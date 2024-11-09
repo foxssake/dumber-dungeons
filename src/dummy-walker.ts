@@ -9,8 +9,26 @@ class vec2 {
     this.y = y ?? 0
   }
 
+  clone(): vec2 {
+    return new vec2(this.x, this.y)
+  }
+
   distanceTo(p: vec2): number {
-    return this.subtracted(p).length()
+    return Math.sqrt(
+      Math.pow(this.x - p.x, 2) +
+      Math.pow(this.y - p.y, 2)
+    )
+  }
+
+  directionTo(p: vec2): vec2 {
+    return this.vectorTo(p).normalize()
+  }
+
+  vectorTo(p: vec2): vec2 {
+    return new vec2(
+      p.x - this.x,
+      p.y - this.y
+    )
   }
 
   dot(p: vec2): number {
@@ -21,42 +39,52 @@ class vec2 {
     return Math.sqrt(this.dot(this))
   }
 
-  added(p: vec2): vec2 {
-    return new vec2(
-      this.x + p.x,
-      this.y + p .y
-    )
+  add(p: vec2): vec2 {
+    this.x += p.x
+    this.y += p.y
+
+    return this
   }
 
-  subtracted(p: vec2): vec2 {
-    return new vec2(
-      this.x - p.x,
-      this.y - p.y
-    )
+  subtract(p: vec2): vec2 {
+    this.x -= p.x
+    this.y -p .y
+
+    return this
   }
 
-  scaled(f: number): vec2 {
-    return new vec2(
-      this.x * f,
-      this.y * f
-    )
+  scale(f: number): vec2 {
+    this.x *= f
+    this.y *= f
+
+    return this
   }
 
-  scaledTo(l: number): vec2 {
-    return this.normalized().scaled(l)
+  scaleTo(d: number): vec2 {
+    const l = this.length()
+    if (l > EPSILON) {
+      this.x *= d / l
+      this.y *= d / l
+    }
+
+    return this
   }
 
-  normalized(): vec2 {
-    return this.length() > EPSILON
-      ? this.scaled(1. / this.length())
-      : this;
+  normalize(): vec2 {
+    const l = this.length()
+    if (l > EPSILON) {
+      this.x /= l
+      this.y /= l
+    }
+
+    return this
   }
 
   static randomDirection(): vec2 {
     return new vec2(
       2 * Math.random() - 1,
       2 * Math.random() - 1
-    ).normalized()
+    ).normalize()
   }
 }
 
@@ -83,23 +111,21 @@ export default class DummyWalker<T> {
     const brownianWeight = 1 - cohesionWeight
 
     // Calculate forces
-    const brownianForce = vec2.randomDirection().scaled(brownianWeight)
+    const brownianForce = vec2.randomDirection().scale(brownianWeight)
 
-    const cohesionForce = this.target.subtracted(this.position)
-      .normalized()
-      .scaled(cohesionWeight)
+    const cohesionForce = this.position.directionTo(this.target)
+      .scale(cohesionWeight)
 
     const acceleration = new vec2()
-      .added(cohesionForce)
-      .added(brownianForce)
-      .normalized()
-      .scaled(this.accelSpeed * dt)
+      .add(cohesionForce)
+      .add(brownianForce)
+      .scale(this.accelSpeed * dt)
 
-    this.velocity = this.velocity.added(acceleration)
+    this.velocity.add(acceleration)
     if (this.velocity.length() > this.moveSpeed)
-      this.velocity = this.velocity.scaledTo(this.moveSpeed)
+      this.velocity.scaleTo(this.moveSpeed)
 
-    this.position = this.position.added(this.velocity.scaled(dt))
+    this.position.add(this.velocity.clone().scale(dt))
   }
 
   withSprite(cb: (sprite: T) => void) {

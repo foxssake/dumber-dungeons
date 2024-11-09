@@ -50,8 +50,8 @@ app.ticker.add(ticker => {
     avatar.update(dt)
 
     avatar.withSprite(sprite => {
-      sprite.position.x = Math.round(avatar.position.x)
-      sprite.position.y = Math.round(avatar.position.y)
+      sprite.position.x = avatar.position.x | 0
+      sprite.position.y = avatar.position.y | 0
 
       sprite.zIndex = avatar.position.y
     })
