@@ -1,0 +1,10 @@
+{
+  "name": "dumber-dungeons",
+  "version": "0.0.1",
+  "module": "src/index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+    "typescript": "5.6.3"
+  }
+}
