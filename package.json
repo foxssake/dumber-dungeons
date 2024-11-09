@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "module": "src/index.ts",
   "type": "module",
+  "scripts": {
+    "build": "bun build src/pixijs.ts --outdir public/build/",
+    "build:dev": "bun build --watch src/pixijs.ts --outdir public/build/",
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "5.6.3"
