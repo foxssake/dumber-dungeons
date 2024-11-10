@@ -1,0 +1,34 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  background-color: black;
+  background: radial-gradient(circle,
+    rgb(127, 89, 26) 9%,
+    rgb( 92, 55, 40) 51%,
+    rgb( 19, 21, 34) 100%
+    );
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+}
+
+h1 {
+  position: fixed;
+  text-align: center;
+  width: 100%;
+}
+
+canvas {
+  aspect-ratio: 1/1;
+  width: 100vmin;
+  height: 100vmin;
+  image-rendering: pixelated;
+}
+
+#fps {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 1em;
+}
