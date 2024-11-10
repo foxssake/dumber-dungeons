@@ -89,18 +89,17 @@ class vec2 {
 }
 
 export default class DummyWalker<T> {
-  public moveSpeed: number = 32
-  public accelSpeed: number = 128
-  public sprite: T | undefined
+  constructor(
+    public sprite: T,
 
-  public target: vec2 = new vec2(128, 128)
+    public moveSpeed: number = 32,
+    public accelSpeed: number = 128,
 
-  public position: vec2 = new vec2()
-  private velocity: vec2 = new vec2()
+    public target: vec2 = new vec2(128, 128),
 
-  constructor(sprite?: T) {
-    this.sprite = sprite
-  }
+    public position: vec2 = new vec2(),
+    private velocity: vec2 = new vec2()
+  ) {}
 
   update(dt: number): void {
     // Calculate weights

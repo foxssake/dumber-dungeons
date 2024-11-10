@@ -49,12 +49,10 @@ app.ticker.add(ticker => {
   avatars.forEach(avatar => {
     avatar.update(dt)
 
-    avatar.withSprite(sprite => {
-      sprite.position.x = avatar.position.x | 0
-      sprite.position.y = avatar.position.y | 0
+    avatar.sprite.position.x = avatar.position.x | 0
+    avatar.sprite.position.y = avatar.position.y | 0
 
-      sprite.zIndex = avatar.position.y
-    })
+    avatar.sprite.zIndex = avatar.position.y
   })
 
   // Update FPS counter
