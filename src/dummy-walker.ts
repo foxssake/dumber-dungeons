@@ -48,7 +48,7 @@ class vec2 {
 
   subtract(p: vec2): vec2 {
     this.x -= p.x
-    this.y -p .y
+    this.y -= p .y
 
     return this
   }
@@ -92,13 +92,13 @@ export default class DummyWalker<T> {
   constructor(
     public sprite: T,
 
-    public moveSpeed: number = 32,
-    public accelSpeed: number = 128,
+    public moveSpeed = 32,
+    public accelSpeed = 128,
 
-    public target: vec2 = new vec2(128, 128),
+    public target = new vec2(128, 128),
 
-    public position: vec2 = new vec2(),
-    private velocity: vec2 = new vec2()
+    public position = new vec2(),
+    private velocity = new vec2()
   ) {}
 
   update(dt: number): void {
@@ -125,9 +125,5 @@ export default class DummyWalker<T> {
       this.velocity.scaleTo(this.moveSpeed)
 
     this.position.add(this.velocity.clone().scale(dt))
-  }
-
-  withSprite(cb: (sprite: T) => void) {
-    this.sprite && cb(this.sprite)
   }
 }
