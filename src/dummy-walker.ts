@@ -80,21 +80,13 @@ class vec2 {
 }
 
 export default class DummyWalker<T> {
-  // TODO:
-  // - put moveSpeed, accelSpeed, velocity together
-  // - put target & position together
-  // eslint-disable-next-line max-params
-  constructor(
-    public sprite: T,
+  public moveSpeed = 32;
+  public accelSpeed = 128;
+  public target = new vec2(128, 128);
+  public position = new vec2();
+  private velocity = new vec2();
 
-    public moveSpeed = 32, // __QUESTION__ is this maxSpeed? (line 127)
-    public accelSpeed = 128,
-
-    public target = new vec2(128, 128),
-
-    public position = new vec2(),
-    private velocity = new vec2()
-  ) {}
+  constructor(public sprite: T) {}
 
   public update(dt: number): void {
     // Calculate weights
