@@ -6,10 +6,23 @@
   "scripts": {
     "build": "bun build src/pixijs.ts --outdir public/build/",
     "build:dev": "bun build --watch src/pixijs.ts --outdir public/build/",
+    "lint": "eslint",
+    "lint:inspect": "eslint --inspect-config",
+    "format:check": "prettier . --check",
+    "format": "prettier . --write"
   },
   "devDependencies": {
+    "@eslint/js": "^9.14.0",
     "@types/bun": "latest",
-    "typescript": "5.6.3"
+    "@types/eslint-config-prettier": "^6.11.3",
+    "@types/eslint__js": "^8.42.3",
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import-x": "^4.4.0",
+    "prettier": "3.3.3",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.13.0"
   },
   "dependencies": {
     "@pixi/math-extras": "^7.4.2",

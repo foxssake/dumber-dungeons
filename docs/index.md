@@ -27,9 +27,9 @@ spells, maps, etc. ) can be plugged in or swapped in the form of mods.
 
 The game experience would focus on the following core pillars:
 
-* Cooperative gameplay
-* Non-serious tone
-* Replayability
+- Cooperative gameplay
+- Non-serious tone
+- Replayability
 
 Dumber Dungeons can be played remotely, or from a TV / PC / laptop / tablet
 around which people gather to play.
@@ -39,11 +39,11 @@ around which people gather to play.
 Dumber Dungeon will be an open source reference piece that solves a few
 interesting problems and integrations, e.g.:
 
-* Performant rendering - [three.js] / [pixi.js]
-* Realtime communication - WebSockets
-* Managing current and multiple hypothetical game states to visualize drafted
+- Performant rendering - [three.js] / [pixi.js]
+- Realtime communication - WebSockets
+- Managing current and multiple hypothetical game states to visualize drafted
   actions
-* Moddable architecture to decouple core game engine and content
+- Moddable architecture to decouple core game engine and content
 
 ## Game flow
 
@@ -102,20 +102,20 @@ Maps are procedurally generated.
 
 Characters have basic stats to govern their gameplay, including:
 
-* HP, max HP
-* Mana, max mana
-* Armor - TBA
-* Move speed - how many tiles to move per turn
-    * Generally one or a few tiles per turn
+- HP, max HP
+- Mana, max mana
+- Armor - TBA
+- Move speed - how many tiles to move per turn
+  - Generally one or a few tiles per turn
 
 Potential stats:
 
-* HP and mana regen
-    * Or just go for potions to encourage looting and discourage turtling?
-* Action points
-    * How many abilities can a player use per turn
-    * Or just leave it uncapped? So players can go all out, and then suffer the
-      consequences of no mana
+- HP and mana regen
+  - Or just go for potions to encourage looting and discourage turtling?
+- Action points
+  - How many abilities can a player use per turn
+  - Or just leave it uncapped? So players can go all out, and then suffer the
+    consequences of no mana
 
 ### Inventory
 
@@ -134,16 +134,16 @@ using items are done as part of a turn.
 
 Potential mechanics:
 
-* Equipping for stats
-* Binding items - can't be unequipped
-* Cursed items - has a negative effect, only revealed upon equip/use
+- Equipping for stats
+- Binding items - can't be unequipped
+- Cursed items - has a negative effect, only revealed upon equip/use
 
 ### Abilities
 
 Characters can have different abilities and spells. Basic attacks are also
 considered abilities.
 
-Abilities can have stat costs ( e.g. health or mana ), and cooldowns. 
+Abilities can have stat costs ( e.g. health or mana ), and cooldowns.
 
 For abilities targeting given unit(s), the phones can display a list of
 targetable units for players to pick. Units are identified by names ( displayed
@@ -159,18 +159,18 @@ buttons on phone, and watching the draft cast on the TV.
 Classes determine what abilities a character has, and by extension, the
 character's role in the team.
 
-* Battle Mage - Tank / Melee DPS
-* Arcane Mage - Ranged DPS
-* Axemancer - Melee DPS, mobility
-* Spice Mage - Debuff, ranged dps
-* Ordained Mage - Support
-* ? Paladin - Tank, support
+- Battle Mage - Tank / Melee DPS
+- Arcane Mage - Ranged DPS
+- Axemancer - Melee DPS, mobility
+- Spice Mage - Debuff, ranged dps
+- Ordained Mage - Support
+- ? Paladin - Tank, support
 
 Other classes may be added as the game evolves.
 
 ### Enemies
 
-Enemies lurk around the map for players to engage. 
+Enemies lurk around the map for players to engage.
 
 Enemies should generally have deterministic behaviour, so players can plan
 around them. This can be fixed movement patterns, or fixed responses to given
@@ -180,7 +180,7 @@ Enemies may drop loot.
 
 ### Bosses
 
-Every n-th level is a boss level. These can be pre-made. 
+Every n-th level is a boss level. These can be pre-made.
 
 Boss levels are designed to test the players' skills before moving on.
 
@@ -194,38 +194,37 @@ what's going to happen, but counter-playing the special abilities.
 
 ## Maybe-mechanics
 
-* Weapons
-    * Players can equip different weapons
-    * Each weapon may have stat requirements
-    * Weapon's damage may be based on stats
+- Weapons
+  - Players can equip different weapons
+  - Each weapon may have stat requirements
+  - Weapon's damage may be based on stats
 
 ## Design considerations
 
-* ? Target audience
-* The game is to be kept semi-casual, so most players can enjoy the game
+- ? Target audience
+- The game is to be kept semi-casual, so most players can enjoy the game
   without too much of a learning curve
-* We can have more spells, since the game is turn based, but not too much to
+- We can have more spells, since the game is turn based, but not too much to
   not overwhelm the player - somewhere between 4-8?
 
 ## Tech considerations
 
-* Typescript + Bun
-* Testing + `bun:test`
-* eslint, jsdoc
-* CI / CD - GitHub Actions
-* Docker
-* Staging environment eventually
-* Don't break availability during updates
-    * Save game states to some DB, read on restart, clients reconnect
-    * State and game versioning
+- Typescript + Bun
+- Testing + `bun:test`
+- eslint, jsdoc
+- CI / CD - GitHub Actions
+- Docker
+- Staging environment eventually
+- Don't break availability during updates
+  - Save game states to some DB, read on restart, clients reconnect
+  - State and game versioning
 
 ## Workflow considerations
 
-* Conventional commits + Semver
-* Feature dev: Github issues + projects -> PR -> review -> main
-* After go-live, add a dev branch, main would autodeploy to prod
+- Conventional commits + Semver
+- Feature dev: Github issues + projects -> PR -> review -> main
+- After go-live, add a dev branch, main would autodeploy to prod
 
 [r/wizardposting]: https://www.reddit.com/r/wizardposting/
 [three.js]: https://threejs.org/
 [pixi.js]: https://pixijs.com/
-

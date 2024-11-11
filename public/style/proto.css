@@ -2,11 +2,12 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white;
   background-color: black;
-  background: radial-gradient(circle,
+  background: radial-gradient(
+    circle,
     rgb(127, 89, 26) 9%,
-    rgb( 92, 55, 40) 51%,
-    rgb( 19, 21, 34) 100%
-    );
+    rgb(92, 55, 40) 51%,
+    rgb(19, 21, 34) 100%
+  );
   text-align: center;
   margin: 0px;
   padding: 0px;

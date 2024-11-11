@@ -14,4 +14,3 @@ mkdocs serve
 The site will be accessible at <http://127.0.0.1:8006/>.
 
 [mkdocs]: https://www.mkdocs.org/
-
