@@ -1,8 +1,13 @@
 // @ts-check
 
 import js from '@eslint/js';
-import { config as mergeConfigs, configs as tsConfigs, parser as tsParser } from 'typescript-eslint';
+import {
+  config as mergeConfigs,
+  configs as tsConfigs,
+  parser as tsParser,
+} from 'typescript-eslint';
 import eslintPluginImportX from 'eslint-plugin-import-x';
+import * as prettierConfig from 'eslint-config-prettier';
 
 export default mergeConfigs(
   {
@@ -16,7 +21,6 @@ export default mergeConfigs(
   eslintPluginImportX.flatConfigs.typescript,
   {
     files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
-    ignores: ['eslint.config.js'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -27,8 +31,6 @@ export default mergeConfigs(
       sourceType: 'module',
     },
     name: 'dumber-dungeon',
-    // prettier config
-    // plugins: { import: eslintImport },
     rules: {
       'import-x/no-dynamic-require': 'error',
       'import-x/no-nodejs-modules': 'warn',
@@ -104,7 +106,10 @@ export default mergeConfigs(
       // https://eslint.org/docs/latest/rules/no-dupe-class-members#handled_by_typescript
       'no-dupe-class-members': 'off',
       'dot-notation': 'off',
-      'import-x/no-extraneous-dependencies': ['error', { devDependencies: true }],
+      'import-x/no-extraneous-dependencies': [
+        'error',
+        { devDependencies: true },
+      ],
       // https://eslint.org/docs/latest/rules/no-undef#handled_by_typescript
       'no-undef': 'off',
       'prefer-promise-reject-errors': 'error',
@@ -126,6 +131,7 @@ export default mergeConfigs(
         },
       ],
     },
+    ...prettierConfig.rules,
   },
   {
     files: [
