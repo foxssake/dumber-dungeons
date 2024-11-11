@@ -12,7 +12,8 @@ export default class DummyWalker<T> {
 
   public update(dt: number): void {
     // Calculate weights
-    let cohesionWeight = this.position.distanceTo(this.target) / this.targetRange
+    let cohesionWeight =
+      this.position.distanceTo(this.target) / this.targetRange;
     cohesionWeight = Math.min(1, Math.max(0, cohesionWeight));
     cohesionWeight = Math.pow(cohesionWeight, 4);
 

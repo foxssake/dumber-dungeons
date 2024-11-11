@@ -6,7 +6,7 @@ Bun.serve({
     if (url.pathname === '/pixijs')
       return new Response(Bun.file('public/pixijs.html'));
     if (url.pathname === '/threejs')
-      return new Response(Bun.file('public/threejs.html'))
+      return new Response(Bun.file('public/threejs.html'));
 
     // Asset routes
     if (url.pathname.startsWith('/assets/'))
