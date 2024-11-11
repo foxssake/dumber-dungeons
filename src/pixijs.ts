@@ -51,14 +51,9 @@ app.ticker.add((ticker) => {
   const dt = ticker.deltaMS / 1000;
   avatars.forEach((avatar) => {
     avatar.update(dt);
-
-    // TODO: https://eslint.org/docs/latest/rules/no-param-reassign#options
-    /* eslint-disable no-param-reassign */
     avatar.sprite.position.x = avatar.position.x | 0;
     avatar.sprite.position.y = avatar.position.y | 0;
-
     avatar.sprite.zIndex = avatar.position.y;
-    /* eslint-enable no-param-reassign */
   });
 
   // Update FPS counter
@@ -66,7 +61,6 @@ app.ticker.add((ticker) => {
 
   const counterDiv = document.querySelector('#fps');
   if (counterDiv)
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     counterDiv.innerHTML = `FPS: ${fpsCounter.averageFps | 0}`;
 });
 

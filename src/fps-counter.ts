@@ -10,7 +10,6 @@ export default class FPSCounter {
 
   constructor(capacity: number) {
     this.capacity = capacity;
-    // TODO: talk about https://typescript-eslint.io/rules/no-unsafe-assignment/
     this.frametimes = new Array<number>(capacity);
     this.frametimes.fill(0);
   }

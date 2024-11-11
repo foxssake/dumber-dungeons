@@ -95,7 +95,7 @@ export default mergeConfigs(
       ],
       'no-useless-constructor': 'off',
       'no-empty-function': ['error', { allow: ['constructors'] }],
-      'no-param-reassign': ['error', { props: true }],
+      'no-param-reassign': ['error', { props: false }],
       '@typescript-eslint/no-shadow': 'error',
       'no-shadow': 'off',
       'default-case': 'off',
@@ -129,6 +129,10 @@ export default mergeConfigs(
           ],
         },
       ],
+      '@typescript-eslint/restrict-template-expressions': ['error', {
+        allowNumber: true,
+        allowBoolean: true,
+      }]
     },
     ...prettierConfig.rules,
   },
