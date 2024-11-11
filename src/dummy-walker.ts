@@ -10,10 +10,7 @@ class vec2 {
   }
 
   public static randomDirection(): vec2 {
-    return new vec2(
-      2 * Math.random() - 1,
-      2 * Math.random() - 1
-    ).normalize();
+    return new vec2(2 * Math.random() - 1, 2 * Math.random() - 1).normalize();
   }
 
   public clone(): vec2 {
@@ -21,10 +18,7 @@ class vec2 {
   }
 
   public distanceTo(p: vec2): number {
-    return Math.sqrt(
-      Math.pow(this.x - p.x, 2) +
-      Math.pow(this.y - p.y, 2)
-    );
+    return Math.sqrt(Math.pow(this.x - p.x, 2) + Math.pow(this.y - p.y, 2));
   }
 
   public directionTo(p: vec2): vec2 {
@@ -32,10 +26,7 @@ class vec2 {
   }
 
   public vectorTo(p: vec2): vec2 {
-    return new vec2(
-      p.x - this.x,
-      p.y - this.y
-    );
+    return new vec2(p.x - this.x, p.y - this.y);
   }
 
   public dot(p: vec2): number {
@@ -55,7 +46,7 @@ class vec2 {
 
   public subtract(p: vec2): this {
     this.x -= p.x;
-    this.y -= p .y;
+    this.y -= p.y;
 
     return this;
   }
@@ -108,15 +99,16 @@ export default class DummyWalker<T> {
   public update(dt: number): void {
     // Calculate weights
     let cohesionWeight = this.position.distanceTo(this.target) / 96;
-    cohesionWeight = Math.min(1., Math.max(0., cohesionWeight));
-    cohesionWeight = Math.pow(cohesionWeight, 4.);
+    cohesionWeight = Math.min(1, Math.max(0, cohesionWeight));
+    cohesionWeight = Math.pow(cohesionWeight, 4);
 
     const brownianWeight = 1 - cohesionWeight;
 
     // Calculate forces
     const brownianForce = vec2.randomDirection().scale(brownianWeight);
 
-    const cohesionForce = this.position.directionTo(this.target)
+    const cohesionForce = this.position
+      .directionTo(this.target)
       .scale(cohesionWeight);
 
     const acceleration = new vec2()

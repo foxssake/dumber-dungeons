@@ -20,7 +20,7 @@ export default class FPSCounter {
   }
 
   public get averageFps(): number {
-    return this.isEmpty() ? 0 : 1. / this.averageFrameTime;
+    return this.isEmpty() ? 0 : 1 / this.averageFrameTime;
   }
 
   public pushMillis(frameTime: milliseconds): void {

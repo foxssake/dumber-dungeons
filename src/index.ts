@@ -13,9 +13,8 @@ Bun.serve({
     // Public routes
     const publicFile = Bun.file(`public${url.pathname}`);
     console.log('Trying public path', publicFile.name);
-    if (await publicFile.exists())
-      return new Response(publicFile);
+    if (await publicFile.exists()) return new Response(publicFile);
 
     return new Response('?');
-  }
+  },
 });

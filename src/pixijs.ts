@@ -16,8 +16,12 @@ document.body.appendChild(app.canvas);
 
 // Load resources
 const assets = {
-  necromant: await PIXI.Assets.load<PIXI.TextureSourceLike>('/assets/necromant.png'),
-  background: await PIXI.Assets.load<PIXI.TextureSourceLike>('/assets/test-background.png')
+  necromant: await PIXI.Assets.load<PIXI.TextureSourceLike>(
+    '/assets/necromant.png'
+  ),
+  background: await PIXI.Assets.load<PIXI.TextureSourceLike>(
+    '/assets/test-background.png'
+  ),
 };
 
 // Setup scene
@@ -25,8 +29,7 @@ const background = PIXI.Sprite.from(assets.background);
 app.stage.addChild(background);
 
 const avatarCount = parseInt(
-  (new URLSearchParams(location.search)).get('count')
-  ?? '128'
+  new URLSearchParams(location.search).get('count') ?? '128'
 );
 
 const avatars = range(avatarCount).map(() => {
@@ -40,13 +43,13 @@ const avatars = range(avatarCount).map(() => {
   return avatar;
 });
 
-avatars.forEach(avatar => app.stage.addChild(avatar.sprite));
+avatars.forEach((avatar) => app.stage.addChild(avatar.sprite));
 
 // Animate
-app.ticker.add(ticker => {
+app.ticker.add((ticker) => {
   // Run simulation
   const dt = ticker.deltaMS / 1000;
-  avatars.forEach(avatar => {
+  avatars.forEach((avatar) => {
     avatar.update(dt);
 
     // TODO: https://eslint.org/docs/latest/rules/no-param-reassign#options

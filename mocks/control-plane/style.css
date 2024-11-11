@@ -158,12 +158,13 @@ body {
   padding: 0;
   margin: 0;
 
-  font-family: Liberation Serif, serif;
+  font-family:
+    Liberation Serif,
+    serif;
 }
 
 .move-input {
   width: 100cqmin;
-
 }
 
 .move-input__dir {
