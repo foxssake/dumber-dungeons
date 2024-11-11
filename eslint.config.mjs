@@ -30,7 +30,7 @@ export default mergeConfigs(
       ecmaVersion: 'latest',
       sourceType: 'module',
     },
-    name: 'dumber-dungeon',
+    name: 'dumber-dungeons',
     rules: {
       'import-x/no-dynamic-require': 'error',
       'import-x/no-nodejs-modules': 'warn',
