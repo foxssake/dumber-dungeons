@@ -99,7 +99,6 @@ export default mergeConfigs(
       '@typescript-eslint/no-shadow': 'error',
       'no-shadow': 'off',
       'default-case': 'off',
-      // TODO: check if we have it
       'default-case-last': 'error',
       'class-methods-use-this': 'off',
       // for overload we need this, and anyway ts takes care of this rule
