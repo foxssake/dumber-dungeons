@@ -53,10 +53,11 @@ export default mergeConfigs(
       ],
       // prettier does the job: https://stackoverflow.com/a/58977894/11009933
       indent: 'off',
+      'prefer-template': 'error',
       complexity: ['error', 8],
       'max-params': ['error', 4],
       'max-depth': ['error', 2],
-      'max-nested-callbacks': ['error', 1],
+      'max-nested-callbacks': ['error', 2],
       'max-statements': ['error', 24],
       'max-lines': [
         'error',

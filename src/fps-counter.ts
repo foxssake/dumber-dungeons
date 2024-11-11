@@ -10,28 +10,29 @@ export default class FPSCounter {
 
   constructor(capacity: number) {
     this.capacity = capacity;
-    this.frametimes = new Array(capacity);
+    // TODO: talk about https://typescript-eslint.io/rules/no-unsafe-assignment/
+    this.frametimes = new Array<number>(capacity);
     this.frametimes.fill(0);
   }
 
-  pushMillis(frametime: milliseconds) {
-    frametime /= 1000.; // Use seconds internally
-    this.sum += frametime - this.frametimes[this.head];
+  public get averageFrameTime(): seconds {
+    return this.isEmpty() ? 0 : this.sum / this.count;
+  }
 
-    this.frametimes[this.head] = frametime;
+  public get averageFps(): number {
+    return this.isEmpty() ? 0 : 1. / this.averageFrameTime;
+  }
+
+  public pushMillis(frameTime: milliseconds): void {
+    const frameTimeInSeconds = frameTime / 1000; // Use seconds internally
+    this.sum += frameTimeInSeconds - this.frametimes[this.head];
+
+    this.frametimes[this.head] = frameTimeInSeconds;
     this.count = Math.min(this.count + 1, this.capacity);
     this.head = (this.head + 1) % this.capacity;
   }
 
-  isEmpty(): boolean {
+  public isEmpty(): boolean {
     return this.count <= 0;
-  }
-
-  get averageFrameTime(): seconds {
-    return this.isEmpty() ? 0 : this.sum / this.count;
-  }
-
-  get averageFps(): number {
-    return this.isEmpty() ? 0 : 1. / this.averageFrameTime;
   }
 }

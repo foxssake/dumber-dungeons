@@ -9,58 +9,65 @@ class vec2 {
     this.y = y ?? 0;
   }
 
-  clone(): vec2 {
+  public static randomDirection(): vec2 {
+    return new vec2(
+      2 * Math.random() - 1,
+      2 * Math.random() - 1
+    ).normalize();
+  }
+
+  public clone(): vec2 {
     return new vec2(this.x, this.y);
   }
 
-  distanceTo(p: vec2): number {
+  public distanceTo(p: vec2): number {
     return Math.sqrt(
       Math.pow(this.x - p.x, 2) +
       Math.pow(this.y - p.y, 2)
     );
   }
 
-  directionTo(p: vec2): vec2 {
+  public directionTo(p: vec2): vec2 {
     return this.vectorTo(p).normalize();
   }
 
-  vectorTo(p: vec2): vec2 {
+  public vectorTo(p: vec2): vec2 {
     return new vec2(
       p.x - this.x,
       p.y - this.y
     );
   }
 
-  dot(p: vec2): number {
+  public dot(p: vec2): number {
     return this.x * p.x + this.y * p.y;
   }
 
-  length(): number {
+  public length(): number {
     return Math.sqrt(this.dot(this));
   }
 
-  add(p: vec2): this {
+  public add(p: vec2): this {
     this.x += p.x;
     this.y += p.y;
 
     return this;
   }
 
-  subtract(p: vec2): this {
+  public subtract(p: vec2): this {
     this.x -= p.x;
     this.y -= p .y;
 
     return this;
   }
 
-  scale(f: number): this {
+  public scale(f: number): this {
     this.x *= f;
     this.y *= f;
 
     return this;
   }
 
-  scaleTo(d: number): this {
+  public scaleTo(d: number): this {
     const l = this.length();
     if (l > EPSILON) {
       this.x *= d / l;
@@ -70,7 +77,7 @@ class vec2 {
     return this;
   }
 
-  normalize(): this {
+  public normalize(): this {
     const l = this.length();
     if (l > EPSILON) {
       this.x /= l;
@@ -79,20 +86,17 @@ class vec2 {
 
     return this;
   }
-
-  static randomDirection(): vec2 {
-    return new vec2(
-      2 * Math.random() - 1,
-      2 * Math.random() - 1
-    ).normalize();
-  }
 }
 
 export default class DummyWalker<T> {
+  // TODO:
+  // - put moveSpeed, accelSpeed, velocity together
+  // - put target & position together
+  // eslint-disable-next-line max-params
   constructor(
     public sprite: T,
 
-    public moveSpeed = 32,
+    public moveSpeed = 32, // __QUESTION__ is this maxSpeed? (line 127)
     public accelSpeed = 128,
 
     public target = new vec2(128, 128),
@@ -101,7 +105,7 @@ export default class DummyWalker<T> {
     private velocity = new vec2()
   ) {}
 
-  update(dt: number): void {
+  public update(dt: number): void {
     // Calculate weights
     let cohesionWeight = this.position.distanceTo(this.target) / 96;
     cohesionWeight = Math.min(1., Math.max(0., cohesionWeight));

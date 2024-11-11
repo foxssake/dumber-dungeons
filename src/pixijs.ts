@@ -3,7 +3,7 @@ import FPSCounter from './fps-counter';
 import DummyWalker from './dummy-walker';
 
 function range(n: number): Array<number> {
-  return [...new Array(n)].map((_, i) => i);
+  return [...new Array<number>(n)].map((_, i) => i);
 }
 
 // Init
@@ -16,8 +16,8 @@ document.body.appendChild(app.canvas);
 
 // Load resources
 const assets = {
-  necromant: await PIXI.Assets.load('/assets/necromant.png'),
-  background: await PIXI.Assets.load('/assets/test-background.png')
+  necromant: await PIXI.Assets.load<PIXI.TextureSourceLike>('/assets/necromant.png'),
+  background: await PIXI.Assets.load<PIXI.TextureSourceLike>('/assets/test-background.png')
 };
 
 // Setup scene
@@ -40,19 +40,22 @@ const avatars = range(avatarCount).map(() => {
   return avatar;
 });
 
-avatars.forEach(avatar => avatar.sprite && app.stage.addChild(avatar.sprite));
+avatars.forEach(avatar => app.stage.addChild(avatar.sprite));
 
 // Animate
 app.ticker.add(ticker => {
   // Run simulation
-  const dt = ticker.deltaMS / 1000.;
+  const dt = ticker.deltaMS / 1000;
   avatars.forEach(avatar => {
     avatar.update(dt);
 
+    // TODO: https://eslint.org/docs/latest/rules/no-param-reassign#options
+    /* eslint-disable no-param-reassign */
     avatar.sprite.position.x = avatar.position.x | 0;
     avatar.sprite.position.y = avatar.position.y | 0;
 
     avatar.sprite.zIndex = avatar.position.y;
+    /* eslint-enable no-param-reassign */
   });
 
   // Update FPS counter
@@ -60,7 +63,8 @@ app.ticker.add(ticker => {
 
   const counterDiv = document.querySelector('#fps');
   if (counterDiv)
-    counterDiv.innerHTML = 'FPS: ' + (fpsCounter.averageFps | 0);
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    counterDiv.innerHTML = `FPS: ${fpsCounter.averageFps | 0}`;
 });
 
 app.start();
