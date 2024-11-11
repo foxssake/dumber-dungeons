@@ -1,4 +1,5 @@
 import { vec2 } from './vec2';
+
 export default class DummyWalker<T> {
   public moveSpeed = 32;
   public accelSpeed = 128;

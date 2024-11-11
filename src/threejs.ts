@@ -1,5 +1,6 @@
 import * as three from 'three'
 import DummyWalker, { vec2 } from './dummy-walker'
+import FPSCounter from './fps-counter'
 
 const PI = 3.14159265
 const PIx2 = PI * 2
@@ -18,33 +19,56 @@ const renderer = new three.WebGLRenderer({
 })
 
 renderer.setSize(512, 512, false)
+renderer.domElement.style.display = ''
 
 document.body.appendChild(renderer.domElement)
+
+const fpsCounter = new FPSCounter(128)
 
 // Load resources
 
 const textureLoader = new three.TextureLoader()
+
 const necromantTexture = await textureLoader.loadAsync('/assets/necromant.png')
+const rockTexture = await textureLoader.loadAsync('/assets/rock-tile.png')
+
 necromantTexture.magFilter = three.NearestFilter
+necromantTexture.colorSpace = three.SRGBColorSpace
+
+rockTexture.magFilter = three.NearestFilter
+rockTexture.minFilter = three.NearestMipmapLinearFilter
+rockTexture.colorSpace = three.SRGBColorSpace
 
 // Setup scene
 const scene = new three.Scene()
 const camera = new three.PerspectiveCamera()
 
-const floorSize = 16
-const floorMaterial = new three.MeshBasicMaterial({ color: 'white' })
-const floorGeometry = new three.BoxGeometry(floorSize, 1, floorSize)
-const floorObject = new three.Mesh(floorGeometry, floorMaterial)
+const floorSize = 12
+const floorMaterial = new three.MeshBasicMaterial({ color: 'white', map: rockTexture })
+const floorGeometry = new three.BoxGeometry(1, 1, 1)
 
-floorObject.position.y = -1
+const floorObjects = range(floorSize * floorSize).map(i => {
+  const x = i % floorSize
+  const y = (i - x) / floorSize | 0
 
-scene.add(floorObject)
+  const floorObject = new three.Mesh(floorGeometry, floorMaterial)
+  floorObject.position.x = x - floorSize / 2
+  floorObject.position.y = -1
+  floorObject.position.z = y - floorSize / 2
+
+  scene.add(floorObject)
+
+  return floorObject
+})
 
 const spriteMaterial = new three.SpriteMaterial({
   map: necromantTexture
 })
 
-const avatarCount = 128
+const avatarCount = parseInt(
+  (new URLSearchParams(location.search)).get('count')
+  ?? '128'
+)
 const avatars = range(avatarCount).map(() => {
   const sprite = new three.Sprite(spriteMaterial)
   sprite.center.y = 0
@@ -78,7 +102,7 @@ renderer.setAnimationLoop(timeMs => {
   // Move camera
   const yaw = radians(45 + Math.sin(timeMs / 12000 * PIx2) * 15)
   const pitch = radians(30)
-  const distance = floorSize * Math.SQRT2
+  const distance = floorSize * 2
 
   camera.position.set(
     Math.cos(yaw) * Math.cos(pitch) * distance,
@@ -98,5 +122,12 @@ renderer.setAnimationLoop(timeMs => {
 
   // Render
   renderer.render(scene, camera)
+
+  // Update FPS counter
+  fpsCounter.pushMillis(dt * 1000)
+
+  const counterDiv = document.querySelector('#fps')
+  if (counterDiv)
+    counterDiv.innerHTML = 'FPS: ' + (fpsCounter.averageFps | 0)
 })
 
