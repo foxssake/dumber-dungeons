@@ -129,10 +129,13 @@ export default mergeConfigs(
           ],
         },
       ],
-      '@typescript-eslint/restrict-template-expressions': ['error', {
-        allowNumber: true,
-        allowBoolean: true,
-      }]
+      '@typescript-eslint/restrict-template-expressions': [
+        'error',
+        {
+          allowNumber: true,
+          allowBoolean: true,
+        },
+      ],
     },
     ...prettierConfig.rules,
   },

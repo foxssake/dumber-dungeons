@@ -1,6 +1,7 @@
 import * as three from 'three';
-import DummyWalker, { vec2 } from './dummy-walker';
+import DummyWalker from './dummy-walker';
 import FPSCounter, { type milliseconds } from './fps-counter';
+import { vec2 } from './vec2';
 
 const PIx2 = Math.PI * 2;
 
@@ -61,7 +62,7 @@ const floorObjects = range(floorSize * floorSize).map((i) => {
   return floorObject;
 });
 
-floorObjects.forEach(floorObject => scene.add(floorObject));
+floorObjects.forEach((floorObject) => scene.add(floorObject));
 
 const spriteMaterial = new three.SpriteMaterial({
   map: necromantTexture,
@@ -128,5 +129,5 @@ renderer.setAnimationLoop((timeMs) => {
   fpsCounter.pushMillis(dt * 1000);
 
   const counterDiv = document.querySelector('#fps');
-  if (counterDiv) counterDiv.innerHTML = `FPS: ${  fpsCounter.averageFps | 0}`;
+  if (counterDiv) counterDiv.innerHTML = `FPS: ${fpsCounter.averageFps | 0}`;
 });
