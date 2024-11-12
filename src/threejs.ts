@@ -1,9 +1,8 @@
 import * as three from 'three';
 import DummyWalker, { vec2 } from './dummy-walker';
-import FPSCounter from './fps-counter';
+import FPSCounter, { type milliseconds } from './fps-counter';
 
-const PI = 3.14159265;
-const PIx2 = PI * 2;
+const PIx2 = Math.PI * 2;
 
 function radians(degrees: number): number {
   return (degrees / 180) * PI;
@@ -52,7 +51,7 @@ const floorGeometry = new three.BoxGeometry(1, 1, 1);
 
 const floorObjects = range(floorSize * floorSize).map((i) => {
   const x = i % floorSize;
-  const y = ((i - x) / floorSize) | 0;
+  const y = (i - x) / floorSize;
 
   const floorObject = new three.Mesh(floorGeometry, floorMaterial);
   floorObject.position.x = x - floorSize / 2;
@@ -91,7 +90,7 @@ const avatars = range(avatarCount).map(() => {
 });
 
 // Run scene
-let lastUpdate = -1;
+let lastUpdate: milliseconds = -1;
 renderer.setAnimationLoop((timeMs) => {
   // Calculate frame delta
   if (lastUpdate < 0) {
