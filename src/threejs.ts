@@ -5,11 +5,11 @@ import FPSCounter, { type milliseconds } from './fps-counter';
 const PIx2 = Math.PI * 2;
 
 function radians(degrees: number): number {
-  return (degrees / 180) * PI;
+  return (degrees / 180) * Math.PI;
 }
 
 function range(n: number): Array<number> {
-  return [...new Array(n)].map((_, i) => i);
+  return [...new Array<number>(n)].map((_, i) => i);
 }
 
 // Init three.js / Setup rendering
@@ -58,10 +58,10 @@ const floorObjects = range(floorSize * floorSize).map((i) => {
   floorObject.position.y = -1;
   floorObject.position.z = y - floorSize / 2;
 
-  scene.add(floorObject);
-
   return floorObject;
 });
+
+floorObjects.forEach(floorObject => scene.add(floorObject));
 
 const spriteMaterial = new three.SpriteMaterial({
   map: necromantTexture,
@@ -128,5 +128,5 @@ renderer.setAnimationLoop((timeMs) => {
   fpsCounter.pushMillis(dt * 1000);
 
   const counterDiv = document.querySelector('#fps');
-  if (counterDiv) counterDiv.innerHTML = 'FPS: ' + (fpsCounter.averageFps | 0);
+  if (counterDiv) counterDiv.innerHTML = `FPS: ${  fpsCounter.averageFps | 0}`;
 });
