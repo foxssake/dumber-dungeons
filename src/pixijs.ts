@@ -60,8 +60,7 @@ app.ticker.add((ticker) => {
   fpsCounter.pushMillis(ticker.deltaMS);
 
   const counterDiv = document.querySelector('#fps');
-  if (counterDiv)
-    counterDiv.innerHTML = `FPS: ${fpsCounter.averageFps | 0}`;
+  if (counterDiv) counterDiv.innerHTML = `FPS: ${fpsCounter.averageFps | 0}`;
 });
 
 app.start();

@@ -4,6 +4,7 @@ export default class DummyWalker<T> {
   public moveSpeed = 32;
   public accelSpeed = 128;
   public target = new vec2(128, 128);
+  public targetRange = 96;
   public position = new vec2();
   private velocity = new vec2();
 
@@ -11,7 +12,8 @@ export default class DummyWalker<T> {
 
   public update(dt: number): void {
     // Calculate weights
-    let cohesionWeight = this.position.distanceTo(this.target) / 96;
+    let cohesionWeight =
+      this.position.distanceTo(this.target) / this.targetRange;
     cohesionWeight = Math.min(1, Math.max(0, cohesionWeight));
     cohesionWeight = Math.pow(cohesionWeight, 4);
 
