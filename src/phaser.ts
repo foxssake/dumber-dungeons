@@ -1,20 +1,19 @@
 import Phaser from 'phaser';
 import DummyWalker from './dummy-walker';
-import FPSCounter from './fps-counter';
+// import FPSCounter from './fps-counter';
 
 function range(n: number): Array<number> {
   return [...new Array<number>(n)].map((_, i) => i);
 }
 
-const fpsCounter = new FPSCounter(128);
+// const fpsCounter = new FPSCounter(128);
 
 const avatarCount = parseInt(
   new URLSearchParams(location.search).get('count') ?? '128'
 );
 
 class Example extends Phaser.Scene {
-  private avatars: DummyWalker<Phaser.Types.Physics.Arcade.ImageWithDynamicBody>[] =
-    [];
+  private avatars: DummyWalker<Phaser.GameObjects.Image>[] = [];
 
   public preload(): void {
     this.load.image('background', '/assets/test-background.png');
@@ -25,7 +24,7 @@ class Example extends Phaser.Scene {
     this.add.image(128, 128, 'background');
 
     this.avatars = range(avatarCount).map(() => {
-      const sprite = this.physics.add.image(128, 128, 'character');
+      const sprite = this.add.image(128, 128, 'character');
 
       const avatar = new DummyWalker(sprite);
       avatar.position.x = Math.floor(Math.random() * 256);
@@ -61,10 +60,13 @@ class Example extends Phaser.Scene {
     // Update FPS counter
     // TODO: time is ms since start, so in theory we don't need manipulate it
     // but the FPS counter always writes 0 :( // no the performance is better than that :D
-    fpsCounter.pushMillis(time);
+    // fpsCounter.pushMillis(time / 1000);
+
+    // a solution:
+    const fps = (this.game.getFrame() / time) * 1000;
 
     const counterDiv = document.querySelector('#fps');
-    if (counterDiv) counterDiv.innerHTML = `FPS: ${fpsCounter.averageFps | 0}`;
+    if (counterDiv) counterDiv.innerHTML = `FPS: ${fps | 0}`;
   }
 }
 
@@ -74,12 +76,6 @@ const config: Phaser.Types.Core.GameConfig = {
   width: 256,
   height: 256,
   scene: Example,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { x: 0, y: 0 },
-    },
-  },
 };
 
 new Phaser.Game(config);
