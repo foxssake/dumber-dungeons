@@ -13,6 +13,20 @@ The feature can be broken down to the following major points:
 
 ## Session management
 
+```puml
+
+actor "Host Player" as HP
+boundary "Main Screen" as MS
+entity "Server" as S
+
+HP -> MS: Open in browser
+MS -> S: Request game session
+S -> MS: Respond with game session
+MS -> HP: Redirect to session page
+MS -> HP: Display instructions to join
+
+```
+
 When the host player opens the game on their main screen, the application
 creates a new game session and displays instructions on how to join.
 
@@ -34,7 +48,12 @@ readiness flag.
 For convenience, players may have globally unique IDs, but they must always
 belong to a game session.
 
-> TODO: Is the TV a player?
+### Observers
+
+Aside from players, observers may also connect to game sessions, e.g. the main
+screen or TV the host is using.
+
+Observers are players themselves, marked with an Observer flag.
 
 ## Joining the session
 
@@ -58,15 +77,50 @@ dictionary and do lookups based on ID.
 Later we can move on to keeping these objects in an actual database, so game
 data is not tied to a single running instance, enabling horizontal scaling.
 
+### WebSocket message routing
+
+On the backend, [nest.js] has built-in support for WebSockets, through a
+[socket.io] adapter - see [nest.js WS docs].
+
+On the frontend, [socket.io] provides a high-level API similar to node's
+EventEmitter.
+
 ## Player setup
 
 After successfully joining, players are presented with the player setup screen.
 For the scope of this epic, players can edit their own names and toggle their
 readiness.
 
+```puml
+@startsalt
+{^"Player setup"
+  Name | "Player name"
+  [ Ready ]
+}
+@endsalt
+```
+
 During this phase, on the main screen, all players and their state is displayed
 next to the join instructions. This is updated in real-time, as players join or
 update their settings.
+
+```puml
+@startsalt
+{
+  {^"Join"
+    <img:https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/296px-QR_code_for_mobile_English_Wikipedia.svg.png?20101130144655>
+    https://dumber.dungeons/game/XXXX
+  } |
+  {^"Players"
+    Name | Ready?
+    Foo  | <&circle-check>
+    Bar  | <&circle-x>
+    Quix | <&circle-check>
+    Baz  | <&circle-x>
+  }
+}
+@endsalt
+```
 
 Player actions ( changing name or readiness ) are submitted through WebSocket.
 
@@ -91,6 +145,32 @@ the affected session. If so, it broadcasts a session start event.
 Clients lock the player settings and display a message that the session has
 started.
 
-> TODO: WS message routing?
+## Data model
+
+```puml
+@startyaml
+session:
+  id: 81DCIQL9NqPW
+  players:
+    - name: Foo
+      id: 841GIhHUw-iK
+      ready: false
+      observer: false
+      auth_token: WMAou-ECTaxyl5IbLlIxLp8lnX_yyQ9Z
+    - name: Bar
+      id: teeDUHGoUTwy
+      ready: true
+      observer: false
+      auth_token: _pQUp8F34t_HBjmp1jI6sRbOLSpv7AcA
+    - name: Foo's TV
+      id: acyLzh_Lab-F
+      ready: false
+      observer: true
+      auth_token: Gu6A4KRqcIQXi8t5Xuyh6JP2YzqPFLSx
+@endyaml
+```
 
 [#17]: https://github.com/foxssake/dumber-dungeons/issues/17
+[nest.js]: https://nestjs.com/
+[socket.io]: https://socket.io/
+[nest.js WS docs]: https://docs.nestjs.com/websockets/gateways
