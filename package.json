@@ -4,8 +4,8 @@
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
-    "build": "bun build src/pixijs.ts src/threejs.ts --outdir public/build/",
-    "build:dev": "bun build --watch src/pixijs.ts src/threejs.ts --outdir public/build/",
+    "build": "bun build src/pixijs.ts src/threejs.ts src/phaser.ts --outdir public/build/",
+    "build:dev": "bun build --watch src/pixijs.ts src/threejs.ts src/phaser.ts --outdir public/build/",
     "lint": "eslint",
     "lint:inspect": "eslint --inspect-config",
     "format:check": "prettier . --check",
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@pixi/math-extras": "^7.4.2",
+    "phaser": "^3.87.0",
     "pixi.js": "^8.5.2",
     "three": "^0.170.0"
   }
