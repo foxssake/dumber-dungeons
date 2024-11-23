@@ -56,6 +56,7 @@ const config: Phaser.Types.Core.GameConfig = {
   width: 256,
   height: 256,
   scene: Example,
+  transparent: true,
 };
 
 new Phaser.Game(config);
