@@ -1,12 +1,12 @@
 import Phaser from 'phaser';
 import DummyWalker from './dummy-walker';
-// import FPSCounter from './fps-counter';
+import FPSCounter from './fps-counter';
 
 function range(n: number): Array<number> {
   return [...new Array<number>(n)].map((_, i) => i);
 }
 
-// const fpsCounter = new FPSCounter(128);
+const fpsCounter = new FPSCounter(128);
 
 const avatarCount = parseInt(
   new URLSearchParams(location.search).get('count') ?? '128'
@@ -34,7 +34,7 @@ class Example extends Phaser.Scene {
     });
   }
 
-  public update(time: number, delta: number): void {
+  public update(_time: number, delta: number): void {
     // Run simulation
     this.avatars.forEach((avatar) => {
       avatar.update(delta / 1000);
@@ -42,31 +42,11 @@ class Example extends Phaser.Scene {
       avatar.sprite.y = avatar.position.y | 0;
       avatar.sprite.z = avatar.position.y;
     });
-    // console.log(time);
-    /*
-      phaser.js:80317 1524.8
-      phaser.js:80317 1541.4
-      phaser.js:80317 1558.1
-      phaser.js:80317 1574.7
-      phaser.js:80317 1591.4
-      phaser.js:80317 1608.1
-      phaser.js:80317 1624.8
-      phaser.js:80317 1641.5
-      phaser.js:80317 1658.1
-      phaser.js:80317 1674.8
-      phaser.js:80317 1691.4
-      phaser.js:80317 1708.1
-    */
-    // Update FPS counter
-    // TODO: time is ms since start, so in theory we don't need manipulate it
-    // but the FPS counter always writes 0 :( // no the performance is better than that :D
-    // fpsCounter.pushMillis(time / 1000);
 
-    // a solution:
-    const fps = (this.game.getFrame() / time) * 1000;
+    fpsCounter.pushMillis(delta);
 
     const counterDiv = document.querySelector('#fps');
-    if (counterDiv) counterDiv.innerHTML = `FPS: ${fps | 0}`;
+    if (counterDiv) counterDiv.innerHTML = `FPS: ${fpsCounter.averageFps | 0}`;
   }
 }
 
