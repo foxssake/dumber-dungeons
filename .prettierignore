@@ -1,0 +1,4 @@
+# Prettier messes up list indents
+# See issue: https://github.com/prettier/prettier/issues/5019
+# See ( unreleased ) fix: https://github.com/prettier/prettier/pull/15526
+**/*.md

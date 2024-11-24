@@ -2,10 +2,10 @@ site_name: 'Dumber Dungeons'
 dev_addr: 'localhost:8006'
 theme: readthedocs
 plugins:
-    - plantuml:
-        puml_url: https://www.plantuml.com/plantuml/
-        num_workers: 8
-        theme:
-          enabled: false
-        interaction:
-          enabled: false
+  - plantuml:
+      puml_url: https://www.plantuml.com/plantuml/
+      num_workers: 8
+      theme:
+        enabled: false
+      interaction:
+        enabled: false
