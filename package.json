@@ -26,9 +26,6 @@
     "typescript-eslint": "^8.13.0"
   },
   "dependencies": {
-    "@pixi/math-extras": "^7.4.2",
-    "phaser": "^3.87.0",
-    "pixi.js": "^8.5.2",
     "three": "^0.170.0"
   }
 }
