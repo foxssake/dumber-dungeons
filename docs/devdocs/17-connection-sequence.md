@@ -27,42 +27,43 @@ MS -> HP: Display instructions to join
 
 ```
 
-When the host Participant opens the game on their main screen, the application
+When the host participant opens the game on their main screen, the application
 creates a new game session and displays instructions on how to join.
 
 ---
 
-Sessions are objects that have an ID and a list of Participants that are currently
-in the session.
+Sessions are objects that have an ID and a list of participants that are
+currently in the session.
 
 Session IDs are randomly generated, to ensure all IDs are unique. This property
 can be useful for scaling horizontally as well - instances can generate IDs for
 a shared storage independently of each other.
 
-Participants in this case represent the user *as part of the session*. Participants do
-not exist outside of game sessions.
+Participants in this case represent the user *as part of the session*.
+Participants do not exist outside of game sessions.
 
 Participants also have a randomly generated ID, and in addition, a name and a
 readiness flag.
 
-For convenience, Participants may have globally unique IDs, but they must always
-belong to a game session.
+For convenience, participants may have globally unique IDs, but they must
+always belong to a game session.
 
 ### Displays
 
-Aside from Participants, Displays may also connect to game sessions, e.g. the main
-screen or TV the host is using.
+Aside from participants, displays may also connect to game sessions, e.g. the main
+screen or TV the host is using. Displays don't interact with the game, they
+just present its state to users.
 
-Displays are Participants themselves, marked with an Display flag.
+Displays are participants themselves, marked with an `is_display` flag.
 
 ## Joining the session
 
-When a Participant opens the session - i.e. opens its link in a browser -, they
+When a participant opens the session - i.e. opens its link in a browser -, they
 connect to the game through WebSocket. This will be used to send actions to the
 server, and to receive state updates from it.
 
 Initially, the server creates a Participant object, and sends its data to the
-browser. The browser can then use this data to authenticate as the Participant
+browser. The browser can then use this data to authenticate as the participant
 itself.
 
 On the server, the specified Session is validated ( i.e. does it exist? ), and
@@ -71,8 +72,8 @@ This event is broadcast to the Participants already in the session.
 
 ### Data storage
 
-For starters, we can keep Session and Participant objects in memory, in a simple
-dictionary and do lookups based on ID.
+For starters, we can keep Session and Participant objects in memory, in a
+simple dictionary and do lookups based on ID.
 
 Later we can move on to keeping these objects in an actual database, so game
 data is not tied to a single running instance, enabling horizontal scaling.
@@ -87,9 +88,9 @@ EventEmitter.
 
 ## Participant setup
 
-After successfully joining, Participants are presented with the player setup screen.
-For the scope of this epic, Participants can edit their own names and toggle their
-readiness.
+After successfully joining, participants are presented with the player setup
+screen. For the scope of this epic, participants can edit their own names and
+toggle their readiness.
 
 ```puml
 @startsalt
@@ -100,9 +101,9 @@ readiness.
 @endsalt
 ```
 
-During this phase, on the main screen, all Participants and their state is displayed
-next to the join instructions. This is updated in real-time, as Participants join or
-update their settings.
+During this phase, on the main screen, all Participants and their state is
+displayed next to the join instructions. This is updated in real-time, as
+participants join or update their settings.
 
 ```puml
 @startsalt
@@ -122,7 +123,8 @@ update their settings.
 @endsalt
 ```
 
-Participant actions ( changing name or readiness ) are submitted through WebSocket.
+Participant actions ( changing name or readiness ) are submitted through
+WebSocket.
 
 ### Authentication
 
@@ -162,6 +164,7 @@ started.
 @startyaml
 session:
   id: 81DCIQL9NqPW
+  is_in_progress: false
   participants:
     - name: Foo
       id: 841GIhHUw-iK
