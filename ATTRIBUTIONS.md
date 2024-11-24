@@ -11,12 +11,12 @@ Also used in `assets/test-background.png`.
 
 Part of *Isometric Tiles - Pixel Art* by *The Devil's Work.shop*.
 
-  CC0 1.0 Universal (CC0 1.0)  
-  Credits to the author is always appreciate  
+    CC0 1.0 Universal (CC0 1.0)  
+    Credits to the author is always appreciate  
 
-  Credits  
-  Ajay Karat | Devil's Work.shop
-  www.devilswork.shop
+    Credits  
+    Ajay Karat | Devil's Work.shop
+    www.devilswork.shop
 
 <https://devilsworkshop.itch.io/isometric-tiles-pixel-art>
 
