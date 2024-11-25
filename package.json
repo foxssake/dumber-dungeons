@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "module": "src/index.ts",
   "type": "module",
+  "license": "GPL-3.0-only",
   "scripts": {
     "build": "bun build src/pixijs.ts src/threejs.ts src/phaser.ts --outdir public/build/",
     "build:dev": "bun build --watch src/pixijs.ts src/threejs.ts src/phaser.ts --outdir public/build/",
