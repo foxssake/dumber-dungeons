@@ -3,8 +3,6 @@ Bun.serve({
     const url = new URL(req.url);
 
     // Fixed routes
-    if (url.pathname === '/pixijs')
-      return new Response(Bun.file('public/pixijs.html'));
     if (url.pathname === '/threejs')
       return new Response(Bun.file('public/threejs.html'));
 
