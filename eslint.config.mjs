@@ -141,9 +141,18 @@ export default mergeConfigs(
   },
   {
     files: [
-      '*.test.ts',
-      '*.spec.ts',
-      '*.mock.ts',
+      '**/*.module.ts',
+    ],
+    rules: {
+      // nest.js modules are marked by empty classes with annotations
+      '@typescript-eslint/no-extraneous-class': 'off'
+    }
+  },
+  {
+    files: [
+      '**/*.test.ts',
+      '**/*.spec.ts',
+      '**/*.mock.ts',
       '**/test/**/*',
       '**/tests/**/*',
       '**/mock/**/*',
