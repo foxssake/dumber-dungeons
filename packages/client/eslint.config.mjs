@@ -1,11 +1,12 @@
 // @ts-check
-
+//
 import {
   config as mergeConfigs,
 } from 'typescript-eslint';
-import baseConfig from '../shared/eslint.config.mjs'
+import sharedConfig from '../shared/eslint.config.mjs';
+import nextConfig from '@next/eslint-plugin-next';
 
 export default mergeConfigs(
-  {},
-  baseConfig
+  sharedConfig,
+  nextConfig
 )
