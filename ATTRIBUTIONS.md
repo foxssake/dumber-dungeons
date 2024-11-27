@@ -5,9 +5,9 @@ licenses.
 
 ---
 
-`assets/blocks_63.png`
+`packages/client/public/assets/blocks_63.png`
 
-Also used in `assets/test-background.png`.
+Also used in `packages/client/public/assets/test-background.png`.
 
 Part of *Isometric Tiles - Pixel Art* by *The Devil's Work.shop*.
 
@@ -22,7 +22,7 @@ Part of *Isometric Tiles - Pixel Art* by *The Devil's Work.shop*.
 
 ---
 
-`assets/rock-tile.png`
+`packages/client/public/assets/rock-tile.png`
 
 Part of *Rock Tileset* by *sithoius*.
 

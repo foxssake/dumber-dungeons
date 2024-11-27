@@ -1,0 +1,12 @@
+{
+  "name": "@dumber-dungeons/shared",
+  "type": "module",
+  "license": "GPL-3.0-only",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "bun test src",
+    "test:watch": "bun test src --watch",
+    "test:cov": "bun test src --coverage",
+    "test:debug": "bun test src --inspect-brk"
+  }
+}
