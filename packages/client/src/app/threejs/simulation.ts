@@ -13,15 +13,18 @@ function range(n: number): Array<number> {
   return [...new Array<number>(n)].map((_, i) => i);
 }
 
-export default async function runSimulation(canvas: HTMLCanvasElement | null, fpsCounter: FPSCounter): Promise<void> {
-  if(canvas == null) {
+export default async function runSimulation(
+  canvas: HTMLCanvasElement | null,
+  fpsCounter: FPSCounter
+): Promise<void> {
+  if (canvas == null) {
     return;
   }
 
   // Init three.js / Setup rendering
   const renderer = new three.WebGLRenderer({
     alpha: true, // Transparent background
-    canvas
+    canvas,
   });
 
   renderer.setSize(512, 512, false);
@@ -31,7 +34,9 @@ export default async function runSimulation(canvas: HTMLCanvasElement | null, fp
 
   const textureLoader = new three.TextureLoader();
 
-  const necromantTexture = await textureLoader.loadAsync('/assets/necromant.png');
+  const necromantTexture = await textureLoader.loadAsync(
+    '/assets/necromant.png'
+  );
   const rockTexture = await textureLoader.loadAsync('/assets/rock-tile.png');
 
   necromantTexture.magFilter = three.NearestFilter;
@@ -132,4 +137,3 @@ export default async function runSimulation(canvas: HTMLCanvasElement | null, fp
     fpsCounter.pushMillis(dt * 1000);
   });
 }
-
