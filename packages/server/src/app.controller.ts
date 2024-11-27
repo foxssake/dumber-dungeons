@@ -2,7 +2,7 @@ import { Controller, Get, StreamableFile } from '@nestjs/common';
 import { createReadStream } from 'fs';
 import { join } from 'path';
 
-const DIST_ROOT = join(__dirname, '../../../dist/')
+const DIST_ROOT = join(__dirname, '../../../dist/');
 
 @Controller()
 export class AppController {
@@ -11,7 +11,7 @@ export class AppController {
     return new StreamableFile(
       createReadStream(join(DIST_ROOT, '/index.html')),
       { type: 'text/html' }
-    )
+    );
   }
 
   @Get('threejs')
@@ -19,6 +19,6 @@ export class AppController {
     return new StreamableFile(
       createReadStream(join(DIST_ROOT, '/threejs.html')),
       { type: 'text/html' }
-    )
+    );
   }
 }
