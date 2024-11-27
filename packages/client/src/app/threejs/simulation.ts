@@ -19,14 +19,20 @@ export class ThreeJSPrototype {
   private renderer!: three.WebGLRenderer;
   private scene!: three.Scene;
   private fpsCounter!: FPSCounter;
-
   private lastUpdate = -1;
   private floorSize = 12;
+  private rockTexture!: three.Texture;
+  private necromantTexture!: three.Texture;
 
-  public async run(canvas: HTMLCanvasElement | null, fpsCounter: FPSCounter) {
+  public async run(
+    canvas: HTMLCanvasElement | null,
+    fpsCounter: FPSCounter
+  ): Promise<void> {
     if (canvas == null) {
       return;
     }
+
+    this.fpsCounter = fpsCounter;
 
     // Init three.js / Setup rendering
     this.renderer = new three.WebGLRenderer({
@@ -37,31 +43,24 @@ export class ThreeJSPrototype {
     this.renderer.setSize(512, 512, false);
     this.renderer.domElement.style.display = '';
 
-    this.fpsCounter = fpsCounter;
+    await this.loadResources();
+    this.setupScene();
 
-    // Load resources
-    const textureLoader = new three.TextureLoader();
+    // Run scene
+    this.lastUpdate = -1;
+    this.renderer.setAnimationLoop((time) => {
+      this.update(time);
+    });
+  }
 
-    const necromantTexture = await textureLoader.loadAsync(
-      '/assets/necromant.png'
-    );
-    const rockTexture = await textureLoader.loadAsync('/assets/rock-tile.png');
-
-    necromantTexture.magFilter = three.NearestFilter;
-    necromantTexture.colorSpace = three.SRGBColorSpace;
-    necromantTexture.premultiplyAlpha = true;
-
-    rockTexture.magFilter = three.NearestFilter;
-    rockTexture.minFilter = three.NearestMipmapLinearFilter;
-    rockTexture.colorSpace = three.SRGBColorSpace;
-
+  private setupScene(): void {
     // Setup scene
     this.scene = new three.Scene();
     this.camera = new three.PerspectiveCamera();
 
     const floorMaterial = new three.MeshBasicMaterial({
       color: 'white',
-      map: rockTexture,
+      map: this.rockTexture,
     });
     const floorGeometry = new three.BoxGeometry(1, 1, 1);
 
@@ -80,7 +79,7 @@ export class ThreeJSPrototype {
     floorObjects.forEach((floorObject) => this.scene.add(floorObject));
 
     const spriteMaterial = new three.SpriteMaterial({
-      map: necromantTexture,
+      map: this.necromantTexture,
     });
 
     const avatarCount = parseInt(
@@ -104,13 +103,27 @@ export class ThreeJSPrototype {
 
       return avatar;
     });
-
-    // Run scene
-    this.lastUpdate = -1;
-    this.renderer.setAnimationLoop(time => this.update(time));
   }
 
-  private update(time: milliseconds) {
+  private async loadResources(): Promise<void> {
+    // Load resources
+    const textureLoader = new three.TextureLoader();
+
+    this.necromantTexture = await textureLoader.loadAsync(
+      '/assets/necromant.png'
+    );
+    this.rockTexture = await textureLoader.loadAsync('/assets/rock-tile.png');
+
+    this.necromantTexture.magFilter = three.NearestFilter;
+    this.necromantTexture.colorSpace = three.SRGBColorSpace;
+    this.necromantTexture.premultiplyAlpha = true;
+
+    this.rockTexture.magFilter = three.NearestFilter;
+    this.rockTexture.minFilter = three.NearestMipmapLinearFilter;
+    this.rockTexture.colorSpace = three.SRGBColorSpace;
+  }
+
+  private update(time: milliseconds): void {
     // Calculate frame delta
     if (this.lastUpdate < 0) {
       this.lastUpdate = time;
