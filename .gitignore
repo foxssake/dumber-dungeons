@@ -176,4 +176,7 @@ dist
 
 # Bundled content
 **/build/*
+
+# Bun lockfiles
 **/bun.lockb
+bun.lockb
