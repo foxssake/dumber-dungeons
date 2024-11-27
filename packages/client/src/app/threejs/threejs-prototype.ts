@@ -3,7 +3,7 @@ import DummyWalker from './dummy-walker';
 import FPSCounter, { type milliseconds } from './fps-counter';
 import { vec2 } from './vec2';
 
-const PIx2 = Math.PI * 2;
+const TAU = Math.PI * 2;
 
 function radians(degrees: number): number {
   return (degrees / 180) * Math.PI;
@@ -133,7 +133,7 @@ export class ThreeJSPrototype {
     this.lastUpdate = time;
 
     // Move camera
-    const yaw = radians(45 + Math.sin((time / 12000) * PIx2) * 15);
+    const yaw = radians(45 + Math.sin((time / 12000) * TAU) * 15);
     const pitch = radians(30);
     const distance = this.floorSize * 2;
 

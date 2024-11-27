@@ -2,7 +2,7 @@
 
 import FPSCounter from "./fps-counter";
 import { useRef } from "react";
-import { ThreeJSPrototype } from "./simulation";
+import { ThreeJSPrototype } from "./threejs-prototype";
 
 export default function ThreeJS() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
