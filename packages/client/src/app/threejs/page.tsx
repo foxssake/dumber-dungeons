@@ -1,17 +1,19 @@
 'use client';
 
 import FPSCounter from "./fps-counter";
-import runSimulation from "./simulation";
 import { useRef } from "react";
+import { ThreeJSPrototype } from "./simulation";
 
 export default function ThreeJS() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fpsRef = useRef<HTMLDivElement>(null);
   const fpsCounter = new FPSCounter(128);
 
+  const prototype = new ThreeJSPrototype();
+
   // Run deferred
   setTimeout(
-    () => runSimulation(canvasRef.current!!, fpsCounter),
+    () => prototype.run(canvasRef.current!!, fpsCounter),
     0
   );
 
