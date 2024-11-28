@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "format": "prettier --write \"packages/*/src/**/*.ts\" \"packages/*/test/**/*.ts\"",
-    "format:check": "prettier \"packages/*/src/**/*.ts\" \"packages/*/test/**/*.ts\"",
+    "format": "bun --filter '*' format",
+    "format:check": "bun --filter '*' format:check",
     "lint": "bun --filter '*' lint",
     "lint:inspect": "eslint -c packages/shared/eslint.config.mjs --inspect-config"
   },
