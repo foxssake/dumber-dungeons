@@ -1,0 +1,14 @@
+{
+  "extends": "../shared/tsconfig.json",
+  "compilerOptions": {
+    // nest.js
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "incremental": false,
+    "forceConsistentCasingInFileNames": true
+  }
+}
