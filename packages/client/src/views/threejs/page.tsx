@@ -1,10 +1,12 @@
-'use client';
-
 import FPSCounter from "./fps-counter";
 import { useRef } from "react";
 import { ThreeJSPrototype } from "./threejs-prototype";
+import { createRoot } from 'react-dom/client';
 
-export default function ThreeJS() {
+const root = createRoot(document.body);
+root.render(ThreeJS());
+
+function ThreeJS() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fpsRef = useRef<HTMLDivElement>(null);
   const fpsCounter = new FPSCounter(128);
