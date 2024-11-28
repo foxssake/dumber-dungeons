@@ -11,12 +11,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "incremental": true,
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "noEmit": true
   },
   "include": [
     "**/*.ts",
