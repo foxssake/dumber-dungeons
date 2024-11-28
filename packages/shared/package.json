@@ -7,6 +7,10 @@
     "test": "bun test src",
     "test:watch": "bun test src --watch",
     "test:cov": "bun test src --coverage",
-    "test:debug": "bun test src --inspect-brk"
+    "test:debug": "bun test src --inspect-brk",
+    "format": "prettier --write \"{src,test}/**/*.ts\"",
+    "format:check": "prettier \"{src,test}/**/*.ts\"",
+    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
+    "lint:inspect": "eslint --inspect-config"
   }
 }

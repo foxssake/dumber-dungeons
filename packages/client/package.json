@@ -14,7 +14,11 @@
     "test:watch": "bun test src --watch",
     "test:cov": "bun test src --coverage",
     "test:debug": "bun test src --inspect-brk",
-    "test:e2e": "bun test test/e2e"
+    "test:e2e": "bun test test/e2e",
+    "format": "prettier --write \"{src,test}/**/*.ts\"",
+    "format:check": "prettier \"{src,test}/**/*.ts\"",
+    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
+    "lint:inspect": "eslint --inspect-config"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
