@@ -8,7 +8,7 @@ const targetDir = resolve(join(projectRoot, 'public/dist'))
 
 const isWatching = process.argv.includes('--watch')
 
-async function bundle() {
+async function build() {
   const glob = new Glob('views/**/*.tsx');
   const pages = (await Array.fromAsync(glob.scan({ cwd: srcRoot, absolute: true })))
     .map(path => relative(projectRoot, path));
@@ -26,13 +26,13 @@ async function bundle() {
 
 
 if (isWatching) {
-  const watcher = watch(srcRoot, { recursive: true }, () => bundle())
+  const watcher = watch(srcRoot, { recursive: true }, () => build())
   console.log(`Watching "${srcRoot}" for changes...`)
-  bundle()
+  build()
 
   process.on('beforeExit', () => {
     watcher.close()
   })
 } else {
-  await bundle();
+  await build();
 }

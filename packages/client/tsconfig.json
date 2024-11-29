@@ -13,12 +13,5 @@
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }

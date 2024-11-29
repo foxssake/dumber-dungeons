@@ -1,5 +1,5 @@
 // @ts-check
-//
+
 import {
   config as mergeConfigs,
 } from 'typescript-eslint';

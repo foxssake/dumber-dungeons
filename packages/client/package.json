@@ -5,7 +5,7 @@
   "license": "GPL-3.0-only",
   "private": true,
   "scripts": {
-    "build": "bun scripts/bundle.ts",
+    "build": "bun scripts/build.ts",
     "build:dev": "bun scripts/bundle.ts --watch",
     "serve": "bunx http-server",
     "start": "concurrently \"bun run build\" \"bun run serve\"",
@@ -21,8 +21,8 @@
     "lint:inspect": "eslint --inspect-config"
   },
   "dependencies": {
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react": "19.0.0-rc.1",
+    "react-dom": "19.0.0-rc.1",
     "three": "^0.170.0"
   },
   "devDependencies": {
