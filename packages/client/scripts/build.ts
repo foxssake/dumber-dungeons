@@ -2,11 +2,12 @@ import { watch } from 'fs';
 import { basename, join, resolve } from 'path';
 import { Glob, type GlobScanOptions } from 'bun';
 
-const projectRoot = resolve(join(import.meta.dir, '../'));
-const srcRoot = resolve(join(projectRoot, 'src'));
-const publicRoot = resolve(join(projectRoot, 'public'));
-const targetDir = resolve(join(projectRoot, 'dist'));
-const templatePath = resolve(join(projectRoot, 'src/views/template.html'));
+const packageRoot = resolve(join(import.meta.dir, '../'));
+const projectRoot = resolve(join(packageRoot, '../../'));
+const srcRoot = resolve(join(packageRoot, 'src'));
+const publicRoot = resolve(join(packageRoot, 'public'));
+const distRoot = resolve(join(projectRoot, 'dist'));
+const templatePath = resolve(join(packageRoot, 'src/views/template.html'));
 const templateData = await Bun.file(templatePath).text();
 
 const isWatching = process.argv.includes('--watch');
@@ -64,7 +65,7 @@ async function build(): Promise<void> {
   const assets = await globScan('**/*', { cwd: publicRoot });
   assets.forEach((asset) => {
     const sourcePath = join(publicRoot, asset);
-    const targetPath = join(targetDir, 'public', asset);
+    const targetPath = join(distRoot, 'public', asset);
 
     void Bun.write(targetPath, Bun.file(sourcePath));
   });
@@ -79,7 +80,7 @@ async function build(): Promise<void> {
     // Bundle as JS
     const result = await Bun.build({
       entrypoints: [join(view.path, view.main)],
-      outdir: join(targetDir, 'public'),
+      outdir: join(distRoot, 'public'),
       naming: `${view.name}.js`,
     });
 
@@ -94,7 +95,7 @@ async function build(): Promise<void> {
 
     // Generate corresponding html
     const htmlData = templateData.replaceAll('{main}', `${view.name}.js`);
-    await Bun.write(join(targetDir, 'views', `${view.name}.html`), htmlData);
+    await Bun.write(join(distRoot, 'views', `${view.name}.html`), htmlData);
   }
 
   if (failedViews.length > 0) {

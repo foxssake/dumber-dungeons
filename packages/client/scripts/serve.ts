@@ -2,7 +2,8 @@ import { basename, join, resolve } from 'path';
 import { Glob, type GlobScanOptions } from 'bun';
 import { env } from 'process';
 
-const projectRoot = resolve(join(import.meta.dir, '../'));
+const packageRoot = resolve(join(import.meta.dir, '../'));
+const projectRoot = resolve(join(packageRoot, '../../'));
 const distRoot = resolve(join(projectRoot, 'dist'));
 const viewRoot = resolve(join(distRoot, 'views'));
 const publicRoot = resolve(join(distRoot, 'public'));
