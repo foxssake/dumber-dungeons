@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "bun scripts/build.ts",
-    "build:dev": "bun scripts/bundle.ts --watch",
+    "build:dev": "bun scripts/build.ts --watch",
     "serve": "bun scripts/serve.ts",
     "start": "concurrently \"bun run build\" \"bun run serve\"",
     "start:dev": "concurrently \"bun run build:dev\" \"bun run serve\"",
