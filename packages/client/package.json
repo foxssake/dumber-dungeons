@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "build": "bun scripts/bundle.ts",
-    "build:dev": "DEV=true bun scripts/bundle.ts",
-    "serve": "bunx http-server dist/",
+    "build:dev": "bun scripts/bundle.ts --watch",
+    "serve": "bunx http-server",
     "start": "concurrently \"bun run build\" \"bun run serve\"",
     "start:dev": "concurrently \"bun run build:dev\" \"bun run serve\"",
     "test": "bun test src",
@@ -32,7 +32,6 @@
     "@types/three": "^0.170.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
-    "bun-plugin-html": "^2.2.1",
     "concurrently": "^9.1.0",
     "eslint": "^9.14.0",
     "eslint-config-prettier": "^9.1.0",

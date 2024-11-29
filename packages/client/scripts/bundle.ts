@@ -1,28 +1,33 @@
-import html from 'bun-plugin-html';
 import { watch } from 'fs';
-import { join, resolve } from 'path';
+import { join, relative, resolve } from 'path';
+import { Glob } from 'bun';
 
-const srcRoot = resolve(join(import.meta.dir, '/../src/'))
-const isDev = process.env.DEV == 'true'
+const projectRoot = resolve(join(import.meta.dir, '../'));
+const srcRoot = resolve(join(projectRoot, '/src'));
+const targetDir = resolve(join(projectRoot, 'public/dist'))
+
+const isWatching = process.argv.includes('--watch')
 
 async function bundle() {
+  const glob = new Glob('views/**/*.tsx');
+  const pages = (await Array.fromAsync(glob.scan({ cwd: srcRoot, absolute: true })))
+    .map(path => relative(projectRoot, path));
+
+  console.log('Found pages\n', pages.map(path => '\t' + path).join('\n'))
+
   const result = await Bun.build({
-    entrypoints: [
-      './src/views/threejs/index.html'
-      // './src/views/threejs/page.tsx'
-    ],
-    outdir: './dist/',
-    plugins: [
-      html()
-    ]
+    entrypoints: pages,
+    outdir: targetDir,
+    plugins: []
   })
 
   result.logs.forEach(log => console.log(log))
 }
 
 
-if (isDev) {
+if (isWatching) {
   const watcher = watch(srcRoot, { recursive: true }, () => bundle())
+  console.log(`Watching "${srcRoot}" for changes...`)
   bundle()
 
   process.on('beforeExit', () => {

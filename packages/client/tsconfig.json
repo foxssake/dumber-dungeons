@@ -12,8 +12,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
-    "verbatimModuleSyntax": true,
-    "noEmit": true
+    "verbatimModuleSyntax": true
   },
   "include": [
     "**/*.ts",

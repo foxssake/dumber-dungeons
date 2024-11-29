@@ -1,10 +1,10 @@
-import FPSCounter from "./fps-counter";
 import { useRef } from "react";
-import { ThreeJSPrototype } from "./threejs-prototype";
 import { createRoot } from 'react-dom/client';
+import FPSCounter from "./fps-counter";
+import { ThreeJSPrototype } from "./threejs-prototype";
 
-const root = createRoot(document.body);
-root.render(ThreeJS());
+const root = createRoot(document.getElementById('root')!);
+root.render(<ThreeJS/>);
 
 function ThreeJS() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
