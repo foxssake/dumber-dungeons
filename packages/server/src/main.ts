@@ -14,11 +14,11 @@ const viewsRoot = join(distRoot, 'views');
 const staticRoot = join(distRoot, 'public');
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule) as NestExpressApplication;
+  const app: NestExpressApplication = await NestFactory.create(AppModule);
   app.useStaticAssets(staticRoot);
 
-  logger.log('Using views root: ' + viewsRoot);
-  logger.log('Using static root: ' + staticRoot);
+  logger.log(`Using views root: ${viewsRoot}`);
+  logger.log(`Using static root: ${staticRoot}`);
 
   await app.listen(process.env.PORT ?? 3000);
 }
