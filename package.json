@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "start": "concurrently \"bun --cwd packages/client build\" \"bun --cwd packages/server start\"",
+    "start:dev": "concurrently \"bun --cwd packages/client build:dev\" \"bun --cwd packages/server start:dev\"",
     "format": "bun --filter '*' format",
     "format:check": "bun --filter '*' format:check",
     "lint": "bun --filter '*' lint",
@@ -10,5 +12,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
 }
