@@ -15,9 +15,9 @@
     "test:cov": "bun test src --coverage",
     "test:debug": "bun test src --inspect-brk",
     "test:e2e": "bun test test/e2e",
-    "format": "prettier --write \"{src,test}/**/*.{ts,tsx}\"",
-    "format:check": "prettier \"{src,test}/**/*.{ts,tsx}\"",
-    "lint": "eslint \"{src,test}/**/*.{ts,tsx}\" --fix",
+    "format": "prettier --write \"{src,test,scripts}/**/*.ts\"",
+    "format:check": "prettier \"{src,test,scripts}/**/*.ts\"",
+    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
     "lint:inspect": "eslint --inspect-config"
   },
   "dependencies": {
