@@ -9,31 +9,37 @@ const targetDir = resolve(join(projectRoot, 'dist'));
 const templatePath = resolve(join(projectRoot, 'src/views/template.html'));
 const templateData = await Bun.file(templatePath).text();
 
-const isWatching = process.argv.includes('--watch')
+const isWatching = process.argv.includes('--watch');
 
 interface View {
-  name: string,
-  path: string,
-  main: string,
-  tsxFiles: string[],
-};
+  name: string;
+  path: string;
+  main: string;
+  tsxFiles: string[];
+}
 
-async function globScan(pattern: string, options: GlobScanOptions = {}): Promise<Array<string>> {
+async function globScan(
+  pattern: string,
+  options: GlobScanOptions = {}
+): Promise<Array<string>> {
   const glob = new Glob(pattern);
   return Array.fromAsync(glob.scan(options));
 }
 
 async function gatherViews(): Promise<Array<View>> {
   const views: Array<View> = [];
-  const viewDirectories = await globScan('views/*', { cwd: srcRoot, absolute: true, onlyFiles: false});
+  const viewDirectories = await globScan('views/*', {
+    cwd: srcRoot,
+    absolute: true,
+    onlyFiles: false,
+  });
 
   for (const viewDir of viewDirectories) {
     // Look for .tsx files
     const tsxFiles = await globScan('*.tsx', { cwd: viewDir }).catch(() => []);
 
     // Not a valid view
-    if (tsxFiles.length == 0)
-      continue;
+    if (tsxFiles.length == 0) continue;
 
     // Multiple pages per view
     if (tsxFiles.length > 1)
@@ -46,22 +52,22 @@ async function gatherViews(): Promise<Array<View>> {
       name: viewName,
       path: viewDir,
       main: mainFile,
-      tsxFiles: tsxFiles
+      tsxFiles: tsxFiles,
     });
   }
 
   return views;
 }
 
-async function build() {
+async function build(): Promise<void> {
   // Copy assets
   const assets = await globScan('**/*', { cwd: publicRoot });
-  assets.forEach(asset => {
-    const sourcePath = join(publicRoot, asset)
-    const targetPath = join(targetDir, 'public', asset)
+  assets.forEach((asset) => {
+    const sourcePath = join(publicRoot, asset);
+    const targetPath = join(targetDir, 'public', asset);
 
-    Bun.write(targetPath, Bun.file(sourcePath));
-  })
+    void Bun.write(targetPath, Bun.file(sourcePath));
+  });
 
   // Render views
   const views = await gatherViews();
@@ -74,10 +80,12 @@ async function build() {
     const result = await Bun.build({
       entrypoints: [join(view.path, view.main)],
       outdir: join(targetDir, 'public'),
-      naming: `${view.name}.js`
+      naming: `${view.name}.js`,
     });
 
-    result.logs.forEach(log => console.log(log));
+    result.logs.forEach((log) => {
+      console.log(log);
+    });
 
     if (!result.success) {
       failedViews.push(view);
@@ -85,7 +93,7 @@ async function build() {
     }
 
     // Generate corresponding html
-    const htmlData = templateData.replaceAll('{main}', `${view.name}.js`)
+    const htmlData = templateData.replaceAll('{main}', `${view.name}.js`);
     await Bun.write(join(targetDir, 'views', `${view.name}.html`), htmlData);
   }
 
@@ -95,13 +103,15 @@ async function build() {
 }
 
 if (isWatching) {
-  const watcher = watch(srcRoot, { recursive: true }, () => build())
-  console.log(`Watching "${srcRoot}" for changes...`)
-  build()
-
+  const watcher = watch(srcRoot, { recursive: true }, () => {
+    void build();
+  });
+  console.log(`Watching "${srcRoot}" for changes...`);
   process.on('beforeExit', () => {
-    watcher.close()
-  })
+    watcher.close();
+  });
+
+  await build();
 } else {
   await build();
 }
