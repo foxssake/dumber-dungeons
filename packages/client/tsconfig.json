@@ -1,7 +1,17 @@
 {
   "extends": "../shared/tsconfig.json",
   "compilerOptions": {
-    "lib": ["ESNext", "DOM"],
-    "jsx": "react-jsx"
-  },
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true
+  }
 }
