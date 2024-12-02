@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "bun scripts/build.ts",
-    "build:dev": "bun scripts/bundle.ts --watch",
+    "build:dev": "bun scripts/build.ts --watch",
     "serve": "bunx http-server",
     "start": "concurrently \"bun run build\" \"bun run serve\"",
     "start:dev": "concurrently \"bun run build:dev\" \"bun run serve\"",
@@ -21,6 +21,8 @@
     "lint:inspect": "eslint --inspect-config"
   },
   "dependencies": {
+    "iti": "^0.7.0",
+    "iti-react": "^0.7.0",
     "react": "19.0.0-rc.1",
     "react-dom": "19.0.0-rc.1",
     "three": "^0.170.0"
