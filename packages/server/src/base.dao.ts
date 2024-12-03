@@ -1,12 +1,12 @@
 interface Identifiable<T> {
-  id: T
+  id: T;
 }
 
 export class BaseDAO<T extends Identifiable<K>, K> {
   private data = new Map<K, T>();
 
   public save(...items: Array<T>): void {
-    for(const item of items) {
+    for (const item of items) {
       this.data.set(item.id, item);
     }
   }
@@ -24,6 +24,6 @@ export class BaseDAO<T extends Identifiable<K>, K> {
   }
 
   public list(): Array<T> {
-    return [...this.data.values()]
+    return [...this.data.values()];
   }
 }

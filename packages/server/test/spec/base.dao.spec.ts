@@ -1,20 +1,20 @@
-import { describe, it, expect } from 'bun:test'
-import { BaseDAO } from 'src/base.dao'
+import { describe, it, expect } from 'bun:test';
+import { BaseDAO } from 'src/base.dao';
 
 interface Employee {
-  id: string,
-  name: string
+  id: string;
+  name: string;
 }
 
 const employee: Employee = {
   id: '0000',
-  name: 'Foo'
-}
+  name: 'Foo',
+};
 
 const otherEmployee: Employee = {
   id: '0021',
-  name: 'Bar'
-}
+  name: 'Bar',
+};
 
 describe('BaseDao', () => {
   describe('find', () => {
@@ -24,11 +24,11 @@ describe('BaseDao', () => {
       dao.save(employee);
 
       // When
-      const result = dao.find('0000')
+      const result = dao.find('0000');
 
       // Then
-      expect(result).toBe(employee)
-    })
+      expect(result).toBe(employee);
+    });
 
     it('should return undefined', () => {
       // Given
@@ -36,12 +36,12 @@ describe('BaseDao', () => {
       dao.save(employee);
 
       // When
-      const result = dao.find('0208')
+      const result = dao.find('0208');
 
       // Then
-      expect(result).toBeUndefined()
-    })
-  })
+      expect(result).toBeUndefined();
+    });
+  });
 
   describe('has', () => {
     it('should return true', () => {
@@ -50,11 +50,11 @@ describe('BaseDao', () => {
       dao.save(employee);
 
       // When
-      const result = dao.has('0000')
+      const result = dao.has('0000');
 
       // Then
-      expect(result).toBeTrue()
-    })
+      expect(result).toBeTrue();
+    });
 
     it('should return false', () => {
       // Given
@@ -62,12 +62,12 @@ describe('BaseDao', () => {
       dao.save(employee);
 
       // When
-      const result = dao.has('0208')
+      const result = dao.has('0208');
 
       // Then
-      expect(result).toBeFalse()
-    })
-  })
+      expect(result).toBeFalse();
+    });
+  });
 
   describe('delete', () => {
     it('should return true on known item', () => {
@@ -76,26 +76,26 @@ describe('BaseDao', () => {
       dao.save(employee);
 
       // When
-      const result = dao.delete('0000')
+      const result = dao.delete('0000');
 
       // Then
-      expect(result).toBeTrue()
-      expect(dao.has('0000')).toBeFalse()
-    })
-    
+      expect(result).toBeTrue();
+      expect(dao.has('0000')).toBeFalse();
+    });
+
     it('should return false on unknown item', () => {
       // Given
       const dao = new BaseDAO<Employee, string>();
       dao.save(employee);
 
       // When
-      const result = dao.delete('0208')
+      const result = dao.delete('0208');
 
       // Then
-      expect(result).toBeFalse()
-      expect(dao.has('0208')).toBeFalse()
-    })
-  })
+      expect(result).toBeFalse();
+      expect(dao.has('0208')).toBeFalse();
+    });
+  });
 
   describe('list', () => {
     it('should return empty list', () => {
@@ -107,7 +107,7 @@ describe('BaseDao', () => {
 
       // Then
       expect(result).toBeEmpty();
-    })
+    });
 
     it('should return all items', () => {
       // Given
@@ -119,6 +119,6 @@ describe('BaseDao', () => {
 
       // Then
       expect(result).toEqual([employee, otherEmployee]);
-    })
-  })
-})
+    });
+  });
+});
