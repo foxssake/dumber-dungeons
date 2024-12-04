@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import type { SessionDAO } from "./session.dao";
-import { type Session, SessionStatus } from "./session";
-import type { IDGenerator } from "src/id.generator";
+import { Injectable } from '@nestjs/common';
+import { SessionDAO } from './session.dao';
+import { IDGenerator } from 'src/id.generator';
+import { Session, SessionStatus } from './session';
 import { assert } from '../assert';
 
 @Injectable()
