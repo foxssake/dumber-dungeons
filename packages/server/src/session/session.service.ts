@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SessionDAO } from './session.dao';
 import { IDGenerator } from 'src/id.generator';
 import { Session, SessionStatus } from './session';
-import { assert } from '../assert';
+import { assert } from 'src/assert';
 
 @Injectable()
 export class SessionService {
@@ -15,7 +15,7 @@ export class SessionService {
     const session: Session = {
       id: this.idGenerator.forSession(),
       status: SessionStatus.IN_LOBBY,
-      participants: []
+      participants: [],
     };
 
     this.sessionDAO.save(session);
@@ -24,7 +24,10 @@ export class SessionService {
   }
 
   public start(session: Session): Session {
-    assert(session.status == SessionStatus.IN_LOBBY, "Session can only be started if it's already in lobby!");
+    assert(
+      session.status == SessionStatus.IN_LOBBY,
+      "Session can only be started if it's already in lobby!"
+    );
 
     session.status = SessionStatus.ACTIVE;
     this.sessionDAO.save(session);

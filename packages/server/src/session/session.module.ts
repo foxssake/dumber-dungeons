@@ -6,6 +6,6 @@ import { IDGenerator } from 'src/id.generator';
 
 @Module({
   providers: [SessionService, SessionDAO, IDGenerator],
-  controllers: [SessionController]
+  controllers: [SessionController],
 })
 export class SessionModule {}
