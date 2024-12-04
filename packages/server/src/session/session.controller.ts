@@ -4,9 +4,7 @@ import type { Session } from './session';
 
 @Controller('session')
 export class SessionController {
-  constructor(
-    private readonly sessionService: SessionService
-  ) {}
+  constructor(private readonly sessionService: SessionService) {}
 
   @Post()
   public createSession(): Session {
