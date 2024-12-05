@@ -3,6 +3,6 @@ import { IDGenerator } from './id.generator';
 
 @Module({
   providers: [IDGenerator],
-  exports: [IDGenerator]
+  exports: [IDGenerator],
 })
 export class UtilsModule {}
