@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach } from 'bun:test';
 import { SessionStatus, type Session } from 'src/session/session';
 import { createStubInstance, type SinonStubbedInstance } from 'sinon';
-import { IDGenerator } from 'src/id.generator';
 import { SessionDAO } from 'src/session/session.dao';
 import { SessionService } from 'src/session/session.service';
+import { IDGenerator } from 'src/utils/id.generator';
 
 describe('SessionService', () => {
   let sessionDao: SinonStubbedInstance<SessionDAO>;
