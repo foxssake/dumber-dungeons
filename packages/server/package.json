@@ -5,9 +5,9 @@
   "license": "GPL-3.0-only",
   "version": "0.0.1",
   "scripts": {
-    "start": "bun ./src/main.ts",
-    "start:dev": "bun --watch ./src/main.ts",
-    "start:debug": "bun --debug --watch ./src/main.ts",
+    "start": "NEST_DEBUG=true bun ./src/main.ts",
+    "start:dev": "NEST_DEBUG=true bun --watch ./src/main.ts",
+    "start:debug": "NEST_DEBUG=true bun --debug --watch ./src/main.ts",
     "start:prod": "bun ./src/main.ts",
     "test": "bun test test/spec",
     "test:watch": "bun test test/spec --watch",
