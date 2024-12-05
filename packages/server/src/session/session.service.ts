@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { SessionDAO } from './session.dao';
-import { IDGenerator } from 'src/id.generator';
-import { Session, SessionStatus } from './session';
+import { type Session, SessionStatus } from './session';
 import { assert } from 'src/assert';
+import type { IDGenerator } from 'src/utils/id.generator';
 
 @Injectable()
 export class SessionService {
