@@ -104,14 +104,17 @@ async function build(): Promise<void> {
 }
 
 if (isWatching) {
-  const watchPaths = [srcRoot, publicRoot]
-  const watchers = watchPaths
-    .map(path => watch(path, { recursive: true }, () => { void build(); }))
+  const watchPaths = [srcRoot, publicRoot];
+  const watchers = watchPaths.map((path) =>
+    watch(path, { recursive: true }, () => {
+      void build();
+    })
+  );
 
-  console.log('Watching directories for changes:\n', watchPaths)
+  console.log('Watching directories for changes:\n', watchPaths);
 
   process.on('beforeExit', () => {
-    watchers.forEach(watcher => watcher.close());
+    watchers.forEach((watcher) => watcher.close());
   });
 
   await build();
