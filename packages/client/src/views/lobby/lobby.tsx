@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { renderPage } from "../../pageutils"
 import * as QR from 'qrcode';
+import { app } from "../../app";
 
 // TODO: Have a shared type
 interface Participant {
+  id: string,
   name: string,
   isReady: boolean
 };
 
 function JoinLobby(props: { sessionId: string }) {
-  const link = `${window.location.origin}/join/${props.sessionId}`;
+  const linkService = app.items.linkService
+  const link = linkService.joinLobby(props.sessionId).toString();
   const [qrData, setQrData] = useState('foo');
 
   QR.toString(link).then(svg => {
@@ -45,7 +48,7 @@ function LobbyParticipants(props: { participants: Array<Participant> }) {
         </thead>
         <tbody>
           {props.participants.map((participant, idx) => (
-            <tr key={idx}>
+            <tr key={participant.id}>
               <td>#{idx + 1}</td>
               <td>{participant.name}</td>
               <td>{participant.isReady ? '✔️' : '❌'}</td>
@@ -57,24 +60,26 @@ function LobbyParticipants(props: { participants: Array<Participant> }) {
   );
 }
 
-function Lobby() {
+function Lobby(props: { sessionId: string, participants: Array<Participant>}) {
   return (
     <div className="lobby">
-      <JoinLobby sessionId="Sni3QJme" />
-      <LobbyParticipants participants={[
-        {
-          name: 'Foo',
-          isReady: true
-        },
-        {
-          name: 'Bar',
-          isReady: false
-        }
-      ]}/>
+      <JoinLobby sessionId={props.sessionId} />
+      <LobbyParticipants participants={props.participants}/>
     </div>
   )
 }
 
-renderPage(<Lobby/>, {
+function LobbyPage() {
+  const sessionId = 'Sni3QJme';
+  const [participants, setParticipants] = useState<Array<Participant>>([
+    { id: '0000', name: 'Foo', isReady: true },
+    { id: '0001', name: 'Bar', isReady: false },
+    { id: '0001', name: 'Quix', isReady: true },
+  ]);
+
+  return <Lobby sessionId={sessionId} participants={participants} />;
+}
+
+renderPage(<LobbyPage/>, {
   title: 'Dumber Dungeons - Lobby'
 })
