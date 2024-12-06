@@ -23,6 +23,7 @@
   "dependencies": {
     "iti": "^0.7.0",
     "iti-react": "^0.7.0",
+    "qrcode": "^1.5.4",
     "react": "19.0.0-rc.1",
     "react-dom": "^19.0.0",
     "three": "^0.170.0"
@@ -32,6 +33,7 @@
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/eslint__js": "^8.42.3",
     "@types/react-dom": "^19.0.2",
+    "@types/qrcode": "^1.5.5",
     "@types/three": "^0.170.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",

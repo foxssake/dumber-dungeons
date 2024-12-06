@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { renderPage } from "../../pageutils"
+import * as QR from 'qrcode';
 
 // TODO: Have a shared type
 interface Participant {
@@ -8,11 +10,19 @@ interface Participant {
 
 function JoinLobby(props: { sessionId: string }) {
   const link = `${window.location.origin}/join/${props.sessionId}`;
+  const [qrData, setQrData] = useState('foo');
+
+  QR.toString(link).then(svg => {
+    const encodedData = btoa(svg);
+    const dataUrl = `data:image/svg+xml;base64,${encodedData}`;
+
+    setQrData(dataUrl);
+  });
 
   return (
     <div className="lobby__panel">
       <p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" />
+        <img src={qrData} />
       </p>
       <p>
         Join at: <a href={link}>{link}</a>
@@ -27,13 +37,15 @@ function LobbyParticipants(props: { participants: Array<Participant> }) {
       Participants
       <table>
         <thead>
-          <td>#</td>
-          <td>Name</td>
-          <td>Ready?</td>
+          <tr>
+            <td>#</td>
+            <td>Name</td>
+            <td>Ready?</td>
+          </tr>
         </thead>
         <tbody>
           {props.participants.map((participant, idx) => (
-            <tr>
+            <tr key={idx}>
               <td>#{idx + 1}</td>
               <td>{participant.name}</td>
               <td>{participant.isReady ? '✔️' : '❌'}</td>
