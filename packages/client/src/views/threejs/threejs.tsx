@@ -1,10 +1,11 @@
 import { useRef } from "react";
-import { createRoot } from 'react-dom/client';
 import FPSCounter from "./fps-counter";
 import { ThreeJSPrototype } from "./threejs-prototype";
+import { renderPage } from "../../pageutils";
 
-const root = createRoot(document.getElementById('root')!);
-root.render(<ThreeJS/>);
+renderPage(<ThreeJS/>, {
+  title: 'three.js prototype'
+});
 
 function ThreeJS() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
