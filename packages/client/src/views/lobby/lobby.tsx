@@ -10,6 +10,8 @@ interface Participant {
   isReady: boolean
 };
 
+const participantsSource = new EventTarget();
+
 function JoinLobby(props: { sessionId: string }) {
   const linkService = app.items.linkService
   const link = linkService.joinLobby(props.sessionId).toString();
@@ -71,15 +73,50 @@ function Lobby(props: { sessionId: string, participants: Array<Participant>}) {
 
 function LobbyPage() {
   const sessionId = 'Sni3QJme';
-  const [participants, setParticipants] = useState<Array<Participant>>([
-    { id: '0000', name: 'Foo', isReady: true },
-    { id: '0001', name: 'Bar', isReady: false },
-    { id: '0001', name: 'Quix', isReady: true },
-  ]);
+  const [participants, setParticipants] = useState<Array<Participant>>([]);
+
+  participantsSource.addEventListener('set', e => {
+    setParticipants((e as CustomEvent).detail);
+  })
 
   return <Lobby sessionId={sessionId} participants={participants} />;
 }
 
 renderPage(<LobbyPage/>, {
   title: 'Dumber Dungeons - Lobby'
-})
+});
+
+[
+  () => [
+    { id: '0000', name: 'Foo', isReady: false },
+  ],
+  () => [
+    { id: '0000', name: 'Foo', isReady: false },
+    { id: '0001', name: 'Bar', isReady: false },
+  ],
+  () => [
+    { id: '0000', name: 'Foo', isReady: false },
+    { id: '0001', name: 'Bar', isReady: false },
+    { id: '0001', name: 'Quix', isReady: false },
+  ],
+  () => [
+    { id: '0000', name: 'Foo', isReady: true },
+    { id: '0001', name: 'Bar', isReady: false },
+    { id: '0001', name: 'Quix', isReady: false },
+  ],
+  () => [
+    { id: '0000', name: 'Foo', isReady: true },
+    { id: '0001', name: 'Bar', isReady: false },
+    { id: '0001', name: 'Quix', isReady: true },
+  ],
+  () => [
+    { id: '0000', name: 'Foo', isReady: true },
+    { id: '0001', name: 'Bar', isReady: true },
+    { id: '0001', name: 'Quix', isReady: true },
+  ],
+].forEach((action, idx) =>
+    setTimeout(() => {
+      const data = action();
+      participantsSource.dispatchEvent(new CustomEvent('set', { detail: data }));
+    }, 1000 + idx * 1000)
+)
