@@ -3,8 +3,8 @@ import type { Participant } from './participant';
 import type { Session } from './session';
 
 interface ParticipantEvent {
-  participant: Participant
-};
+  participant: Participant;
+}
 
 export type ParticipantJoinEvent = ParticipantEvent;
 export type ParticipantChangeEvent = ParticipantEvent;
@@ -15,9 +15,18 @@ export type EventHandler<T> = (data: T) => void;
 export class DungeonClient extends EventSource {
   private session: Session | undefined;
 
-  public on(event: 'lobby/join', handler: EventHandler<ParticipantJoinEvent>): void;
-  public on(event: 'lobby/change', handler: EventHandler<ParticipantChangeEvent>): void;
-  public on(event: 'lobby/leave', handler: EventHandler<ParticipantLeaveEvent>): void;
+  public on(
+    event: 'lobby/join',
+    handler: EventHandler<ParticipantJoinEvent>
+  ): void;
+  public on(
+    event: 'lobby/change',
+    handler: EventHandler<ParticipantChangeEvent>
+  ): void;
+  public on(
+    event: 'lobby/leave',
+    handler: EventHandler<ParticipantLeaveEvent>
+  ): void;
   public on(event: string, handler: Function): void {
     super.on(event, handler);
   }
@@ -34,12 +43,12 @@ export class DungeonClient extends EventSource {
 
     this.session = {
       id: 'todo',
-      participants: []
+      participants: [],
     };
 
-    this.on('lobby/join', data => this.addParticipant(data.participant));
-    this.on('lobby/leave', data => this.removeParticipant(data.participant));
-    this.on('lobby/change', data => this.updateParticipant(data.participant));
+    this.on('lobby/join', (data) => this.addParticipant(data.participant));
+    this.on('lobby/leave', (data) => this.removeParticipant(data.participant));
+    this.on('lobby/change', (data) => this.updateParticipant(data.participant));
   }
 
   public getParticipants(): Array<Participant> {
@@ -51,16 +60,17 @@ export class DungeonClient extends EventSource {
   }
 
   private removeParticipant(participant: Participant) {
-    this.session!.participants = this.session!.participants
-      .filter(p => p.id !=participant.id);
+    this.session!.participants = this.session!.participants.filter(
+      (p) => p.id != participant.id
+    );
   }
 
   private updateParticipant(participant: Participant) {
-    const idx = this.session!.participants.findIndex(p => p.id == participant.id);
+    const idx = this.session!.participants.findIndex(
+      (p) => p.id == participant.id
+    );
 
-    if(idx < 0)
-      this.addParticipant(participant);
-    else
-      this.session!.participants[idx] = participant;
+    if (idx < 0) this.addParticipant(participant);
+    else this.session!.participants[idx] = participant;
   }
 }
