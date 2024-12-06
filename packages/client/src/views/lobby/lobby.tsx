@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { renderPage } from "../../pageutils"
 import * as QR from 'qrcode';
 import { app } from "../../app";
-
-// TODO: Have a shared type
-interface Participant {
-  id: string,
-  name: string,
-  isReady: boolean
-};
-
-const participantsSource = new EventTarget();
+import type { Participant } from "../../participant";
 
 function JoinLobby(props: { sessionId: string }) {
   const linkService = app.items.linkService
@@ -72,12 +64,13 @@ function Lobby(props: { sessionId: string, participants: Array<Participant>}) {
 }
 
 function LobbyPage() {
+  const dungeonClient = app.items.dungeonClient;
   const sessionId = 'Sni3QJme';
   const [participants, setParticipants] = useState<Array<Participant>>([]);
 
-  participantsSource.addEventListener('set', e => {
-    setParticipants((e as CustomEvent).detail);
-  })
+  dungeonClient.on('lobby/join', () => setParticipants(dungeonClient.getParticipants()));
+  dungeonClient.on('lobby/change', () => setParticipants(dungeonClient.getParticipants()));
+  dungeonClient.on('lobby/leave', () => setParticipants(dungeonClient.getParticipants()));
 
   return <Lobby sessionId={sessionId} participants={participants} />;
 }
@@ -86,37 +79,28 @@ renderPage(<LobbyPage/>, {
   title: 'Dumber Dungeons - Lobby'
 });
 
+const dungeonClient = app.items.dungeonClient;
 [
-  () => [
-    { id: '0000', name: 'Foo', isReady: false },
-  ],
-  () => [
-    { id: '0000', name: 'Foo', isReady: false },
-    { id: '0001', name: 'Bar', isReady: false },
-  ],
-  () => [
-    { id: '0000', name: 'Foo', isReady: false },
-    { id: '0001', name: 'Bar', isReady: false },
-    { id: '0001', name: 'Quix', isReady: false },
-  ],
-  () => [
-    { id: '0000', name: 'Foo', isReady: true },
-    { id: '0001', name: 'Bar', isReady: false },
-    { id: '0001', name: 'Quix', isReady: false },
-  ],
-  () => [
-    { id: '0000', name: 'Foo', isReady: true },
-    { id: '0001', name: 'Bar', isReady: false },
-    { id: '0001', name: 'Quix', isReady: true },
-  ],
-  () => [
-    { id: '0000', name: 'Foo', isReady: true },
-    { id: '0001', name: 'Bar', isReady: true },
-    { id: '0001', name: 'Quix', isReady: true },
-  ],
-].forEach((action, idx) =>
-    setTimeout(() => {
-      const data = action();
-      participantsSource.dispatchEvent(new CustomEvent('set', { detail: data }));
-    }, 1000 + idx * 1000)
-)
+  () => dungeonClient.emit('lobby/join', {
+    participant: { id: '0000', name: 'Foo', isReady: false }
+  }),
+  () => dungeonClient.emit('lobby/join', {
+    participant: { id: '000a', name: 'Bar', isReady: false }
+  }),
+  () => dungeonClient.emit('lobby/join', {
+    participant: { id: '0010', name: 'Quix', isReady: false }
+  }),
+
+  () => dungeonClient.emit('lobby/change', {
+    participant: { id: '0000', name: 'Foo', isReady: true }
+  }),
+  () => dungeonClient.emit('lobby/change', {
+    participant: { id: '000a', name: 'Baron', isReady: false }
+  }),
+  () => dungeonClient.emit('lobby/change', {
+    participant: { id: '0010', name: 'Quix', isReady: true }
+  }),
+  () => dungeonClient.emit('lobby/change', {
+    participant: { id: '000a', name: 'Baron', isReady: true }
+  }),
+].forEach((action, idx) => setTimeout(action, (1 + idx) * 1000));

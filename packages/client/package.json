@@ -27,6 +27,8 @@
     "react": "19.0.0-rc.1",
     "react-dom": "^19.0.0",
     "three": "^0.170.0"
+    "three": "^0.170.0",
+    "@dumber-dungeons/shared": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",

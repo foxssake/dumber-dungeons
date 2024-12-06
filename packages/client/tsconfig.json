@@ -15,7 +15,8 @@
     "verbatimModuleSyntax": true,
     "paths": {
       "#src/*": ["./src/*"],
-      "#assets/*": ["./public/assets/*"]
+      "#assets/*": ["./public/assets/*"],
+      "@shared/*": [ "../shared/src/*" ]
     }
   }
 }
