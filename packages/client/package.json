@@ -21,13 +21,14 @@
     "lint:inspect": "eslint --inspect-config"
   },
   "dependencies": {
+    "@dumber-dungeons/shared": "workspace:*",
     "iti": "^0.7.0",
     "iti-react": "^0.7.0",
     "qrcode": "^1.5.4",
     "react": "19.0.0-rc.1",
     "react-dom": "^19.0.0",
-    "three": "^0.170.0"
     "three": "^0.170.0",
+    "socket.io-client": "^4.8.1",
     "@dumber-dungeons/shared": "workspace:*"
   },
   "devDependencies": {
