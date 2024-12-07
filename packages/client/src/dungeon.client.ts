@@ -1,6 +1,7 @@
 import { EventEmitter } from '@shared/event.emitter';
 import type { Participant } from './participant';
 import type { Session } from './session';
+import type { Socket } from 'socket.io-client';
 
 interface ParticipantEvent {
   participant: Participant;
@@ -17,14 +18,33 @@ export class DungeonClient {
     new EventEmitter<ParticipantChangeEvent>();
   public readonly onParticipantLeave =
     new EventEmitter<ParticipantLeaveEvent>();
-  private session: Session;
 
-  constructor() {
+  private session: Session;
+  private socket: Socket;
+
+  constructor(socket: Socket) {
+    this.socket = socket;
+
     this.session = {
-      id: 'todo',
+      id: '',
       participants: [],
     };
 
+    this.subscribeToSocket();
+    this.subscribeToEvents();
+  }
+
+  public getParticipants(): Array<Participant> {
+    return [...this.session.participants];
+  }
+
+  private subscribeToSocket(): void {
+    this.socket.on('participant/join', (participant: Participant) => this.onParticipantJoin.emit({ participant }));
+    this.socket.on('participant/update', (participant: Participant) => this.onParticipantChange.emit({ participant }));
+    this.socket.on('participant/leave', (participant: Participant) => this.onParticipantLeave.emit({ participant }));
+  }
+
+  private subscribeToEvents(): void {
     this.onParticipantJoin.add((event) => {
       this.addParticipant(event.participant);
     });
@@ -34,10 +54,6 @@ export class DungeonClient {
     this.onParticipantLeave.add((event) => {
       this.removeParticipant(event.participant);
     });
-  }
-
-  public getParticipants(): Array<Participant> {
-    return [...this.session.participants];
   }
 
   private addParticipant(participant: Participant): void {
