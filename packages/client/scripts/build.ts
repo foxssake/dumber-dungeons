@@ -99,17 +99,27 @@ async function build(): Promise<void> {
   }
 
   if (failedViews.length > 0) {
-    console.error('Failed building views:\n', failedViews.join('\n'));
+    console.error(
+      'Failed building views:\n',
+      failedViews.map((view) => `\t${view.name}`).join('\n')
+    );
   }
 }
 
 if (isWatching) {
-  const watcher = watch(srcRoot, { recursive: true }, () => {
-    void build();
-  });
-  console.log(`Watching "${srcRoot}" for changes...`);
+  const watchPaths = [srcRoot, publicRoot];
+  const watchers = watchPaths.map((path) =>
+    watch(path, { recursive: true }, () => {
+      void build();
+    })
+  );
+
+  console.log('Watching directories for changes:\n', watchPaths);
+
   process.on('beforeExit', () => {
-    watcher.close();
+    watchers.forEach((watcher) => {
+      watcher.close();
+    });
   });
 
   await build();
