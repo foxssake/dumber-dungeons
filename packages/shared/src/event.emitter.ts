@@ -8,6 +8,8 @@ export class EventEmitter<T> {
   }
 
   public emit(event: T): void {
-    this.handlers.forEach(handler => handler(event));
+    this.handlers.forEach((handler) => {
+      handler(event);
+    });
   }
 }

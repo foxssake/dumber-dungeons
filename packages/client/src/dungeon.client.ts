@@ -10,14 +10,14 @@ export type ParticipantJoinEvent = ParticipantEvent;
 export type ParticipantChangeEvent = ParticipantEvent;
 export type ParticipantLeaveEvent = ParticipantEvent;
 
-export type EventHandler<T> = (data: T) => void;
-
 export class DungeonClient {
+  public readonly onParticipantJoin =
+    new EventEmitter<ParticipantJoinEvent>();
+  public readonly onParticipantChange =
+    new EventEmitter<ParticipantChangeEvent>();
+  public readonly onParticipantLeave =
+    new EventEmitter<ParticipantLeaveEvent>();
   private session: Session;
-
-  public readonly onParticipantJoin = new EventEmitter<ParticipantJoinEvent>();
-  public readonly onParticipantChange = new EventEmitter<ParticipantChangeEvent>();
-  public readonly onParticipantLeave = new EventEmitter<ParticipantLeaveEvent>();
 
   constructor() {
     this.session = {
@@ -25,9 +25,15 @@ export class DungeonClient {
       participants: [],
     };
 
-    this.onParticipantJoin.add(event => {this.addParticipant(event.participant);});
-    this.onParticipantChange.add(event => {this.updateParticipant(event.participant);});
-    this.onParticipantLeave.add(event => {this.removeParticipant(event.participant);});
+    this.onParticipantJoin.add((event) => {
+      this.addParticipant(event.participant);
+    });
+    this.onParticipantChange.add((event) => {
+      this.updateParticipant(event.participant);
+    });
+    this.onParticipantLeave.add((event) => {
+      this.removeParticipant(event.participant);
+    });
   }
 
   public getParticipants(): Array<Participant> {

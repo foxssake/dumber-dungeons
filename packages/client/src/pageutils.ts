@@ -5,9 +5,12 @@ interface RenderPageOptions {
   title?: string;
 }
 
-export function renderPage(page: ReactNode, options: RenderPageOptions = {}): void {
+export function renderPage(
+  page: ReactNode,
+  options: RenderPageOptions = {}
+): void {
   const rootElement = document.querySelector('#root');
-  if(!rootElement) {
+  if (!rootElement) {
     throw new Error('Root element not found!');
   }
 
