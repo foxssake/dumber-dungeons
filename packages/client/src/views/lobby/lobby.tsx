@@ -78,29 +78,3 @@ function LobbyPage() {
 renderPage(<LobbyPage/>, {
   title: 'Dumber Dungeons - Lobby'
 });
-
-const dungeonClient = app.items.dungeonClient;
-[
-  () => dungeonClient.onParticipantJoin.emit( {
-    participant: { id: '0000', name: 'Foo', isReady: false }
-  }),
-  () => dungeonClient.onParticipantJoin.emit({
-    participant: { id: '000a', name: 'Bar', isReady: false }
-  }),
-  () => dungeonClient.onParticipantJoin.emit({
-    participant: { id: '0010', name: 'Quix', isReady: false }
-  }),
-
-  () => dungeonClient.onParticipantChange.emit({
-    participant: { id: '0000', name: 'Foo', isReady: true }
-  }),
-  () => dungeonClient.onParticipantChange.emit({
-    participant: { id: '000a', name: 'Baron', isReady: false }
-  }),
-  () => dungeonClient.onParticipantChange.emit({
-    participant: { id: '0010', name: 'Quix', isReady: true }
-  }),
-  () => dungeonClient.onParticipantChange.emit({
-    participant: { id: '000a', name: 'Baron', isReady: true }
-  }),
-].forEach((action, idx) => setTimeout(action, (1 + idx) * 1000));
