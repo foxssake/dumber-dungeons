@@ -1,4 +1,4 @@
-import { EventSource } from '@shared/event.source';
+import { EventEmitter } from '@shared/event.emitter';
 import type { Participant } from './participant';
 import type { Session } from './session';
 
@@ -12,65 +12,44 @@ export type ParticipantLeaveEvent = ParticipantEvent;
 
 export type EventHandler<T> = (data: T) => void;
 
-export class DungeonClient extends EventSource {
-  private session: Session | undefined;
+export class DungeonClient {
+  private session: Session;
 
-  public on(
-    event: 'lobby/join',
-    handler: EventHandler<ParticipantJoinEvent>
-  ): void;
-  public on(
-    event: 'lobby/change',
-    handler: EventHandler<ParticipantChangeEvent>
-  ): void;
-  public on(
-    event: 'lobby/leave',
-    handler: EventHandler<ParticipantLeaveEvent>
-  ): void;
-  public on(event: string, handler: Function): void {
-    super.on(event, handler);
-  }
+  public readonly onParticipantJoin = new EventEmitter<ParticipantJoinEvent>();
+  public readonly onParticipantChange = new EventEmitter<ParticipantChangeEvent>();
+  public readonly onParticipantLeave = new EventEmitter<ParticipantLeaveEvent>();
 
-  public emit(event: 'lobby/join', data: ParticipantJoinEvent): void;
-  public emit(event: 'lobby/change', data: ParticipantChangeEvent): void;
-  public emit(event: 'lobby/leave', data: ParticipantLeaveEvent): void;
-  public emit(event: string, ...data: Array<any>): void {
-    super.emit(event, ...data);
-  }
-
-  public constructor() {
-    super();
-
+  constructor() {
     this.session = {
       id: 'todo',
       participants: [],
     };
 
-    this.on('lobby/join', (data) => this.addParticipant(data.participant));
-    this.on('lobby/leave', (data) => this.removeParticipant(data.participant));
-    this.on('lobby/change', (data) => this.updateParticipant(data.participant));
+    this.onParticipantJoin.add(event => {this.addParticipant(event.participant);});
+    this.onParticipantChange.add(event => {this.updateParticipant(event.participant);});
+    this.onParticipantLeave.add(event => {this.removeParticipant(event.participant);});
   }
 
   public getParticipants(): Array<Participant> {
-    return [...(this.session?.participants ?? [])];
+    return [...this.session.participants];
   }
 
-  private addParticipant(participant: Participant) {
-    this.session?.participants.push(participant);
+  private addParticipant(participant: Participant): void {
+    this.session.participants.push(participant);
   }
 
-  private removeParticipant(participant: Participant) {
-    this.session!.participants = this.session!.participants.filter(
+  private removeParticipant(participant: Participant): void {
+    this.session.participants = this.session.participants.filter(
       (p) => p.id != participant.id
     );
   }
 
-  private updateParticipant(participant: Participant) {
-    const idx = this.session!.participants.findIndex(
+  private updateParticipant(participant: Participant): void {
+    const idx = this.session.participants.findIndex(
       (p) => p.id == participant.id
     );
 
     if (idx < 0) this.addParticipant(participant);
-    else this.session!.participants[idx] = participant;
+    else this.session.participants[idx] = participant;
   }
 }

@@ -99,7 +99,7 @@ async function build(): Promise<void> {
   }
 
   if (failedViews.length > 0) {
-    console.error('Failed building views:\n', failedViews.join('\n'));
+    console.error('Failed building views:\n', failedViews.map(view => `\t${  view.name}`).join('\n'));
   }
 }
 
@@ -114,7 +114,7 @@ if (isWatching) {
   console.log('Watching directories for changes:\n', watchPaths);
 
   process.on('beforeExit', () => {
-    watchers.forEach((watcher) => watcher.close());
+    watchers.forEach((watcher) => { watcher.close(); });
   });
 
   await build();

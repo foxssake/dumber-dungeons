@@ -68,9 +68,9 @@ function LobbyPage() {
   const sessionId = 'Sni3QJme';
   const [participants, setParticipants] = useState<Array<Participant>>([]);
 
-  dungeonClient.on('lobby/join', () => setParticipants(dungeonClient.getParticipants()));
-  dungeonClient.on('lobby/change', () => setParticipants(dungeonClient.getParticipants()));
-  dungeonClient.on('lobby/leave', () => setParticipants(dungeonClient.getParticipants()));
+  dungeonClient.onParticipantJoin.add(() => setParticipants(dungeonClient.getParticipants()));
+  dungeonClient.onParticipantChange.add(() => setParticipants(dungeonClient.getParticipants()));
+  dungeonClient.onParticipantLeave.add(() => setParticipants(dungeonClient.getParticipants()));
 
   return <Lobby sessionId={sessionId} participants={participants} />;
 }
@@ -81,26 +81,26 @@ renderPage(<LobbyPage/>, {
 
 const dungeonClient = app.items.dungeonClient;
 [
-  () => dungeonClient.emit('lobby/join', {
+  () => dungeonClient.onParticipantJoin.emit( {
     participant: { id: '0000', name: 'Foo', isReady: false }
   }),
-  () => dungeonClient.emit('lobby/join', {
+  () => dungeonClient.onParticipantJoin.emit({
     participant: { id: '000a', name: 'Bar', isReady: false }
   }),
-  () => dungeonClient.emit('lobby/join', {
+  () => dungeonClient.onParticipantJoin.emit({
     participant: { id: '0010', name: 'Quix', isReady: false }
   }),
 
-  () => dungeonClient.emit('lobby/change', {
+  () => dungeonClient.onParticipantChange.emit({
     participant: { id: '0000', name: 'Foo', isReady: true }
   }),
-  () => dungeonClient.emit('lobby/change', {
+  () => dungeonClient.onParticipantChange.emit({
     participant: { id: '000a', name: 'Baron', isReady: false }
   }),
-  () => dungeonClient.emit('lobby/change', {
+  () => dungeonClient.onParticipantChange.emit({
     participant: { id: '0010', name: 'Quix', isReady: true }
   }),
-  () => dungeonClient.emit('lobby/change', {
+  () => dungeonClient.onParticipantChange.emit({
     participant: { id: '000a', name: 'Baron', isReady: true }
   }),
 ].forEach((action, idx) => setTimeout(action, (1 + idx) * 1000));
