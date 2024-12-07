@@ -12,14 +12,12 @@ export type ParticipantChangeEvent = ParticipantEvent;
 export type ParticipantLeaveEvent = ParticipantEvent;
 
 export class DungeonClient {
-  public readonly onParticipantJoin =
-    new EventEmitter<ParticipantJoinEvent>();
+  public readonly onParticipantJoin = new EventEmitter<ParticipantJoinEvent>();
   public readonly onParticipantChange =
     new EventEmitter<ParticipantChangeEvent>();
   public readonly onParticipantLeave =
     new EventEmitter<ParticipantLeaveEvent>();
-
-  private session: Session;
+private session: Session;
   private socket: Socket;
 
   constructor(socket: Socket) {
@@ -39,9 +37,15 @@ export class DungeonClient {
   }
 
   private subscribeToSocket(): void {
-    this.socket.on('participant/join', (participant: Participant) => this.onParticipantJoin.emit({ participant }));
-    this.socket.on('participant/update', (participant: Participant) => this.onParticipantChange.emit({ participant }));
-    this.socket.on('participant/leave', (participant: Participant) => this.onParticipantLeave.emit({ participant }));
+    this.socket.on('participant/join', (participant: Participant) =>
+      { this.onParticipantJoin.emit({ participant }); }
+    );
+    this.socket.on('participant/update', (participant: Participant) =>
+      { this.onParticipantChange.emit({ participant }); }
+    );
+    this.socket.on('participant/leave', (participant: Participant) =>
+      { this.onParticipantLeave.emit({ participant }); }
+    );
   }
 
   private subscribeToEvents(): void {
