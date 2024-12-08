@@ -11,31 +11,31 @@ export class SessionService {
     private readonly idGenerator: IDGenerator
   ) {}
 
-  public create(): Session {
+  public async create(): Promise<Session> {
     const session: Session = {
       id: this.idGenerator.forSession(),
       status: SessionStatus.IN_LOBBY,
       participants: [],
     };
 
-    this.sessionDAO.save(session);
+    await this.sessionDAO.save(session);
 
     return session;
   }
 
-  public start(session: Session): Session {
+  public async start(session: Session): Promise<Session> {
     assert(
       session.status == SessionStatus.IN_LOBBY,
       "Session can only be started if it's already in lobby!"
     );
 
     session.status = SessionStatus.ACTIVE;
-    this.sessionDAO.save(session);
+    await this.sessionDAO.save(session);
 
     return session;
   }
 
-  public find(id: string): Session | undefined {
+  public find(id: string): Promise<Session | undefined> {
     return this.sessionDAO.find(id);
   }
 }

@@ -21,7 +21,7 @@ describe('SessionService', () => {
   });
 
   describe('create', () => {
-    it('should create session', () => {
+    it('should create session', async () => {
       // Given
       const expected: Session = {
         id: '0000',
@@ -30,7 +30,7 @@ describe('SessionService', () => {
       };
 
       // When
-      const actual = sessionService.create();
+      const actual = await sessionService.create();
 
       // Then
       expect(actual).toEqual(expected);
@@ -39,7 +39,7 @@ describe('SessionService', () => {
   });
 
   describe('start', () => {
-    it('should start session', () => {
+    it('should start session', async () => {
       // Given
       const session: Session = {
         id: '0000',
@@ -48,7 +48,7 @@ describe('SessionService', () => {
       };
 
       // When
-      const result = sessionService.start(session);
+      const result = await sessionService.start(session);
 
       // Then
       expect(result.status).toBe(SessionStatus.ACTIVE);
@@ -69,22 +69,22 @@ describe('SessionService', () => {
   });
 
   describe('find', () => {
-    it('should return known session', () => {
+    it('should return known session', async () => {
       // Given
-      const expected = sessionService.create();
-      sessionDao.find.returns(expected);
+      const expected = await sessionService.create();
+      sessionDao.find.returns(Promise.resolve(expected));
 
       // When
-      const actual = sessionService.find(expected.id);
+      const actual = await sessionService.find(expected.id);
 
       // Then
       expect(actual).toBe(expected);
       expect(sessionDao.find.calledWith(expected.id)).toBeTrue();
     });
 
-    it('should return undefined on unknown session', () => {
+    it('should return undefined on unknown session', async () => {
       // When
-      const result = sessionService.find('0000');
+      const result = await sessionService.find('0000');
 
       // Then
       expect(result).toBeUndefined();
