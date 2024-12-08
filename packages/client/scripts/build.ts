@@ -1,3 +1,5 @@
+/* eslint-disable import-x/no-nodejs-modules */
+
 import { watch } from 'fs';
 import { stat } from 'fs/promises';
 import { basename, dirname, join, relative, resolve } from 'path';

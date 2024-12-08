@@ -1,3 +1,5 @@
+/* eslint-disable import-x/no-nodejs-modules */
+
 import { Glob, type GlobScanOptions } from 'bun';
 import { join, resolve } from 'path';
 

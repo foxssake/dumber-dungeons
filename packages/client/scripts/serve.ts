@@ -1,3 +1,5 @@
+/* eslint-disable import-x/no-nodejs-modules */
+
 import { basename, join } from 'path';
 import { env } from 'process';
 import { globScan, publicDistRoot, viewRoot } from './shared';
