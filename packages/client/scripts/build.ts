@@ -1,4 +1,5 @@
 import { watch } from 'fs';
+import { stat } from 'fs/promises';
 import { basename, join, resolve } from 'path';
 import { Glob, type GlobScanOptions } from 'bun';
 
@@ -13,10 +14,9 @@ const templateData = await Bun.file(templatePath).text();
 const isWatching = process.argv.includes('--watch');
 
 interface View {
-  name: string;
-  path: string;
-  main: string;
-  tsxFiles: string[];
+  name: string,
+  path: string,
+  main: string,
 }
 
 async function globScan(
@@ -36,24 +36,23 @@ async function gatherViews(): Promise<Array<View>> {
   });
 
   for (const viewDir of viewDirectories) {
-    // Look for .tsx files
-    const tsxFiles = await globScan('*.tsx', { cwd: viewDir }).catch(() => []);
-
-    // Not a valid view
-    if (tsxFiles.length == 0) continue;
-
-    // Multiple pages per view
-    if (tsxFiles.length > 1)
-      console.warn('Multiple page files found for view!', viewDir);
-
     const viewName = basename(viewDir);
-    const mainFile = tsxFiles[0];
+    const mainFile = join(viewDir, viewName + '.tsx');
+
+    if(!(await stat(viewDir)).isDirectory()) {
+      // Not a view directory
+      continue
+    }
+
+    if (!await Bun.file(mainFile).exists()) {
+      console.error(`View '${viewName}' is missing page file '${mainFile}'! Skipping.`)
+      continue;
+    }
 
     views.push({
       name: viewName,
       path: viewDir,
       main: mainFile,
-      tsxFiles: tsxFiles,
     });
   }
 
@@ -80,7 +79,7 @@ async function build(): Promise<void> {
 
     // Bundle as JS
     const result = await Bun.build({
-      entrypoints: [join(view.path, view.main)],
+      entrypoints: [view.main],
       outdir: join(distRoot, 'public'),
       naming: `${view.name}.js`,
     });
