@@ -1,15 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { join, resolve } from 'path';
-
-const packageRoot = resolve(join(import.meta.dir, '../'));
-const projectRoot = resolve(join(packageRoot, '../../'));
-const distRoot = resolve(join(projectRoot, 'dist/'));
-
-const viewsRoot = join(distRoot, 'views');
+import { Inject, Injectable } from '@nestjs/common';
+import { join } from 'path';
 
 @Injectable()
 export class ViewService {
-  private viewsRoot: string = viewsRoot;
+  constructor(
+    @Inject('VIEWS_ROOT') private readonly viewsRoot: string
+  ) {}
 
   public async render(view: string): Promise<string> {
     return Bun.file(join(this.viewsRoot, `${view}.html`)).text();
