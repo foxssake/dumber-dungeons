@@ -1,7 +1,7 @@
 import { watch } from 'fs';
 import { stat } from 'fs/promises';
-import { basename, join, resolve } from 'path';
-import { Glob, type GlobScanOptions } from 'bun';
+import { basename, dirname, join, relative, resolve } from 'path';
+import { Glob, type BuildOutput, type GlobScanOptions } from 'bun';
 
 const packageRoot = resolve(join(import.meta.dir, '../'));
 const projectRoot = resolve(join(packageRoot, '../../'));
@@ -59,8 +59,7 @@ async function gatherViews(): Promise<Array<View>> {
   return views;
 }
 
-async function build(): Promise<void> {
-  // Copy assets
+async function copyAssets(): Promise<void> {
   const assets = await globScan('**/*', { cwd: publicRoot });
   await Promise.all(
     assets.map((asset: string) => ([
@@ -69,38 +68,51 @@ async function build(): Promise<void> {
     ]))
     .map(([sourcePath, targetPath]) => Bun.write(targetPath, Bun.file(sourcePath)))
   );
+}
+
+async function buildView(view: View): Promise<BuildOutput> {
+  console.log(`Building view '${view.name}'`);
+
+  // Bundle JS
+  const buildPath = join(distRoot, 'public', `${view.name}.js`);
+  const result = await Bun.build({
+    entrypoints: [view.main],
+    outdir: dirname(buildPath),
+    naming: basename(buildPath),
+  });
+
+  if (!result.success)
+    return result;
+
+  // Generate corresponding html
+  const templatePath = join(distRoot, 'views', `${view.name}.html`)
+  const mainPath = relative(join(distRoot, 'public'), buildPath);
+
+  const htmlData = templateData.replaceAll('{main}', mainPath);
+  await Bun.write(templatePath, htmlData);
+
+  return result;
+}
+
+async function build(): Promise<void> {
+  await copyAssets();
 
   // Render views
   const views = await gatherViews();
-  const failedViews = [];
+  const viewResults = (await Promise.all(views.map(buildView)))
+    .map((result, idx) => ({ view: views[idx], result }));
 
-  for (const view of views) {
-    console.log(`Building view '${view.name}'`);
-
-    // Bundle as JS
-    const result = await Bun.build({
-      entrypoints: [view.main],
-      outdir: join(distRoot, 'public'),
-      naming: `${view.name}.js`,
-    });
-
-    result.logs.forEach((log) => {
-      console.log(log);
-    });
-
-    if (!result.success) {
-      failedViews.push(view);
-      continue;
-    }
-
-    // Generate corresponding html
-    const htmlData = templateData.replaceAll('{main}', `${view.name}.js`);
-    await Bun.write(join(distRoot, 'views', `${view.name}.html`), htmlData);
-  }
-
-  if (failedViews.length > 0) {
-    console.error('Failed building views:\n', failedViews.map(view => view.name).join('\n'));
-  }
+  // Log results
+  viewResults.filter(({ result }) => result.success)
+    .forEach(({ view, result }) =>
+      console.log(`Successfully built "${view.name}":\n`, result.logs, '\n')
+    )
+  
+  // Log errors
+  viewResults.filter(({ result }) => !result.success)
+    .forEach(({ view, result }) =>
+      console.error(`Couldn't build "${view.name}"!\n`, result.logs, '\n')
+    )
 }
 
 if (isWatching) {
