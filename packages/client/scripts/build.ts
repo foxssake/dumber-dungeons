@@ -63,12 +63,13 @@ async function gatherViews(): Promise<Array<View>> {
 async function build(): Promise<void> {
   // Copy assets
   const assets = await globScan('**/*', { cwd: publicRoot });
-  assets.forEach((asset) => {
-    const sourcePath = join(publicRoot, asset);
-    const targetPath = join(distRoot, 'public', asset);
-
-    void Bun.write(targetPath, Bun.file(sourcePath));
-  });
+  await Promise.all(
+    assets.map((asset: string) => ([
+      join(publicRoot, asset),
+      join(distRoot, 'public', asset)
+    ]))
+    .map(([sourcePath, targetPath]) => Bun.write(targetPath, Bun.file(sourcePath)))
+  );
 
   // Render views
   const views = await gatherViews();
