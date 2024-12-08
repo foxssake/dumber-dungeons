@@ -18,25 +18,25 @@ const otherEmployee: Employee = {
 
 describe('BaseDao', () => {
   describe('find', () => {
-    it('should return item', () => {
+    it('should return item', async () => {
       // Given
       const dao = new BaseDAO<Employee, string>();
-      dao.save(employee);
+      await dao.save(employee);
 
       // When
-      const result = dao.find('0000');
+      const result = await dao.find('0000');
 
       // Then
       expect(result).toBe(employee);
     });
 
-    it('should return undefined', () => {
+    it('should return undefined', async () => {
       // Given
       const dao = new BaseDAO<Employee, string>();
-      dao.save(employee);
+      await dao.save(employee);
 
       // When
-      const result = dao.find('0208');
+      const result = await dao.find('0208');
 
       // Then
       expect(result).toBeUndefined();
@@ -44,25 +44,25 @@ describe('BaseDao', () => {
   });
 
   describe('has', () => {
-    it('should return true', () => {
+    it('should return true', async () => {
       // Given
       const dao = new BaseDAO<Employee, string>();
-      dao.save(employee);
+      await dao.save(employee);
 
       // When
-      const result = dao.has('0000');
+      const result = await dao.has('0000');
 
       // Then
       expect(result).toBeTrue();
     });
 
-    it('should return false', () => {
+    it('should return false', async () => {
       // Given
       const dao = new BaseDAO<Employee, string>();
-      dao.save(employee);
+      await dao.save(employee);
 
       // When
-      const result = dao.has('0208');
+      const result = await dao.has('0208');
 
       // Then
       expect(result).toBeFalse();
@@ -70,52 +70,52 @@ describe('BaseDao', () => {
   });
 
   describe('delete', () => {
-    it('should return true on known item', () => {
+    it('should return true on known item', async () => {
       // Given
       const dao = new BaseDAO<Employee, string>();
-      dao.save(employee);
+      await dao.save(employee);
 
       // When
-      const result = dao.delete('0000');
+      const result = await dao.delete('0000');
 
       // Then
       expect(result).toBeTrue();
-      expect(dao.has('0000')).toBeFalse();
+      expect(await dao.has('0000')).toBeFalse();
     });
 
-    it('should return false on unknown item', () => {
+    it('should return false on unknown item', async () => {
       // Given
       const dao = new BaseDAO<Employee, string>();
-      dao.save(employee);
+      await dao.save(employee);
 
       // When
-      const result = dao.delete('0208');
+      const result = await dao.delete('0208');
 
       // Then
       expect(result).toBeFalse();
-      expect(dao.has('0208')).toBeFalse();
+      expect(await dao.has('0208')).toBeFalse();
     });
   });
 
   describe('list', () => {
-    it('should return empty list', () => {
+    it('should return empty list', async () => {
       // Given
       const dao = new BaseDAO<Employee, string>();
 
       // When
-      const result = dao.list();
+      const result = await dao.list();
 
       // Then
       expect(result).toBeEmpty();
     });
 
-    it('should return all items', () => {
+    it('should return all items', async () => {
       // Given
       const dao = new BaseDAO<Employee, string>();
-      dao.save(employee, otherEmployee);
+      await dao.save(employee, otherEmployee);
 
       // When
-      const result = dao.list();
+      const result = await dao.list();
 
       // Then
       expect(result).toEqual([employee, otherEmployee]);

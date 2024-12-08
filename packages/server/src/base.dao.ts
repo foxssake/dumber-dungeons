@@ -5,25 +5,25 @@ interface Identifiable<T> {
 export class BaseDAO<T extends Identifiable<K>, K> {
   private data = new Map<K, T>();
 
-  public save(...items: Array<T>): void {
+  public async save(...items: Array<T>): Promise<void> {
     for (const item of items) {
       this.data.set(item.id, item);
     }
   }
 
-  public find(id: K): T | undefined {
+  public async find(id: K): Promise<T | undefined> {
     return this.data.get(id);
   }
 
-  public has(id: K): boolean {
+  public async has(id: K): Promise<boolean> {
     return this.data.has(id);
   }
 
-  public delete(id: K): boolean {
+  public async delete(id: K): Promise<boolean> {
     return this.data.delete(id);
   }
 
-  public list(): Array<T> {
+  public async list(): Promise<Array<T>> {
     return [...this.data.values()];
   }
 }
