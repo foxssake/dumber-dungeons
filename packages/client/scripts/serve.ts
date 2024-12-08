@@ -1,22 +1,8 @@
 import { basename, join, resolve } from 'path';
-import { Glob, type GlobScanOptions } from 'bun';
 import { env } from 'process';
-
-const packageRoot = resolve(join(import.meta.dir, '../'));
-const projectRoot = resolve(join(packageRoot, '../../'));
-const distRoot = resolve(join(projectRoot, 'dist'));
-const viewRoot = resolve(join(distRoot, 'views'));
-const publicRoot = resolve(join(distRoot, 'public'));
+import { globScan, publicDistRoot, viewRoot } from './shared';
 
 const port = env.PORT ?? 3000;
-
-async function globScan(
-  pattern: string,
-  options: GlobScanOptions = {}
-): Promise<Array<string>> {
-  const glob = new Glob(pattern);
-  return Array.fromAsync(glob.scan(options));
-}
 
 // List views
 const views = (await globScan('*.html', { cwd: viewRoot })).map((path) =>
@@ -51,7 +37,7 @@ Bun.serve({
     }
 
     // Check if asset exists
-    const asset = Bun.file(join(publicRoot, url.pathname));
+    const asset = Bun.file(join(publicDistRoot, url.pathname));
     if (await asset.exists()) {
       return new Response(asset);
     }

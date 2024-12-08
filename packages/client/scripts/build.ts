@@ -1,13 +1,9 @@
 import { watch } from 'fs';
 import { stat } from 'fs/promises';
 import { basename, dirname, join, relative, resolve } from 'path';
-import { Glob, type BuildOutput, type GlobScanOptions } from 'bun';
+import { type BuildOutput } from 'bun';
+import { distRoot, globScan, packageRoot, publicDistRoot, publicRoot, srcRoot, viewRoot } from './shared';
 
-const packageRoot = resolve(join(import.meta.dir, '../'));
-const projectRoot = resolve(join(packageRoot, '../../'));
-const srcRoot = resolve(join(packageRoot, 'src'));
-const publicRoot = resolve(join(packageRoot, 'public'));
-const distRoot = resolve(join(projectRoot, 'dist'));
 const templatePath = resolve(join(packageRoot, 'src/views/template.html'));
 const templateData = await Bun.file(templatePath).text();
 
@@ -17,14 +13,6 @@ interface View {
   name: string,
   path: string,
   main: string,
-}
-
-async function globScan(
-  pattern: string,
-  options: GlobScanOptions = {}
-): Promise<Array<string>> {
-  const glob = new Glob(pattern);
-  return Array.fromAsync(glob.scan(options));
 }
 
 async function gatherViews(): Promise<Array<View>> {
@@ -85,9 +73,11 @@ async function buildView(view: View): Promise<BuildOutput> {
     return result;
 
   // Generate corresponding html
-  const templatePath = join(distRoot, 'views', `${view.name}.html`)
-  const mainPath = relative(join(distRoot, 'public'), buildPath);
+  const templatePath = join(viewRoot, `${view.name}.html`)
+  const mainPath = relative(publicDistRoot, buildPath);
 
+  // Usually there's only one `{main}` reference per template, but pays to be
+  // prepared
   const htmlData = templateData.replaceAll('{main}', mainPath);
   await Bun.write(templatePath, htmlData);
 
