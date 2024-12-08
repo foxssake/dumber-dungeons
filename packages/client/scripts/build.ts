@@ -2,7 +2,15 @@ import { watch } from 'fs';
 import { stat } from 'fs/promises';
 import { basename, dirname, join, relative, resolve } from 'path';
 import { type BuildOutput } from 'bun';
-import { distRoot, globScan, packageRoot, publicDistRoot, publicRoot, srcRoot, viewRoot } from './shared';
+import {
+  distRoot,
+  globScan,
+  packageRoot,
+  publicDistRoot,
+  publicRoot,
+  srcRoot,
+  viewRoot,
+} from './shared';
 
 const templatePath = resolve(join(packageRoot, 'src/views/template.html'));
 const templateData = await Bun.file(templatePath).text();
@@ -10,9 +18,9 @@ const templateData = await Bun.file(templatePath).text();
 const isWatching = process.argv.includes('--watch');
 
 interface View {
-  name: string,
-  path: string,
-  main: string,
+  name: string;
+  path: string;
+  main: string;
 }
 
 async function gatherViews(): Promise<Array<View>> {
@@ -25,15 +33,17 @@ async function gatherViews(): Promise<Array<View>> {
 
   for (const viewDir of viewDirectories) {
     const viewName = basename(viewDir);
-    const mainFile = join(viewDir, viewName + '.tsx');
+    const mainFile = join(viewDir, `${viewName}.tsx`);
 
-    if(!(await stat(viewDir)).isDirectory()) {
+    if (!(await stat(viewDir)).isDirectory()) {
       // Not a view directory
-      continue
+      continue;
     }
 
-    if (!await Bun.file(mainFile).exists()) {
-      console.error(`View '${viewName}' is missing page file '${mainFile}'! Skipping.`)
+    if (!(await Bun.file(mainFile).exists())) {
+      console.error(
+        `View '${viewName}' is missing page file '${mainFile}'! Skipping.`
+      );
       continue;
     }
 
@@ -50,11 +60,14 @@ async function gatherViews(): Promise<Array<View>> {
 async function copyAssets(): Promise<void> {
   const assets = await globScan('**/*', { cwd: publicRoot });
   await Promise.all(
-    assets.map((asset: string) => ([
-      join(publicRoot, asset),
-      join(distRoot, 'public', asset)
-    ]))
-    .map(([sourcePath, targetPath]) => Bun.write(targetPath, Bun.file(sourcePath)))
+    assets
+      .map((asset: string) => [
+        join(publicRoot, asset),
+        join(distRoot, 'public', asset),
+      ])
+      .map(([sourcePath, targetPath]) =>
+        Bun.write(targetPath, Bun.file(sourcePath))
+      )
   );
 }
 
@@ -69,17 +82,16 @@ async function buildView(view: View): Promise<BuildOutput> {
     naming: basename(buildPath),
   });
 
-  if (!result.success)
-    return result;
+  if (!result.success) return result;
 
   // Generate corresponding html
-  const templatePath = join(viewRoot, `${view.name}.html`)
+  const templateWritePath = join(viewRoot, `${view.name}.html`);
   const mainPath = relative(publicDistRoot, buildPath);
 
   // Usually there's only one `{main}` reference per template, but pays to be
   // prepared
   const htmlData = templateData.replaceAll('{main}', mainPath);
-  await Bun.write(templatePath, htmlData);
+  await Bun.write(templateWritePath, htmlData);
 
   return result;
 }
@@ -89,20 +101,23 @@ async function build(): Promise<void> {
 
   // Render views
   const views = await gatherViews();
-  const viewResults = (await Promise.all(views.map(buildView)))
-    .map((result, idx) => ({ view: views[idx], result }));
+  const viewResults = (await Promise.all(views.map(buildView))).map(
+    (result, idx) => ({ view: views[idx], result })
+  );
 
   // Log results
-  viewResults.filter(({ result }) => result.success)
-    .forEach(({ view, result }) =>
-      console.log(`Successfully built "${view.name}":\n`, result.logs, '\n')
-    )
-  
+  viewResults
+    .filter(({ result }) => result.success)
+    .forEach(({ view, result }) => {
+      console.log(`Successfully built "${view.name}":\n`, result.logs, '\n');
+    });
+
   // Log errors
-  viewResults.filter(({ result }) => !result.success)
-    .forEach(({ view, result }) =>
-      console.error(`Couldn't build "${view.name}"!\n`, result.logs, '\n')
-    )
+  viewResults
+    .filter(({ result }) => !result.success)
+    .forEach(({ view, result }) => {
+      console.error(`Couldn't build "${view.name}"!\n`, result.logs, '\n');
+    });
 }
 
 if (isWatching) {
