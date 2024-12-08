@@ -99,7 +99,7 @@ async function build(): Promise<void> {
   }
 
   if (failedViews.length > 0) {
-    console.error('Failed building views:\n', failedViews.join('\n'));
+    console.error('Failed building views:\n', failedViews.map(view => view.name).join('\n'));
   }
 }
 
@@ -111,8 +111,6 @@ if (isWatching) {
   process.on('beforeExit', () => {
     watcher.close();
   });
-
-  await build();
-} else {
-  await build();
 }
+
+await build();
