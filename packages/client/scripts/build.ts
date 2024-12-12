@@ -14,7 +14,7 @@ const writeHtml = async (sourcePath: string): Promise<void> => {
   const htmlText = htmlTemplate.replaceAll('{main}', relativePath);
 
   await Bun.write(htmlPath, htmlText);
-}
+};
 
 const build = async (): Promise<void> => {
   const response = await Bun.build({
