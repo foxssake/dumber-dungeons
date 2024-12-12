@@ -6,6 +6,10 @@ import {
 import baseConfig from '../shared/eslint.config.mjs'
 
 export default mergeConfigs(
-  {},
-  baseConfig
+  baseConfig,
+  {
+    rules: {
+      'import-x/no-nodejs-modules': 'off'
+    }
+  }
 )
