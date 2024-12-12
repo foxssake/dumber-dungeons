@@ -1,38 +1,25 @@
 import { watch } from 'fs';
-import { join, relative, resolve } from 'path';
-import { Glob } from 'bun';
+import html from 'bun-plugin-html';
 
-const projectRoot = resolve(join(import.meta.dir, '../'));
-const srcRoot = resolve(join(projectRoot, '/src'));
-const targetDir = resolve(join(projectRoot, 'public/dist'))
+const build = async (): Promise<void> => {
+  const response = await Bun.build({
+    entrypoints: ['src/index.tsx'],
+    outdir: 'dist',
+    plugins: [html()],
+  });
+  if(response.success)
+    console.log('succesfully done at', new Date().toISOString());
+  else
+    console.log(response.logs);
+};
 
-const isWatching = process.argv.includes('--watch')
-
-async function build() {
-  const glob = new Glob('views/**/*.tsx');
-  const pages = (await Array.fromAsync(glob.scan({ cwd: srcRoot, absolute: true })))
-    .map(path => relative(projectRoot, path));
-
-  console.log('Found pages\n', pages.map(path => '\t' + path).join('\n'))
-
-  const result = await Bun.build({
-    entrypoints: pages,
-    outdir: targetDir,
-    plugins: []
-  })
-
-  result.logs.forEach(log => console.log(log))
-}
-
+const isWatching = process.argv.includes('--watch');
 
 if (isWatching) {
-  const watcher = watch(srcRoot, { recursive: true }, () => build())
-  console.log(`Watching "${srcRoot}" for changes...`)
-  build()
-
+  const watcher = watch('./src', { recursive: true }, () => void build());
+  console.log('Watching "src" for changes...');
   process.on('beforeExit', () => {
-    watcher.close()
-  })
-} else {
-  await build();
+    watcher.close();
+  });
 }
+await build();

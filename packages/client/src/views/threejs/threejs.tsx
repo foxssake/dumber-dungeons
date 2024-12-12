@@ -1,13 +1,9 @@
 import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
-import { createRoot } from 'react-dom/client';
 import FPSCounter from './fps-counter';
 import { ThreeJSPrototype } from './threejs-prototype';
 
-const root = createRoot(document.getElementById('root') as HTMLDivElement);
-root.render(<ThreeJS />);
-
-function ThreeJS(): JSX.Element {
+export function ThreeJS(): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fpsRef = useRef<HTMLDivElement>(null);
   const fpsCounter = new FPSCounter(128);
@@ -23,7 +19,7 @@ function ThreeJS(): JSX.Element {
   setInterval(() => {
     if (fpsRef.current)
       fpsRef.current.innerText = `${Math.round(fpsCounter.averageFps).toFixed(0)}fps`;
-  }, 0.1);
+  }, 100);
 
   return (
     <div>
