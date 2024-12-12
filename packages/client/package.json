@@ -7,7 +7,7 @@
   "scripts": {
     "build": "bun scripts/build.ts",
     "build:dev": "bun scripts/build.ts --watch",
-    "serve": "bunx http-server",
+    "serve": "bunx http-server dist/",
     "start": "concurrently \"bun run build\" \"bun run serve\"",
     "start:dev": "concurrently \"bun run build:dev\" \"bun run serve\"",
     "test": "bun test src",
