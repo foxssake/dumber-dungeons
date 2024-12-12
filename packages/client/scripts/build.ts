@@ -1,12 +1,13 @@
 import { watch } from 'fs';
-import html from 'bun-plugin-html';
 
 const build = async (): Promise<void> => {
   const response = await Bun.build({
     entrypoints: ['src/index.tsx'],
     outdir: 'dist',
-    plugins: [html()],
+    plugins: [],
   });
+  // TODO: remove logs
+  console.log(response);
   if(response.success)
     console.log('succesfully done at', new Date().toISOString());
   else

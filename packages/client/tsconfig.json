@@ -12,6 +12,10 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "#src/*": ["./src/*"],
+      "#assets/*": ["./public/assets/*"]
+    }
   }
 }

@@ -2,10 +2,8 @@ import * as three from 'three';
 import DummyWalker from './dummy-walker';
 import FPSCounter, { type milliseconds } from './fps-counter';
 import { vec2 } from './vec2';
-// eslint-disable-next-line no-restricted-imports
-import necromantPng from '../../../public/assets/necromant.png';
-// eslint-disable-next-line no-restricted-imports
-import rockTilePng from '../../../public/assets/rock-tile.png';
+import necromantPng from '#assets/necromant.png';
+import rockTilePng from '#assets/rock-tile.png';
 
 const TAU = Math.PI * 2;
 
