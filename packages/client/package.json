@@ -21,7 +21,6 @@
     "lint:inspect": "eslint --inspect-config"
   },
   "dependencies": {
-    "bun-plugin-html": "^2.2.4",
     "iti": "^0.7.0",
     "iti-react": "^0.7.0",
     "react": "19.0.0-rc.1",
