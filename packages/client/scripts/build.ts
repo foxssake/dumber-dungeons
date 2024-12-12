@@ -1,38 +1,50 @@
 import { watch } from 'fs';
-import { join, relative, resolve } from 'path';
-import { Glob } from 'bun';
+import { basename, dirname, extname, join, relative, resolve } from 'path';
 
-const projectRoot = resolve(join(import.meta.dir, '../'));
-const srcRoot = resolve(join(projectRoot, '/src'));
-const targetDir = resolve(join(projectRoot, 'public/dist'))
+const packageDir = resolve(join(dirname(import.meta.path), '..'));
+const distDir = resolve(join(packageDir, 'dist'));
 
-const isWatching = process.argv.includes('--watch')
+const htmlTemplate = await Bun.file(
+  join(packageDir, 'src/template.html')
+).text();
 
-async function build() {
-  const glob = new Glob('views/**/*.tsx');
-  const pages = (await Array.fromAsync(glob.scan({ cwd: srcRoot, absolute: true })))
-    .map(path => relative(projectRoot, path));
+const writeHtml = async (builtEntryPath: string): Promise<void> => {
+  const relativePath = relative(distDir, builtEntryPath);
+  const entryName = basename(builtEntryPath, extname(builtEntryPath));
 
-  console.log('Found pages\n', pages.map(path => '\t' + path).join('\n'))
+  const htmlPath = join(dirname(builtEntryPath), `${entryName}.html`);
+  const htmlText = htmlTemplate.replaceAll('{scriptPath}', relativePath);
 
-  const result = await Bun.build({
-    entrypoints: pages,
-    outdir: targetDir,
-    plugins: []
-  })
+  await Bun.write(htmlPath, htmlText);
+};
 
-  result.logs.forEach(log => console.log(log))
-}
+const build = async (): Promise<void> => {
+  const response = await Bun.build({
+    entrypoints: ['src/index.tsx'],
+    outdir: distDir,
+    plugins: [],
+  });
 
+  if (response.success)
+    console.log('succesfully done at', new Date().toISOString());
+  else console.log(response.logs);
+
+  await Promise.all(
+    response.outputs
+      .filter((output) => output.kind == 'entry-point')
+      .map((entryPoint) => writeHtml(entryPoint.path))
+  ).catch((e: unknown) => {
+    console.log('Could not write html files:', e);
+  });
+};
+
+const isWatching = process.argv.includes('--watch');
 
 if (isWatching) {
-  const watcher = watch(srcRoot, { recursive: true }, () => build())
-  console.log(`Watching "${srcRoot}" for changes...`)
-  build()
-
+  const watcher = watch('./src', { recursive: true }, () => void build());
+  console.log('Watching "src" for changes...');
   process.on('beforeExit', () => {
-    watcher.close()
-  })
-} else {
-  await build();
+    watcher.close();
+  });
 }
+await build();

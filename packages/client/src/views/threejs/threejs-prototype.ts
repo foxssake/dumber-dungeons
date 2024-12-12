@@ -2,6 +2,8 @@ import * as three from 'three';
 import DummyWalker from './dummy-walker';
 import FPSCounter, { type milliseconds } from './fps-counter';
 import { vec2 } from './vec2';
+import necromantPng from '#assets/necromant.png';
+import rockTilePng from '#assets/rock-tile.png';
 
 const TAU = Math.PI * 2;
 
@@ -109,10 +111,8 @@ export class ThreeJSPrototype {
     // Load resources
     const textureLoader = new three.TextureLoader();
 
-    this.necromantTexture = await textureLoader.loadAsync(
-      '/assets/necromant.png'
-    );
-    this.rockTexture = await textureLoader.loadAsync('/assets/rock-tile.png');
+    this.necromantTexture = await textureLoader.loadAsync(necromantPng);
+    this.rockTexture = await textureLoader.loadAsync(rockTilePng);
 
     this.necromantTexture.magFilter = three.NearestFilter;
     this.necromantTexture.colorSpace = three.SRGBColorSpace;
