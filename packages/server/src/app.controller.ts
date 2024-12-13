@@ -1,14 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
-import { ViewService } from './view.service';
+import ContentService from './content.service';
 
 @Controller()
 export class AppController {
   constructor(
-    private readonly viewService: ViewService
+    private readonly contentService: ContentService
   ) {}
 
   @Get()
   public getIndex(): Promise<string> {
-    return this.viewService.render('index');
+    return this.contentService.serveSPA();
   }
 }
