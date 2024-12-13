@@ -3,9 +3,9 @@ import { join, resolve } from 'path';
 
 const packageRoot = resolve(join(import.meta.dir, '../../'));
 const projectRoot = resolve(join(packageRoot, '../../'));
-const distRoot = resolve(join(projectRoot, 'dist/'));
+const distRoot = resolve(join(projectRoot, 'packages', 'client', 'dist'));
 
-const viewsRoot = join(distRoot, 'views');
+const viewsRoot = distRoot;
 
 @Module({
   providers: [

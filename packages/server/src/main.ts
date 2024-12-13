@@ -6,12 +6,12 @@ import { Logger } from '@nestjs/common';
 
 const logger = new Logger('bootstrap');
 
-const packageRoot = resolve(join(import.meta.dir, '../'));
-const projectRoot = resolve(join(packageRoot, '../../'));
-const distRoot = resolve(join(projectRoot, 'dist/'));
+const packageRoot = resolve(join(import.meta.dir, '../../'));
+const projectRoot = resolve(join(packageRoot, '../'));
+const distRoot = resolve(join(projectRoot, 'packages', 'client', 'dist'));
 
-const viewsRoot = join(distRoot, 'views');
-const staticRoot = join(distRoot, 'public');
+const viewsRoot = distRoot;
+const staticRoot = distRoot;
 
 async function bootstrap(): Promise<void> {
   const app: NestExpressApplication = await NestFactory.create(AppModule);

@@ -6,6 +6,11 @@ export class ViewService {
   constructor(@Inject('VIEWS_ROOT') private readonly viewsRoot: string) {}
 
   public async render(view: string): Promise<string> {
-    return Bun.file(join(this.viewsRoot, `${view}.html`)).text();
+    try {
+      return await Bun.file(join(this.viewsRoot, `${view}.html`)).text();
+    } catch (e) {
+      console.error('Failed to read view file', join(this.viewsRoot, `${view}.html`), e);
+      throw e;
+    }
   }
 }
