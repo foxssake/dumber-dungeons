@@ -8,7 +8,8 @@
     "lint": "bun --filter '*' lint",
     "lint:inspect": "eslint -c packages/shared/eslint.config.mjs --inspect-config"
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": ["packages/*"],
+  "devDependencies": {
+    "shared": "workspace:./packages/shared"
+  }
 }
