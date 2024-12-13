@@ -15,11 +15,12 @@
     "test:cov": "bun test src --coverage",
     "test:debug": "bun test src --inspect-brk",
     "test:e2e": "bun test test/e2e",
-    "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "lint": "eslint . --fix",
-    "lint:inspect": "eslint --inspect-config",
-    "type-check": "tsc"
+    "lint:check": "eslint .",
+    "type:check": "tsc",
+    "format:fix": "prettier . --write",
+    "lint:fix": "eslint . --fix",
+    "lint:inspect": "eslint --inspect-config"
   },
   "dependencies": {
     "iti": "^0.7.0",

@@ -8,11 +8,12 @@
     "test:watch": "bun test src --watch",
     "test:cov": "bun test src --coverage",
     "test:debug": "bun test src --inspect-brk",
-    "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "lint": "eslint . --fix",
-    "lint:inspect": "eslint --inspect-config",
-    "type-check": "tsc"
+    "lint:check": "eslint .",
+    "type:check": "tsc",
+    "format:fix": "prettier . --write",
+    "lint:fix": "eslint . --fix",
+    "lint:inspect": "eslint --inspect-config"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",

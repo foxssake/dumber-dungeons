@@ -14,11 +14,12 @@
     "test:cov": "bun test test/spec --coverage",
     "test:debug": "bun test test/spec --inspect-brk",
     "test:e2e": "bun test test/e2e",
-    "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "lint": "eslint . --fix",
-    "lint:inspect": "eslint --inspect-config",
-    "type-check": "tsc"
+    "lint:check": "eslint .",
+    "type:check": "tsc",
+    "format:fix": "prettier . --write",
+    "lint:fix": "eslint . --fix",
+    "lint:inspect": "eslint --inspect-config"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",

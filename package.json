@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "format": "bun --filter '*' format",
     "format:check": "bun --filter '*' format:check",
-    "lint": "bun --filter '*' lint",
-    "lint:inspect": "eslint -c packages/shared/eslint.config.mjs --inspect-config",
-    "type-check": "bun --filter '*' type-check"
+    "lint:check": "bun --filter '*' lint:check",
+    "type:check": "bun --filter '*' type:check",
+    "format:fix": "bun --filter '*' format:fix",
+    "lint:fix": "bun --filter '*' lint:fix",
+    "lint:inspect": "eslint -c packages/shared/eslint.config.mjs --inspect-config"
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
