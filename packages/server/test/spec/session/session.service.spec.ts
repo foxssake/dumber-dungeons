@@ -81,7 +81,7 @@ describe('SessionService', () => {
       ).toBeTrue();
     });
 
-    it('should not join unknown session', async () => {
+    it('should not join unknown session', () => {
       // Given
       const session: Session = {
         id: '0000',
@@ -95,7 +95,7 @@ describe('SessionService', () => {
       expect(async () => await sessionService.join(session)).toThrow();
     });
 
-    it('should not join non-lobby session', async () => {
+    it('should not join non-lobby session', () => {
       // Given
       const session: Session = {
         id: '0000',
