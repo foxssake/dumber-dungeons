@@ -25,7 +25,7 @@
   "dependencies": {
     "iti": "^0.7.0",
     "iti-react": "^0.7.0",
-    "react": "19.0.0-rc.1",
+    "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "three": "^0.170.0",
     "shared": "workspace:*"
