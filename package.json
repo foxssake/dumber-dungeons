@@ -8,7 +8,8 @@
     "type:check": "bun --filter '*' type:check",
     "format:fix": "bun --filter '*' format:fix",
     "lint:fix": "bun --filter '*' lint:fix",
-    "lint:inspect": "eslint -c packages/shared/eslint.config.mjs --inspect-config"
+    "lint:inspect": "eslint -c packages/shared/eslint.config.mjs --inspect-config",
+    "all:check": "bun type:check && bun format:check && bun lint:check"
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
