@@ -1,11 +1,18 @@
 // @ts-check
 
 import { config as mergeConfigs } from 'typescript-eslint';
-// eslint-disable-next-line no-restricted-imports
-import sharedConfig from '../shared/eslint.config.mjs';
+import sharedConfig from 'shared/eslint.config.mjs';
 
-export default mergeConfigs(sharedConfig, {
-  rules: {
-    'import-x/no-nodejs-modules': 'off',
+export default mergeConfigs(
+  sharedConfig,
+  {
+    // TODO: ignorePatterns: [] i.e. dist, localization, etc
+    // https://github.com/eslint/eslint/discussions/17429#discussioncomment-6579229
+    ignores: ['dist/', 'public'],
   },
-});
+  {
+    rules: {
+      'import-x/no-nodejs-modules': 'off',
+    },
+  }
+);

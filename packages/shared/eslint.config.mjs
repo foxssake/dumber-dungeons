@@ -10,11 +10,6 @@ import eslintPluginImportX from 'eslint-plugin-import-x';
 import * as prettierConfig from 'eslint-config-prettier';
 
 export default mergeConfigs(
-  {
-    // TODO: ignorePatterns: [] i.e. dist, localization, etc
-    // https://github.com/eslint/eslint/discussions/17429#discussioncomment-6579229
-    ignores: ['public/build/'],
-  },
   js.configs.recommended,
   ...tsConfigs.strictTypeChecked,
   eslintPluginImportX.flatConfigs.recommended,
