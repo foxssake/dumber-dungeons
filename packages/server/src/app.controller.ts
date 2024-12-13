@@ -3,9 +3,7 @@ import ContentService from './content.service';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly contentService: ContentService
-  ) {}
+  constructor(private readonly contentService: ContentService) {}
 
   @Get()
   public getIndex(): Promise<string> {

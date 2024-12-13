@@ -12,9 +12,12 @@ const distRoot = resolve(join(projectRoot, 'packages', 'client', 'dist'));
 @Module({
   imports: [SessionModule],
   controllers: [AppController],
-  providers: [AppService, {
-    provide: ContentService,
-    useValue: new ContentService(distRoot)
-  }],
+  providers: [
+    AppService,
+    {
+      provide: ContentService,
+      useValue: new ContentService(distRoot),
+    },
+  ],
 })
 export class AppModule {}

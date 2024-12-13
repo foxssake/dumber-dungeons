@@ -1,7 +1,7 @@
-import { join } from "path";
+import { join } from 'path';
 
 export default class ContentService {
-  constructor (private readonly root: string) {}
+  constructor(private readonly root: string) {}
 
   public getStaticAssetRoot(): string {
     return this.root;
