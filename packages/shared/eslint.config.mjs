@@ -15,6 +15,11 @@ export default mergeConfigs(
   eslintPluginImportX.flatConfigs.recommended,
   eslintPluginImportX.flatConfigs.typescript,
   {
+    // TODO: ignorePatterns: [] i.e. dist, localization, etc
+    // https://github.com/eslint/eslint/discussions/17429#discussioncomment-6579229
+    ignores: ['dist/', 'public'],
+  },
+  {
     files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
     languageOptions: {
       parser: tsParser,
