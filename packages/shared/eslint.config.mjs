@@ -135,13 +135,11 @@ export default mergeConfigs(
     ...prettierConfig.rules,
   },
   {
-    files: [
-      '**/*.module.ts',
-    ],
+    files: ['**/*.module.ts'],
     rules: {
       // nest.js modules are marked by empty classes with annotations
-      '@typescript-eslint/no-extraneous-class': 'off'
-    }
+      '@typescript-eslint/no-extraneous-class': 'off',
+    },
   },
   {
     files: [
