@@ -7,9 +7,9 @@ import type { Participant } from './participant';
 import { ParticipantDAO } from './participant.dao';
 
 export interface JoinSessionOptions {
-  name?: string,
-  isDisplay?: boolean
-};
+  name?: string;
+  isDisplay?: boolean;
+}
 
 @Injectable()
 export class SessionService {
@@ -31,7 +31,10 @@ export class SessionService {
     return session;
   }
 
-  public async join(session: Session, options?: JoinSessionOptions): Promise<Participant> {
+  public async join(
+    session: Session,
+    options?: JoinSessionOptions
+  ): Promise<Participant> {
     assert(await this.hasSession(session), 'Unknown session!');
 
     assert(
@@ -45,7 +48,7 @@ export class SessionService {
       name: options?.name ?? '',
       isReady: false,
       isDisplay: options?.isDisplay ?? false,
-      authToken: this.idGenerator.forAuth()
+      authToken: this.idGenerator.forAuth(),
     };
     await this.participantDAO.save(participant);
 

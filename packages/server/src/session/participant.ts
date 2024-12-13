@@ -1,7 +1,7 @@
 export interface Participant {
-  name: string,
-  id: string,
-  isReady: boolean,
-  isDisplay: boolean,
-  authToken: string
+  name: string;
+  id: string;
+  isReady: boolean;
+  isDisplay: boolean;
+  authToken: string;
 }

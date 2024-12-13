@@ -19,9 +19,11 @@ export class SessionController {
   }
 
   @Post('/:id/participants')
-  public async joinSession(@Param('id') id: string): Promise<Participant | undefined> {
+  public async joinSession(
+    @Param('id') id: string
+  ): Promise<Participant | undefined> {
     const session = await this.sessionService.find(id);
-    const participant = session && await this.sessionService.join(session);
+    const participant = session && (await this.sessionService.join(session));
     return participant;
   }
 }

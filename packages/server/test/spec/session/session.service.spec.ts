@@ -4,20 +4,28 @@ import { createStubInstance, type SinonStubbedInstance } from 'sinon';
 import { SessionDAO } from 'src/session/session.dao';
 import { SessionService } from 'src/session/session.service';
 import { IDGenerator } from 'src/utils/id.generator';
+import { ParticipantDAO } from 'src/session/participant.dao';
+import type { Participant } from 'src/session/participant';
 
 describe('SessionService', () => {
   let sessionDao: SinonStubbedInstance<SessionDAO>;
+  let participantDao: SinonStubbedInstance<ParticipantDAO>;
   let idGenerator: SinonStubbedInstance<IDGenerator>;
   let sessionService: SessionService;
 
   beforeEach(() => {
     sessionDao = createStubInstance(SessionDAO);
+    participantDao = createStubInstance(ParticipantDAO);
 
     idGenerator = createStubInstance(IDGenerator, {
       forSession: '0000',
     });
 
-    sessionService = new SessionService(sessionDao, idGenerator);
+    sessionService = new SessionService(
+      sessionDao,
+      participantDao,
+      idGenerator
+    );
   });
 
   describe('create', () => {
@@ -38,6 +46,70 @@ describe('SessionService', () => {
     });
   });
 
+  describe('join', () => {
+    it('should add participant', async () => {
+      // Given
+      const session: Session = {
+        id: '0000',
+        status: SessionStatus.IN_LOBBY,
+        participants: [],
+      };
+
+      const expected: Participant = {
+        id: 'p0000',
+        name: 'Foo',
+        isDisplay: true,
+        isReady: false,
+        authToken: 'a0000',
+      };
+
+      idGenerator.forParticipant.returns('p0000');
+      idGenerator.forAuth.returns('a0000');
+      sessionDao.has.withArgs('0000').returns(Promise.resolve(true));
+
+      // When
+      const actual = await sessionService.join(session, {
+        name: 'Foo',
+        isDisplay: true,
+      });
+
+      // Then
+      expect(actual).toEqual(expected);
+      expect(participantDao.save.calledWith(expected)).toBeTrue();
+      expect(
+        sessionDao.save.calledWith({ ...session, participants: [expected] })
+      ).toBeTrue();
+    });
+
+    it('should not join unknown session', async () => {
+      // Given
+      const session: Session = {
+        id: '0000',
+        status: SessionStatus.IN_LOBBY,
+        participants: [],
+      };
+
+      sessionDao.has.withArgs('0000').returns(Promise.resolve(false));
+
+      // When + Then
+      expect(async () => await sessionService.join(session)).toThrow();
+    });
+
+    it('should not join non-lobby session', async () => {
+      // Given
+      const session: Session = {
+        id: '0000',
+        status: SessionStatus.ACTIVE,
+        participants: [],
+      };
+
+      sessionDao.has.withArgs('0000').returns(Promise.resolve(true));
+
+      // When + Then
+      expect(async () => await sessionService.join(session)).toThrow();
+    });
+  });
+
   describe('start', () => {
     it('should start session', async () => {
       // Given
@@ -46,6 +118,7 @@ describe('SessionService', () => {
         status: SessionStatus.IN_LOBBY,
         participants: [],
       };
+      sessionDao.has.withArgs(session.id).returns(Promise.resolve(true));
 
       // When
       const result = await sessionService.start(session);
