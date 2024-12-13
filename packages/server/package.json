@@ -14,9 +14,9 @@
     "test:cov": "bun test test/spec --coverage",
     "test:debug": "bun test test/spec --inspect-brk",
     "test:e2e": "bun test test/e2e",
-    "format": "prettier --write \"{src,test}/**/*.ts\"",
-    "format:check": "prettier \"{src,test}/**/*.ts\"",
-    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "lint": "eslint . --fix",
     "lint:inspect": "eslint --inspect-config"
   },
   "devDependencies": {
@@ -55,5 +55,4 @@
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
   }
-
 }
