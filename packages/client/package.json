@@ -18,7 +18,8 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "lint": "eslint . --fix",
-    "lint:inspect": "eslint --inspect-config"
+    "lint:inspect": "eslint --inspect-config",
+    "type-check": "tsc"
   },
   "dependencies": {
     "iti": "^0.7.0",
