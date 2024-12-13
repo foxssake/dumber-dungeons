@@ -12,5 +12,11 @@
     "format:check": "prettier \"{src,test}/**/*.ts\"",
     "lint": "eslint \"{src,test}/**/*.ts\" --fix",
     "lint:inspect": "eslint --inspect-config"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import-x": "^4.5.0",
+    "typescript-eslint": "^8.18.0"
   }
 }
