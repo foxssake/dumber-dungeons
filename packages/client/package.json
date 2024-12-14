@@ -21,7 +21,6 @@
     "lint:inspect": "eslint --inspect-config"
   },
   "dependencies": {
-    "@dumber-dungeons/shared": "workspace:*",
     "iti": "^0.7.0",
     "iti-react": "^0.7.0",
     "qrcode": "^1.5.4",

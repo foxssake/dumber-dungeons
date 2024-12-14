@@ -1,4 +1,4 @@
-import { EventEmitter } from '@shared/event.emitter';
+import { EventEmitter } from '@dumber-dungeons/shared';
 import type { Participant } from './participant';
 import type { Session } from './session';
 import type { Socket } from 'socket.io-client';

@@ -1,9 +1,6 @@
 {
   "name": "dumber-dungeons",
   "version": "0.0.1",
-  "devDependencies": {
-    "concurrently": "^9.1.0"
-  },
   "private": true,
   "scripts": {
     "start": "concurrently \"bun --cwd packages/client build\" \"bun --cwd packages/server start\"",
@@ -15,5 +12,9 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "@dumber-dungeons/shared": "workspace:./packages/shared",
+    "concurrently": "^9.1.0"
+  }
 }
