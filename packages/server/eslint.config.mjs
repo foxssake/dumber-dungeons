@@ -1,12 +1,12 @@
 // @ts-check
 
-import { dev } from '@dumber-dungeons/shared';
 import {
   config as mergeConfigs,
 } from 'typescript-eslint';
+import baseConfig from '../shared/eslint.config.mjs'
 
 export default mergeConfigs(
-  dev.eslintConfig,
+  baseConfig,
   {
     rules: {
       'import-x/no-nodejs-modules': 'off'

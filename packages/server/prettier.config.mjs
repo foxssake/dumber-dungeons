@@ -1,10 +1,9 @@
 // @ts-check
 
-import { dev } from "@dumber-dungeons/shared";
-
+import baseConfig from '../shared/prettier.config.mjs'
 
 export default Object.assign(
-  dev.prettierConfig,
+  baseConfig,
   {
     // Overrides here
   }

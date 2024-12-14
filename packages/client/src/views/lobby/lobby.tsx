@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { renderPage } from "../../pageutils"
 import * as QR from 'qrcode';
 import { app } from "../../app";
 import type { Participant } from "../../participant";
@@ -9,10 +8,10 @@ function JoinLobby(props: { sessionId: string }) {
   const link = linkService.joinLobby(props.sessionId).toString();
   const [qrData, setQrData] = useState<string>();
 
-  QR.toDataURL(link).then(setQrData);
+  QR.toDataURL(link, { width: 512 }).then(setQrData);
 
   return (
-    <div className="lobby__panel">
+    <div className="lobby panel">
       <p>
         <img src={qrData} />
       </p>
@@ -58,7 +57,7 @@ function Lobby(props: { sessionId: string, participants: Array<Participant>}) {
   )
 }
 
-function LobbyPage() {
+export function LobbyPage() {
   const dungeonClient = app.items.dungeonClient;
   const sessionId = 'Sni3QJme';
   const [participants, setParticipants] = useState<Array<Participant>>([]);
@@ -70,7 +69,3 @@ function LobbyPage() {
 
   return <Lobby sessionId={sessionId} participants={participants} />;
 }
-
-renderPage(<LobbyPage/>, {
-  title: 'Dumber Dungeons - Lobby'
-});
