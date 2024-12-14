@@ -12,4 +12,13 @@ export class EventEmitter<T> {
       handler(event);
     });
   }
+
+  public remove(handler: EventHandler<T>): boolean {
+    const handlerIdx = this.handlers.indexOf(handler);
+    if (handlerIdx < 0)
+      return false;
+
+    this.handlers.splice(handlerIdx, 1);
+    return true;
+  }
 }

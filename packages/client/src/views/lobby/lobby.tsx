@@ -7,14 +7,9 @@ import type { Participant } from "../../participant";
 function JoinLobby(props: { sessionId: string }) {
   const linkService = app.items.linkService
   const link = linkService.joinLobby(props.sessionId).toString();
-  const [qrData, setQrData] = useState('foo');
+  const [qrData, setQrData] = useState<string>();
 
-  QR.toString(link).then(svg => {
-    const encodedData = btoa(svg);
-    const dataUrl = `data:image/svg+xml;base64,${encodedData}`;
-
-    setQrData(dataUrl);
-  });
+  QR.toDataURL(link).then(setQrData);
 
   return (
     <div className="lobby__panel">
@@ -30,7 +25,7 @@ function JoinLobby(props: { sessionId: string }) {
 
 function LobbyParticipants(props: { participants: Array<Participant> }) {
   return (
-    <div className="lobby__panel">
+    <div className="lobby panel">
       Participants
       <table>
         <thead>
@@ -45,7 +40,7 @@ function LobbyParticipants(props: { participants: Array<Participant> }) {
             <tr key={participant.id}>
               <td>#{idx + 1}</td>
               <td>{participant.name}</td>
-              <td>{participant.isReady ? '✔️' : '❌'}</td>
+              <td>{participant.isReady ? '✅' : '❎'}</td>
             </tr>
           ))}
         </tbody>
@@ -56,7 +51,7 @@ function LobbyParticipants(props: { participants: Array<Participant> }) {
 
 function Lobby(props: { sessionId: string, participants: Array<Participant>}) {
   return (
-    <div className="lobby">
+    <div className="lobby main">
       <JoinLobby sessionId={props.sessionId} />
       <LobbyParticipants participants={props.participants}/>
     </div>
@@ -68,9 +63,10 @@ function LobbyPage() {
   const sessionId = 'Sni3QJme';
   const [participants, setParticipants] = useState<Array<Participant>>([]);
 
-  dungeonClient.onParticipantJoin.add(() => setParticipants(dungeonClient.getParticipants()));
-  dungeonClient.onParticipantChange.add(() => setParticipants(dungeonClient.getParticipants()));
-  dungeonClient.onParticipantLeave.add(() => setParticipants(dungeonClient.getParticipants()));
+  const refreshParticipants = () => setParticipants(dungeonClient.getParticipants());
+  dungeonClient.onParticipantJoin.add(refreshParticipants);
+  dungeonClient.onParticipantChange.add(refreshParticipants);
+  dungeonClient.onParticipantLeave.add(refreshParticipants);
 
   return <Lobby sessionId={sessionId} participants={participants} />;
 }

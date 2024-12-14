@@ -47,14 +47,14 @@ canvas {
 
 /* Lobby */
 
-.lobby {
+.lobby .main {
   width: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.lobby__panel {
+.lobby .panel {
   background-color: rgba(0,0,0, .25);
   border: 2px solid white;
   border-radius: 2em;
