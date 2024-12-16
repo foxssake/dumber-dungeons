@@ -13,6 +13,6 @@
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
-    "shared": "workspace:./packages/shared"
+    "@dumber-dungeons/shared": "workspace:./packages/shared"
   }
 }

@@ -56,6 +56,6 @@
     "nanoid": "^5.0.9",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
-    "shared": "workspace:*"
+    "@dumber-dungeons/shared": "workspace:*"
   }
 }
