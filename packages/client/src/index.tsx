@@ -1,6 +1,3 @@
-import 'react';
-import { ThreeJS } from './views/threejs/threejs.tsx';
-import { renderPage } from './pageutils.ts';
-import { LobbyPage } from './views/lobby/lobby.tsx';
+import { app } from "./app";
 
-renderPage(<LobbyPage />);
+app.items.router.render(new URL(window.location.href));
