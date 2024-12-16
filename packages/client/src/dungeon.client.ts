@@ -1,6 +1,5 @@
-import { EventEmitter } from '@dumber-dungeons/shared';
-import type { Participant } from './participant';
-import type { Session } from './session';
+import { EventEmitter } from '@dumber-dungeons/shared/src/event.emitter';
+import { type Session, SessionStatus, type Participant } from '@dumber-dungeons/shared/src/api';
 import type { Socket } from 'socket.io-client';
 
 interface ParticipantEvent {
@@ -25,6 +24,7 @@ private session: Session;
 
     this.session = {
       id: '',
+      status: SessionStatus.IN_LOBBY,
       participants: [],
     };
 

@@ -1,4 +1,4 @@
-import type { Participant } from "./participant";
+import type { Participant } from './participant';
 
 export enum SessionStatus {
   IN_LOBBY,

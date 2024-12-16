@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState } from 'react';
 import * as QR from 'qrcode';
-import { app } from "../../app";
-import type { Participant } from "../../participant";
+import { app } from '../../app';
+import type { Participant } from '@dumber-dungeons/shared/src/api';
 
 function JoinLobby(props: { sessionId: string }) {
-  const linkService = app.items.linkService
+  const linkService = app.items.linkService;
   const link = linkService.joinLobby(props.sessionId).toString();
   const [qrData, setQrData] = useState<string>();
 
@@ -19,7 +19,7 @@ function JoinLobby(props: { sessionId: string }) {
         Join at: <a href={link}>{link}</a>
       </p>
     </div>
-  )
+  );
 }
 
 function LobbyParticipants(props: { participants: Array<Participant> }) {
@@ -54,7 +54,7 @@ function Lobby(props: { sessionId: string, participants: Array<Participant>}) {
       <JoinLobby sessionId={props.sessionId} />
       <LobbyParticipants participants={props.participants}/>
     </div>
-  )
+  );
 }
 
 export function LobbyPage() {
@@ -62,7 +62,7 @@ export function LobbyPage() {
   const sessionId = 'Sni3QJme';
   const [participants, setParticipants] = useState<Array<Participant>>([]);
 
-  const refreshParticipants = () => setParticipants(dungeonClient.getParticipants());
+  const refreshParticipants = () => { setParticipants(dungeonClient.getParticipants()); };
   dungeonClient.onParticipantJoin.add(refreshParticipants);
   dungeonClient.onParticipantChange.add(refreshParticipants);
   dungeonClient.onParticipantLeave.add(refreshParticipants);

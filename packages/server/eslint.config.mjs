@@ -3,7 +3,7 @@
 import {
   config as mergeConfigs,
 } from 'typescript-eslint';
-import baseConfig from '../shared/eslint.config.mjs'
+import baseConfig from '@dumber-dungeons/shared/eslint.config.mjs'
 
 export default mergeConfigs(
   baseConfig,
