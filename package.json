@@ -9,7 +9,8 @@
     "format:fix": "bun --filter '*' format:fix",
     "lint:fix": "bun --filter '*' lint:fix",
     "lint:inspect": "eslint -c packages/shared/eslint.config.mjs --inspect-config",
-    "all:check": "bun type:check && bun format:check && bun lint:check"
+    "client:build": "bun --filter ./packages/client build",
+    "all:check": "bun type:check && bun format:check && bun lint:check && bun client:build"
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
