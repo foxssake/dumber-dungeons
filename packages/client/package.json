@@ -15,10 +15,10 @@
     "test:cov": "bun test src --coverage",
     "test:debug": "bun test src --inspect-brk",
     "test:e2e": "bun test test/e2e",
-    "format:check": "prettier . --check",
+    "format:check": "prettier . --check --ignore-path ../../.gitignore",
     "lint:check": "eslint .",
     "type:check": "tsc",
-    "format:fix": "prettier . --write",
+    "format:fix": "prettier . --write --ignore-path ../../.gitignore",
     "lint:fix": "eslint . --fix",
     "lint:inspect": "eslint --inspect-config"
   },
