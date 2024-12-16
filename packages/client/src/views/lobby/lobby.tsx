@@ -1,52 +1,8 @@
-import { useState } from 'react';
-import * as QR from 'qrcode';
-import { app } from '../../app';
 import type { Participant } from '@dumber-dungeons/shared/src/api';
-
-function JoinLobby(props: { sessionId: string }) {
-  const linkService = app.items.linkService;
-  const link = linkService.joinLobby(props.sessionId).toString();
-  const [qrData, setQrData] = useState<string>();
-
-  QR.toDataURL(link, { width: 512 }).then(setQrData);
-
-  return (
-    <div className="lobby panel">
-      <p>
-        <img src={qrData} />
-      </p>
-      <p>
-        Join at: <a href={link}>{link}</a>
-      </p>
-    </div>
-  );
-}
-
-function LobbyParticipants(props: { participants: Array<Participant> }) {
-  return (
-    <div className="lobby panel">
-      Participants
-      <table>
-        <thead>
-          <tr>
-            <td>#</td>
-            <td>Name</td>
-            <td>Ready?</td>
-          </tr>
-        </thead>
-        <tbody>
-          {props.participants.map((participant, idx) => (
-            <tr key={participant.id}>
-              <td>#{idx + 1}</td>
-              <td>{participant.name}</td>
-              <td>{participant.isReady ? '✅' : '❎'}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+import { LobbyParticipants } from './lobby.participants';
+import { JoinLobby } from './join.lobby.pane';
+import { app } from '#src/app';
+import { useState } from 'react';
 
 function Lobby(props: { sessionId: string, participants: Array<Participant>}) {
   return (
