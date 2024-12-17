@@ -15,8 +15,8 @@ export default mergeConfigs(
   eslintPluginImportX.flatConfigs.recommended,
   eslintPluginImportX.flatConfigs.typescript,
   {
-    // TODO: ignorePatterns: [] i.e. dist, localization, etc
     // https://github.com/eslint/eslint/discussions/17429#discussioncomment-6579229
+    // here we can add global ignore patterns for localization or other generated files later
     ignores: ['dist/', 'public'],
   },
   {
