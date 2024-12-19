@@ -1,6 +1,6 @@
 import { Controller, Get, Optional } from '@nestjs/common';
 import { indexPath as defaultIndexPath } from './root.paths';
-import { frontendRoutes } from '@dumber-dungeons/shared/src/api/endpoints';
+import { frontendRoutes } from '@dumber-dungeons/shared/src/api/frontend.routes';
 
 @Controller()
 export class FrontendController {
