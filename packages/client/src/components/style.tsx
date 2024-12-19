@@ -1,0 +1,21 @@
+import { useEffect, type JSX } from "react";
+
+/**
+* Component to include a stylesheet.
+*
+* Can be used from anywhere in the DOM tree, will always append to <head>.
+*/
+export function Style(props: { href: string }): JSX.Element {
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = props.href;
+    document.head.appendChild(link);
+
+    return () => {
+      link.remove();
+    }
+  }, [props.href]);
+
+  return (<></>);
+}
