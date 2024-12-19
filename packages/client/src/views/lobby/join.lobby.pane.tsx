@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import * as QR from 'qrcode';
-import { app } from '../../app';
+import { app } from '#src/app';
 
 export function JoinLobby(props: { sessionId: string }) {
   const linkService = app.items.linkService;
