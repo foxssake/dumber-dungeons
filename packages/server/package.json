@@ -56,7 +56,6 @@
     "@nestjs/platform-express": "^10.0.0",
     "nanoid": "^5.0.9",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1",
-    "@dumber-dungeons/shared": "workspace:*"
+    "rxjs": "^7.8.1"
   }
 }
