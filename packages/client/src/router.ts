@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-export interface PageOptions {
+export type PageOptions = {
   title?: string;
   cssPaths?: Array<string>;
 }
 
-export interface Route {
+export type Route = {
   prefix: string;
   component: ReactNode;
   options?: PageOptions;

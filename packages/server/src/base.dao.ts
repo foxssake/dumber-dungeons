@@ -1,4 +1,4 @@
-interface Identifiable<T> {
+type Identifiable<T> = {
   id: T;
 }
 
