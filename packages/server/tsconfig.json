@@ -1,5 +1,5 @@
 {
-  "extends": "../shared/tsconfig.json",
+  "extends": "@dumber-dungeons/shared/tsconfig.json",
   "compilerOptions": {
     // nest.js
     "sourceMap": true,
