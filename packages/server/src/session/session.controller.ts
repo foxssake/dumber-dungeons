@@ -22,8 +22,8 @@ export class SessionController {
   }
 
   @Get('/:id')
-  public getSession(@Param('id') id: string): Promise<Session | undefined> {
-    const session = this.sessionService.find(id);
+  public async getSession(@Param('id') id: string): Promise<Session> {
+    const session = await this.sessionService.find(id);
     verify(session, new HttpException('Unknown session', HttpStatus.NOT_FOUND));
     return session;
   }
