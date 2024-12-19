@@ -50,12 +50,12 @@
     "typescript-eslint": "^8.13.0"
   },
   "dependencies": {
+    "@dumber-dungeons/shared": "workspace:*",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "nanoid": "^5.0.9",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1",
-    "@dumber-dungeons/shared": "workspace:*"
+    "rxjs": "^7.8.1"
   }
 }

@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { SessionDAO } from './session.dao';
-import { type Session, SessionStatus } from './session';
+import {
+  type Session,
+  SessionStatus,
+} from '@dumber-dungeons/shared/src/api/session';
 import assert from 'node:assert';
 import { IDGenerator } from 'src/utils/id.generator';
-import type { Participant } from './participant';
 import { verify } from '@dumber-dungeons/shared/src/verify';
+import type { Participant } from '@dumber-dungeons/shared/src/api/participant';
 
 export type JoinSessionOptions = {
   name?: string;
