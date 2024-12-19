@@ -25,4 +25,3 @@ export function JoinLobby(props: { sessionId: string }) {
     </div>
   );
 }
-

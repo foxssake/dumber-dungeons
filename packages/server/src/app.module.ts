@@ -6,5 +6,4 @@ import { FrontendController } from './frontend.controller';
   imports: [SessionModule],
   controllers: [FrontendController],
 })
-export class AppModule {
-}
+export class AppModule {}

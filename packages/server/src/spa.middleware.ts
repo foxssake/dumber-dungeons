@@ -21,7 +21,6 @@ export default class SPAMiddleware implements NestMiddleware {
   }
 
   private isSPAPath(path: string): boolean {
-    return path === '/' ||
-            path.startsWith('/lobby');
+    return path === '/' || path.startsWith('/lobby');
   }
 }

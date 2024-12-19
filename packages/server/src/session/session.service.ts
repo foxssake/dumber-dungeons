@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { SessionDAO } from './session.dao';
-import { type  Session, SessionStatus } from '@dumber-dungeons/shared/src/api';
+import { type Session, SessionStatus } from '@dumber-dungeons/shared/src/api';
 import assert from 'node:assert';
 import { IDGenerator } from 'src/utils/id.generator';
 import type { Participant } from './participant';

@@ -8,8 +8,7 @@ export class LinkService {
   public parseLobby(url: URL): string | undefined {
     const parts = url.pathname.split('/').slice(1);
 
-    if (parts.length < 2 || parts[0] !== 'lobby')
-      return undefined;
+    if (parts.length < 2 || parts[0] !== 'lobby') return undefined;
 
     return parts[1];
   }

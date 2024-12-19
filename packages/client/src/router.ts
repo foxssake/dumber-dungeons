@@ -1,15 +1,15 @@
-import type { ReactNode } from "react"
-import { createRoot } from "react-dom/client";
+import type { ReactNode } from 'react';
+import { createRoot } from 'react-dom/client';
 
 export interface PageOptions {
-  title?: string,
-  cssPaths?: Array<string>
+  title?: string;
+  cssPaths?: Array<string>;
 }
 
 export interface Route {
-  prefix: string,
-  component: ReactNode,
-  options?: PageOptions
+  prefix: string;
+  component: ReactNode;
+  options?: PageOptions;
 }
 
 export class Router {
@@ -17,34 +17,41 @@ export class Router {
   private notFoundRoute: Route | undefined;
   private globalStylesheets: Array<string> = [];
 
-  public withRoute(prefix: string, component: ReactNode, options?: PageOptions): Router {
+  public withRoute(
+    prefix: string,
+    component: ReactNode,
+    options?: PageOptions
+  ): this {
     this.routes.push({
-      prefix, component, options
-    })
+      prefix,
+      component,
+      options,
+    });
 
     // Sort routes by prefix length, descending
     // This ensures that always the most specific routes are evaluated first
-    this.routes.sort((a, b) => b.prefix.length - a.prefix.length)
+    this.routes.sort((a, b) => b.prefix.length - a.prefix.length);
     return this;
   }
 
-  public withNotFound(component: ReactNode, options?: PageOptions): Router {
+  public withNotFound(component: ReactNode, options?: PageOptions): this {
     this.notFoundRoute = {
       prefix: '',
-      component, options
+      component,
+      options,
     };
     return this;
   }
 
-  public withGlobalStylesheet(...stylePaths: Array<string>): Router {
-    stylePaths.forEach(stylePath => this.globalStylesheets.push(stylePath));
+  public withGlobalStylesheet(...stylePaths: Array<string>): this {
+    stylePaths.forEach((stylePath) => this.globalStylesheets.push(stylePath));
     return this;
   }
 
   public render(url: URL): void {
     const route = this.findRouteFor(url);
     const options = route.options ?? {};
-    
+
     // Apply document title
     document.title = options.title ?? document.title;
 
@@ -52,9 +59,9 @@ export class Router {
     this.clearStylesheets();
 
     [...this.globalStylesheets, ...(options.cssPaths ?? [])]
-      .map(stylePath => this.makeStyleLink(stylePath))
-      .forEach(link => document.head.appendChild(link));
-    
+      .map((stylePath) => this.makeStyleLink(stylePath))
+      .forEach((link) => document.head.appendChild(link));
+
     // Render root
     const rootElement = this.ensureRoot();
     const root = createRoot(rootElement);
@@ -62,11 +69,11 @@ export class Router {
   }
 
   private findRouteFor(url: URL): Route {
-    const route = this.routes.find(route => url.pathname.startsWith(route.prefix)) ??
+    const route =
+      this.routes.find((route) => url.pathname.startsWith(route.prefix)) ??
       this.notFoundRoute;
 
-    if (!route)
-      throw new Error('Unknown route: ' + url);
+    if (!route) throw new Error(`Unknown route: ${  url}`);
 
     return route;
   }
@@ -80,14 +87,13 @@ export class Router {
   }
 
   private clearStylesheets(): void {
-    document.head.querySelectorAll('link').forEach(link => link.remove());
+    document.head.querySelectorAll('link').forEach((link) => { link.remove(); });
   }
 
   private ensureRoot(): Element {
     const root = document.querySelector('#root');
 
-    if (root)
-      return root;
+    if (root) return root;
 
     const div = document.createElement('div');
     div.id = 'root';

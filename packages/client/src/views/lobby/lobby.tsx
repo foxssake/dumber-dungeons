@@ -6,13 +6,16 @@ import { useState } from 'react';
 
 export function LobbyPage() {
   const dungeonClient = app.items.dungeonClient;
-  const sessionId = app.items.linkService.parseLobby(new URL(window.location.href));
-  if (!sessionId)
-    throw new Error('Missing sessionId!');
+  const sessionId = app.items.linkService.parseLobby(
+    new URL(window.location.href)
+  );
+  if (!sessionId) throw new Error('Missing sessionId!');
 
   const [participants, setParticipants] = useState<Array<Participant>>([]);
 
-  const refreshParticipants = () => { setParticipants(dungeonClient.getParticipants()); };
+  const refreshParticipants = () => {
+    setParticipants(dungeonClient.getParticipants());
+  };
   dungeonClient.onParticipantJoin.add(refreshParticipants);
   dungeonClient.onParticipantChange.add(refreshParticipants);
   dungeonClient.onParticipantLeave.add(refreshParticipants);
@@ -20,7 +23,7 @@ export function LobbyPage() {
   return (
     <div className="lobby main">
       <JoinLobby sessionId={sessionId} />
-      <LobbyParticipants participants={participants}/>
+      <LobbyParticipants participants={participants} />
     </div>
   );
 }

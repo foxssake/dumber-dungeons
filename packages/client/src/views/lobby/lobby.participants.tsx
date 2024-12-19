@@ -1,4 +1,4 @@
-import type { Participant } from "@dumber-dungeons/shared/src/api";
+import type { Participant } from '@dumber-dungeons/shared/src/api';
 
 export function LobbyParticipants(props: { participants: Array<Participant> }) {
   return (
@@ -25,4 +25,3 @@ export function LobbyParticipants(props: { participants: Array<Participant> }) {
     </div>
   );
 }
-

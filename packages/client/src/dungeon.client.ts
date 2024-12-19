@@ -1,5 +1,9 @@
 import { EventEmitter } from '@dumber-dungeons/shared/src/event.emitter';
-import { type Session, SessionStatus, type Participant } from '@dumber-dungeons/shared/src/api';
+import {
+  type Session,
+  SessionStatus,
+  type Participant,
+} from '@dumber-dungeons/shared/src/api';
 import type { Socket } from 'socket.io-client';
 
 interface ParticipantEvent {
@@ -16,7 +20,7 @@ export class DungeonClient {
     new EventEmitter<ParticipantChangeEvent>();
   public readonly onParticipantLeave =
     new EventEmitter<ParticipantLeaveEvent>();
-private session: Session;
+  private session: Session;
   private socket: Socket;
 
   constructor(socket: Socket) {
@@ -37,15 +41,15 @@ private session: Session;
   }
 
   private subscribeToSocket(): void {
-    this.socket.on('participant/join', (participant: Participant) =>
-      { this.onParticipantJoin.emit({ participant }); }
-    );
-    this.socket.on('participant/update', (participant: Participant) =>
-      { this.onParticipantChange.emit({ participant }); }
-    );
-    this.socket.on('participant/leave', (participant: Participant) =>
-      { this.onParticipantLeave.emit({ participant }); }
-    );
+    this.socket.on('participant/join', (participant: Participant) => {
+      this.onParticipantJoin.emit({ participant });
+    });
+    this.socket.on('participant/update', (participant: Participant) => {
+      this.onParticipantChange.emit({ participant });
+    });
+    this.socket.on('participant/leave', (participant: Participant) => {
+      this.onParticipantLeave.emit({ participant });
+    });
   }
 
   private subscribeToEvents(): void {

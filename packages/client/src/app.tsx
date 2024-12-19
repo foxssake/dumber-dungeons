@@ -11,8 +11,9 @@ import globalStyle from './views/style.css';
 export const app = createContainer()
   .add({ linkService: new LinkService(new URL(window.location.origin)) })
   .add({ dungeonClient: new DungeonClient(io()) })
-  .add({ router: new Router()
-    .withGlobalStylesheet(globalStyle)
-    .withRoute('/', (<ThreeJS />), { title: 'Dumber Dungeons' })
-    .withRoute('/lobby', (<LobbyPage />), { title: 'Dumber Dungeons - Lobby' })
+  .add({
+    router: new Router()
+      .withGlobalStylesheet(globalStyle)
+      .withRoute('/', <ThreeJS />, { title: 'Dumber Dungeons' })
+      .withRoute('/lobby', <LobbyPage />, { title: 'Dumber Dungeons - Lobby' }),
   });
