@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'bun:test';
-import { SessionStatus, type Session } from 'src/session/session';
+import { SessionStatus, type Session } from '@dumber-dungeons/shared/src/api';
 import { createStubInstance, type SinonStubbedInstance } from 'sinon';
 import { SessionDAO } from 'src/session/session.dao';
 import { SessionService } from 'src/session/session.service';
