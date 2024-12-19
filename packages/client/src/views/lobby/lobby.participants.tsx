@@ -1,6 +1,9 @@
 import type { Participant } from '@dumber-dungeons/shared/src/api/participant';
+import type { JSX } from 'react';
 
-export function LobbyParticipants(props: { participants: Array<Participant> }) {
+export function LobbyParticipants(props: {
+  participants: Array<Participant>;
+}): JSX.Element {
   return (
     <div className="lobby panel">
       Participants

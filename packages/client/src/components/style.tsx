@@ -1,10 +1,10 @@
-import { useEffect, type JSX } from "react";
+import { useEffect, type JSX } from 'react';
 
 /**
-* Component to include a stylesheet.
-*
-* Can be used from anywhere in the DOM tree, will always append to <head>.
-*/
+ * Component to include a stylesheet.
+ *
+ * Can be used from anywhere in the DOM tree, will always append to <head>.
+ */
 export function Style(props: { href: string }): JSX.Element {
   useEffect(() => {
     const link = document.createElement('link');
@@ -12,10 +12,10 @@ export function Style(props: { href: string }): JSX.Element {
     link.href = props.href;
     document.head.appendChild(link);
 
-    return () => {
+    return (): void => {
       link.remove();
-    }
+    };
   }, [props.href]);
 
-  return (<></>);
+  return <></>;
 }

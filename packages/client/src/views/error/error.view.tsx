@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import type { JSX } from 'react';
 
 export function ErrorView(props: { error: Error }): JSX.Element {
   return (

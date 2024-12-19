@@ -4,7 +4,12 @@ import {
   SessionStatus,
 } from '@dumber-dungeons/shared/src/api/session';
 import { type Participant } from '@dumber-dungeons/shared/src/api/participant';
-import { type ParticipantChangeEvent, type ParticipantJoinEvent, type ParticipantLeaveEvent, type SocketEventMap } from '@dumber-dungeons/shared/src/api/socket.events';
+import {
+  type ParticipantChangeEvent,
+  type ParticipantJoinEvent,
+  type ParticipantLeaveEvent,
+  type SocketEventMap,
+} from '@dumber-dungeons/shared/src/api/socket.events';
 import type { Socket } from 'socket.io-client';
 
 export class DungeonClient {

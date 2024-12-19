@@ -1,5 +1,5 @@
 export const frontendRoutes = {
   index: '/',
   lobby: '/lobby/:id',
-  join: '/join/:id'
+  join: '/join/:id',
 };

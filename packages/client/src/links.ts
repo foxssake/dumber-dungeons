@@ -1,4 +1,4 @@
-import { generatePath } from "react-router";
+import { generatePath } from 'react-router';
 
 export function generateLink(path: string, params: object): string {
   const resultURL = new URL(window.location.href);
