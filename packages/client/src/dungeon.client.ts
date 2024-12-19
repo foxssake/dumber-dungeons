@@ -2,8 +2,8 @@ import { EventEmitter } from '@dumber-dungeons/shared/src/event.emitter';
 import {
   type Session,
   SessionStatus,
-  type Participant,
-} from '@dumber-dungeons/shared/src/api';
+} from '@dumber-dungeons/shared/src/api/session';
+import { type Participant } from '@dumber-dungeons/shared/src/api/participant';
 import { type ParticipantChangeEvent, type ParticipantJoinEvent, type ParticipantLeaveEvent, type SocketEventMap } from '@dumber-dungeons/shared/src/api/socket.events';
 import type { Socket } from 'socket.io-client';
 

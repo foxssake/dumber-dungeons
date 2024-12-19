@@ -7,9 +7,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { SessionService } from './session.service';
-import type { Participant } from './participant';
 import { verify } from '@dumber-dungeons/shared/src/verify';
 import { type Session } from '@dumber-dungeons/shared/src/api/session';
+import type { Participant } from '@dumber-dungeons/shared/src/api/participant';
 
 // TODO: Remove in #40 in favor of WS messages
 @Controller('session')

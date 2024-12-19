@@ -1,4 +1,4 @@
-import type { Participant } from '@dumber-dungeons/shared/src/api';
+import type { Participant } from '@dumber-dungeons/shared/src/api/participant';
 
 export function LobbyParticipants(props: { participants: Array<Participant> }) {
   return (

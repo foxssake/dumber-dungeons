@@ -1,4 +1,4 @@
-import type { Participant } from '@dumber-dungeons/shared/src/api';
+import type { Participant } from '@dumber-dungeons/shared/src/api/participant';
 import { LobbyParticipants } from './lobby.participants';
 import { JoinLobby } from './join.lobby.pane';
 import { app } from '#src/app';
