@@ -15,17 +15,20 @@
     "test:cov": "bun test src --coverage",
     "test:debug": "bun test src --inspect-brk",
     "test:e2e": "bun test test/e2e",
-    "format": "prettier --write \"{src,test}/**/*.{ts,tsx}\"",
-    "format:check": "prettier \"{src,test}/**/*.{ts,tsx}\"",
-    "lint": "eslint \"{src,test}/**/*.{ts,tsx}\" --fix",
+    "format:check": "prettier . --check --ignore-path ../../.gitignore",
+    "lint:check": "eslint .",
+    "type:check": "tsc",
+    "format:fix": "prettier . --write --ignore-path ../../.gitignore",
+    "lint:fix": "eslint . --fix",
     "lint:inspect": "eslint --inspect-config"
   },
   "dependencies": {
     "iti": "^0.7.0",
     "iti-react": "^0.7.0",
-    "react": "19.0.0-rc.1",
+    "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "three": "^0.170.0"
+    "three": "^0.170.0",
+    "@dumber-dungeons/shared": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",

@@ -8,9 +8,17 @@
     "test:watch": "bun test src --watch",
     "test:cov": "bun test src --coverage",
     "test:debug": "bun test src --inspect-brk",
-    "format": "prettier --write \"{src,test}/**/*.ts\"",
-    "format:check": "prettier \"{src,test}/**/*.ts\"",
-    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
+    "format:check": "prettier . --check --ignore-path ../../.gitignore",
+    "lint:check": "eslint .",
+    "type:check": "tsc",
+    "format:fix": "prettier . --write --ignore-path ../../.gitignore",
+    "lint:fix": "eslint . --fix",
     "lint:inspect": "eslint --inspect-config"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import-x": "^4.5.0",
+    "typescript-eslint": "^8.18.0"
   }
 }

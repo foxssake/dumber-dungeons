@@ -10,15 +10,15 @@ import eslintPluginImportX from 'eslint-plugin-import-x';
 import * as prettierConfig from 'eslint-config-prettier';
 
 export default mergeConfigs(
-  {
-    // TODO: ignorePatterns: [] i.e. dist, localization, etc
-    // https://github.com/eslint/eslint/discussions/17429#discussioncomment-6579229
-    ignores: ['public/build/'],
-  },
   js.configs.recommended,
   ...tsConfigs.strictTypeChecked,
   eslintPluginImportX.flatConfigs.recommended,
   eslintPluginImportX.flatConfigs.typescript,
+  {
+    // https://github.com/eslint/eslint/discussions/17429#discussioncomment-6579229
+    // here we can add global ignore patterns for localization or other generated files later
+    ignores: ['dist/', 'public'],
+  },
   {
     files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
     languageOptions: {
@@ -140,13 +140,11 @@ export default mergeConfigs(
     ...prettierConfig.rules,
   },
   {
-    files: [
-      '**/*.module.ts',
-    ],
+    files: ['**/*.module.ts'],
     rules: {
       // nest.js modules are marked by empty classes with annotations
-      '@typescript-eslint/no-extraneous-class': 'off'
-    }
+      '@typescript-eslint/no-extraneous-class': 'off',
+    },
   },
   {
     files: [
