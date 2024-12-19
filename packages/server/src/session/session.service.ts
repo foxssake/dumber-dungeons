@@ -4,18 +4,17 @@ import { type Session, SessionStatus } from './session';
 import assert from 'node:assert';
 import { IDGenerator } from 'src/utils/id.generator';
 import type { Participant } from './participant';
-import { ParticipantDAO } from './participant.dao';
+import { verify } from '@dumber-dungeons/shared/src/verify';
 
-export interface JoinSessionOptions {
+export type JoinSessionOptions = {
   name?: string;
   isDisplay?: boolean;
-}
+};
 
 @Injectable()
 export class SessionService {
   constructor(
     private readonly sessionDAO: SessionDAO,
-    private readonly participantDAO: ParticipantDAO,
     private readonly idGenerator: IDGenerator
   ) {}
 
@@ -37,7 +36,7 @@ export class SessionService {
   ): Promise<Participant> {
     assert(await this.hasSession(session), 'Unknown session!');
 
-    assert(
+    verify(
       session.status == SessionStatus.IN_LOBBY,
       "Session can only be joined if it's in lobby!"
     );
@@ -50,7 +49,6 @@ export class SessionService {
       isDisplay: options?.isDisplay ?? false,
       authToken: this.idGenerator.forAuth(),
     };
-    await this.participantDAO.save(participant);
 
     // Save updated session
     session.participants.push(participant);
@@ -62,7 +60,7 @@ export class SessionService {
   public async start(session: Session): Promise<Session> {
     assert(await this.hasSession(session), 'Unknown session!');
 
-    assert(
+    verify(
       session.status == SessionStatus.IN_LOBBY,
       "Session can only be started if it's in lobby!"
     );

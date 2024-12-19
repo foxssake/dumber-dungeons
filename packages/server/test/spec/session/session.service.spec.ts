@@ -4,28 +4,21 @@ import { createStubInstance, type SinonStubbedInstance } from 'sinon';
 import { SessionDAO } from 'src/session/session.dao';
 import { SessionService } from 'src/session/session.service';
 import { IDGenerator } from 'src/utils/id.generator';
-import { ParticipantDAO } from 'src/session/participant.dao';
 import type { Participant } from 'src/session/participant';
 
 describe('SessionService', () => {
   let sessionDao: SinonStubbedInstance<SessionDAO>;
-  let participantDao: SinonStubbedInstance<ParticipantDAO>;
   let idGenerator: SinonStubbedInstance<IDGenerator>;
   let sessionService: SessionService;
 
   beforeEach(() => {
     sessionDao = createStubInstance(SessionDAO);
-    participantDao = createStubInstance(ParticipantDAO);
 
     idGenerator = createStubInstance(IDGenerator, {
       forSession: '0000',
     });
 
-    sessionService = new SessionService(
-      sessionDao,
-      participantDao,
-      idGenerator
-    );
+    sessionService = new SessionService(sessionDao, idGenerator);
   });
 
   describe('create', () => {
@@ -75,7 +68,6 @@ describe('SessionService', () => {
 
       // Then
       expect(actual).toEqual(expected);
-      expect(participantDao.save.calledWith(expected)).toBeTrue();
       expect(
         sessionDao.save.calledWith({ ...session, participants: [expected] })
       ).toBeTrue();
