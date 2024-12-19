@@ -4,15 +4,8 @@ import {
   SessionStatus,
   type Participant,
 } from '@dumber-dungeons/shared/src/api';
+import { type ParticipantChangeEvent, type ParticipantJoinEvent, type ParticipantLeaveEvent, type SocketEventMap } from '@dumber-dungeons/shared/src/api/socket.events';
 import type { Socket } from 'socket.io-client';
-
-interface ParticipantEvent {
-  participant: Participant;
-}
-
-export type ParticipantJoinEvent = ParticipantEvent;
-export type ParticipantChangeEvent = ParticipantEvent;
-export type ParticipantLeaveEvent = ParticipantEvent;
 
 export class DungeonClient {
   public readonly onParticipantJoin = new EventEmitter<ParticipantJoinEvent>();
@@ -21,7 +14,7 @@ export class DungeonClient {
   public readonly onParticipantLeave =
     new EventEmitter<ParticipantLeaveEvent>();
   private session: Session;
-  private socket: Socket;
+  private socket: Socket<SocketEventMap>;
 
   constructor(socket: Socket) {
     this.socket = socket;
