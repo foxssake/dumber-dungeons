@@ -26,7 +26,6 @@ export class DungeonClient {
     };
 
     this.subscribeToSocket();
-    this.subscribeToEvents();
   }
 
   public getParticipants(): Array<Participant> {
@@ -34,27 +33,17 @@ export class DungeonClient {
   }
 
   private subscribeToSocket(): void {
-    // TODO: Use topics from shared package
     this.socket.on('participant/join', (participant: Participant) => {
+      this.addParticipant(participant);
       this.onParticipantJoin.emit({ participant });
     });
     this.socket.on('participant/update', (participant: Participant) => {
+      this.updateParticipant(participant);
       this.onParticipantChange.emit({ participant });
     });
     this.socket.on('participant/leave', (participant: Participant) => {
+      this.removeParticipant(participant);
       this.onParticipantLeave.emit({ participant });
-    });
-  }
-
-  private subscribeToEvents(): void {
-    this.onParticipantJoin.add((event) => {
-      this.addParticipant(event.participant);
-    });
-    this.onParticipantChange.add((event) => {
-      this.updateParticipant(event.participant);
-    });
-    this.onParticipantLeave.add((event) => {
-      this.removeParticipant(event.participant);
     });
   }
 
