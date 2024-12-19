@@ -1,0 +1,59 @@
+name: DD Bun CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: oven-sh/setup-bun@v2
+    - uses: actions/checkout@v4
+    - run: bun i
+      name: deps install
+    - run: bun run format:check
+      name: format check
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: oven-sh/setup-bun@v2
+    - uses: actions/checkout@v4
+    - run: bun i
+      name: deps install
+    - run: bun run lint:check
+      name: lint check
+
+  type-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: oven-sh/setup-bun@v2
+    - uses: actions/checkout@v4
+    - run: bun i
+      name: deps install
+    - run: bun run type:check
+      name: type check
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: oven-sh/setup-bun@v2
+    - uses: actions/checkout@v4
+    - run: bun i
+      name: deps install
+    - run: bun run all:test
+      name: unit tests
+
+  build-client:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: oven-sh/setup-bun@v2
+    - uses: actions/checkout@v4
+    - run: bun i
+      name: deps install
+    - run: bun run client:build
+      name: frontend build

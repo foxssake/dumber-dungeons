@@ -5,14 +5,18 @@
   "scripts": {
     "start": "concurrently \"bun --cwd packages/client build\" \"bun --cwd packages/server start\"",
     "start:dev": "concurrently \"bun --cwd packages/client build:dev\" \"bun --cwd packages/server start:dev\"",
-    "format": "bun --filter '*' format",
+    "client:build": "bun --filter ./packages/client build",
     "format:check": "bun --filter '*' format:check",
-    "lint": "bun --filter '*' lint",
-    "lint:inspect": "eslint -c packages/shared/eslint.config.mjs --inspect-config"
+    "format:fix": "bun --filter '*' format:fix",
+    "lint:check": "bun --filter '*' lint:check",
+    "lint:fix": "bun --filter '*' lint:fix",
+    "lint:inspect": "eslint -c packages/shared/eslint.config.mjs --inspect-config",
+    "type:check": "bun --filter '*' type:check",
+    "all:check": "bun type:check && bun format:check && bun lint:check && bun client:build",
+    "all:fix": "bun run format:fix && bun run lint:fix",
+    "all:test": "bun --filter '*' test"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "devDependencies": {
     "@dumber-dungeons/shared": "workspace:./packages/shared",
     "concurrently": "^9.1.0"

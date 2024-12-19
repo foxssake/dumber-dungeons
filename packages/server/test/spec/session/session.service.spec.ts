@@ -4,6 +4,7 @@ import { createStubInstance, type SinonStubbedInstance } from 'sinon';
 import { SessionDAO } from 'src/session/session.dao';
 import { SessionService } from 'src/session/session.service';
 import { IDGenerator } from 'src/utils/id.generator';
+import type { Participant } from 'src/session/participant';
 
 describe('SessionService', () => {
   let sessionDao: SinonStubbedInstance<SessionDAO>;
@@ -38,6 +39,69 @@ describe('SessionService', () => {
     });
   });
 
+  describe('join', () => {
+    it('should add participant', async () => {
+      // Given
+      const session: Session = {
+        id: '0000',
+        status: SessionStatus.IN_LOBBY,
+        participants: [],
+      };
+
+      const expected: Participant = {
+        id: 'p0000',
+        name: 'Foo',
+        isDisplay: true,
+        isReady: false,
+        authToken: 'a0000',
+      };
+
+      idGenerator.forParticipant.returns('p0000');
+      idGenerator.forAuth.returns('a0000');
+      sessionDao.has.withArgs('0000').returns(Promise.resolve(true));
+
+      // When
+      const actual = await sessionService.join(session, {
+        name: 'Foo',
+        isDisplay: true,
+      });
+
+      // Then
+      expect(actual).toEqual(expected);
+      expect(
+        sessionDao.save.calledWith({ ...session, participants: [expected] })
+      ).toBeTrue();
+    });
+
+    it('should not join unknown session', () => {
+      // Given
+      const session: Session = {
+        id: '0000',
+        status: SessionStatus.IN_LOBBY,
+        participants: [],
+      };
+
+      sessionDao.has.withArgs('0000').returns(Promise.resolve(false));
+
+      // When + Then
+      expect(async () => await sessionService.join(session)).toThrow();
+    });
+
+    it('should not join non-lobby session', () => {
+      // Given
+      const session: Session = {
+        id: '0000',
+        status: SessionStatus.ACTIVE,
+        participants: [],
+      };
+
+      sessionDao.has.withArgs('0000').returns(Promise.resolve(true));
+
+      // When + Then
+      expect(async () => await sessionService.join(session)).toThrow();
+    });
+  });
+
   describe('start', () => {
     it('should start session', async () => {
       // Given
@@ -46,6 +110,7 @@ describe('SessionService', () => {
         status: SessionStatus.IN_LOBBY,
         participants: [],
       };
+      sessionDao.has.withArgs(session.id).returns(Promise.resolve(true));
 
       // When
       const result = await sessionService.start(session);

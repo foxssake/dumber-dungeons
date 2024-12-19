@@ -14,9 +14,11 @@
     "test:cov": "bun test test/spec --coverage",
     "test:debug": "bun test test/spec --inspect-brk",
     "test:e2e": "bun test test/e2e",
-    "format": "prettier --write \"{src,test}/**/*.ts\"",
-    "format:check": "prettier \"{src,test}/**/*.ts\"",
-    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
+    "format:check": "prettier . --check --ignore-path ../../.gitignore",
+    "lint:check": "eslint .",
+    "type:check": "tsc",
+    "format:fix": "prettier . --write --ignore-path ../../.gitignore",
+    "lint:fix": "eslint . --fix",
     "lint:inspect": "eslint --inspect-config"
   },
   "devDependencies": {
@@ -54,7 +56,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "nanoid": "^5.0.9",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "@dumber-dungeons/shared": "workspace:*"
   }
-
 }
