@@ -5,6 +5,8 @@ import { ThreeJS } from "./views/threejs/threejs";
 import { LobbyView } from "./views/lobby/lobby.view";
 import { Style } from "./components/style";
 import globalStyle from "./views/style.css";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorView } from "./views/error/error.view";
 
 function getRootContainer(): Element {
   const container = document.querySelector('#root');
@@ -20,11 +22,15 @@ function getRootContainer(): Element {
 }
 
 createRoot(getRootContainer()).render(
-  <BrowserRouter>
+  <>
     <Style href={globalStyle} />
-    <Routes>
-      <Route path={frontendRoutes.index} element={<ThreeJS />} />
-      <Route path={frontendRoutes.lobby} element={<LobbyView />} />
-    </Routes>
-  </BrowserRouter>
+    <ErrorBoundary FallbackComponent={ErrorView}>
+      <BrowserRouter>
+        <Routes>
+          <Route path={frontendRoutes.index} element={<ThreeJS />} />
+          <Route path={frontendRoutes.lobby} element={<LobbyView />} />
+        </Routes>
+      </BrowserRouter>
+    </ErrorBoundary>
+  </>
 )
