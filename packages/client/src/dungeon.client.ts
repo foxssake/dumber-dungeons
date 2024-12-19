@@ -41,6 +41,7 @@ export class DungeonClient {
   }
 
   private subscribeToSocket(): void {
+    // TODO: Use topics from shared package
     this.socket.on('participant/join', (participant: Participant) => {
       this.onParticipantJoin.emit({ participant });
     });
