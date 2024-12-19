@@ -5,15 +5,16 @@
   "scripts": {
     "start": "concurrently \"bun --cwd packages/client build\" \"bun --cwd packages/server start\"",
     "start:dev": "concurrently \"bun --cwd packages/client build:dev\" \"bun --cwd packages/server start:dev\"",
+    "client:build": "bun --filter ./packages/client build",
     "format:check": "bun --filter '*' format:check",
-    "lint:check": "bun --filter '*' lint:check",
-    "type:check": "bun --filter '*' type:check",
     "format:fix": "bun --filter '*' format:fix",
+    "lint:check": "bun --filter '*' lint:check",
     "lint:fix": "bun --filter '*' lint:fix",
     "lint:inspect": "eslint -c packages/shared/eslint.config.mjs --inspect-config",
-    "client:build": "bun --filter ./packages/client build",
-    "all:test": "bun --filter '*' test",
-    "all:check": "bun type:check && bun format:check && bun lint:check && bun client:build"
+    "type:check": "bun --filter '*' type:check",
+    "all:check": "bun type:check && bun format:check && bun lint:check && bun client:build",
+    "all:fix": "bun run format:fix && bun run lint:fix",
+    "all:test": "bun --filter '*' test"
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
