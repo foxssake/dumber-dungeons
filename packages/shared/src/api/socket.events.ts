@@ -14,4 +14,9 @@ interface ParticipantEventMap extends EventMap {
   'participant/update': (participant: Participant) => void;
 }
 
-export type SocketEventMap = ParticipantEventMap;
+interface SetupEventMap extends EventMap {
+  'setup/name': (name: string) => void;
+  'setup/ready': (isReady: boolean) => void;
+}
+
+export interface SocketEventMap extends ParticipantEventMap, SetupEventMap {};

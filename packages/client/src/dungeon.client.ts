@@ -37,6 +37,14 @@ export class DungeonClient {
     return [...this.session.participants];
   }
 
+  public setName(name: string): void {
+    this.socket.emit('setup/name', name);
+  }
+
+  public setReady(isReady: boolean): void {
+    this.socket.emit('setup/ready', isReady);
+  }
+
   private subscribeToSocket(): void {
     this.socket.on('participant/join', (participant: Participant) => {
       this.addParticipant(participant);
