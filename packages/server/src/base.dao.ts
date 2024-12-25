@@ -1,6 +1,6 @@
-interface Identifiable<T> {
+type Identifiable<T> = {
   id: T;
-}
+};
 
 export class BaseDAO<T extends Identifiable<K>, K> {
   private data = new Map<K, T>();

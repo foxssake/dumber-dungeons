@@ -1,10 +1,13 @@
 import { describe, it, expect, beforeEach } from 'bun:test';
-import { SessionStatus, type Session } from 'src/session/session';
+import {
+  SessionStatus,
+  type Session,
+} from '@dumber-dungeons/shared/src/api/session';
 import { createStubInstance, type SinonStubbedInstance } from 'sinon';
 import { SessionDAO } from 'src/session/session.dao';
 import { SessionService } from 'src/session/session.service';
 import { IDGenerator } from 'src/utils/id.generator';
-import type { Participant } from 'src/session/participant';
+import type { Participant } from '@dumber-dungeons/shared/src/api/participant';
 
 describe('SessionService', () => {
   let sessionDao: SinonStubbedInstance<SessionDAO>;

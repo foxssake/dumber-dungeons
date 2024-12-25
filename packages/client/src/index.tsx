@@ -1,12 +1,30 @@
-import 'react';
 import { createRoot } from 'react-dom/client';
-import { ThreeJS } from './views/threejs/threejs.tsx';
-import styleCss from './views/style.css';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import { frontendRoutes } from '@dumber-dungeons/shared/src/api/frontend.routes';
+import { ThreeJS } from './views/threejs/threejs';
+import { LobbyView } from './views/lobby/lobby.view';
+import globalStyle from './views/style.css';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorView } from './views/error/error.view';
+import { ExternalStyle } from './components/external.style';
 
-const globalCssLink = document.createElement('link');
-globalCssLink.rel = 'stylesheet';
-globalCssLink.href = styleCss;
-document.head.appendChild(globalCssLink);
+function getRootContainer(): Element {
+  const container = document.querySelector('#root');
+  if (!container) throw new Error('Missing root!');
 
-const root = createRoot(document.getElementById('root') as HTMLDivElement);
-root.render(<ThreeJS />);
+  return container;
+}
+
+createRoot(getRootContainer()).render(
+  <>
+    <ExternalStyle href={globalStyle} />
+    <ErrorBoundary FallbackComponent={ErrorView}>
+      <BrowserRouter>
+        <Routes>
+          <Route path={frontendRoutes.index} element={<ThreeJS />} />
+          <Route path={frontendRoutes.lobby} element={<LobbyView />} />
+        </Routes>
+      </BrowserRouter>
+    </ErrorBoundary>
+  </>
+);

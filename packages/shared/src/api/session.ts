@@ -1,4 +1,4 @@
-type Participant = object; // TODO: #24
+import type { Participant } from './participant';
 
 export enum SessionStatus {
   IN_LOBBY,
