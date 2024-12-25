@@ -1,5 +1,6 @@
 export const frontendRoutes = {
   index: '/',
-  lobby: '/lobby/:id',
-  join: '/join/:id',
+  lobby: '/watch/:id/lobby',
+  join: '/play/:id',
+  participantSetup: '/play/:id/setup',
 };

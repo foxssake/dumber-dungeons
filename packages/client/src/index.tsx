@@ -7,6 +7,7 @@ import globalStyle from './views/style.css';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorView } from './views/error/error.view';
 import { ExternalStyle } from './components/external.style';
+import { ParticipantSetupView } from './views/participant.setup/participant.setup.view';
 
 function getRootContainer(): Element {
   const container = document.querySelector('#root');
@@ -23,6 +24,10 @@ createRoot(getRootContainer()).render(
         <Routes>
           <Route path={frontendRoutes.index} element={<ThreeJS />} />
           <Route path={frontendRoutes.lobby} element={<LobbyView />} />
+          <Route
+            path={frontendRoutes.participantSetup}
+            element={<ParticipantSetupView />}
+          />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>
