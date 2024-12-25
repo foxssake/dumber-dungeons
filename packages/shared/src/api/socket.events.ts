@@ -19,4 +19,4 @@ interface SetupEventMap extends EventMap {
   'setup/ready': (isReady: boolean) => void;
 }
 
-export interface SocketEventMap extends ParticipantEventMap, SetupEventMap {};
+export interface SocketEventMap extends ParticipantEventMap, SetupEventMap {}

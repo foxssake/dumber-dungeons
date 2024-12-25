@@ -24,7 +24,10 @@ createRoot(getRootContainer()).render(
         <Routes>
           <Route path={frontendRoutes.index} element={<ThreeJS />} />
           <Route path={frontendRoutes.lobby} element={<LobbyView />} />
-          <Route path={frontendRoutes.participantSetup} element={<ParticipantSetupView />} />
+          <Route
+            path={frontendRoutes.participantSetup}
+            element={<ParticipantSetupView />}
+          />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

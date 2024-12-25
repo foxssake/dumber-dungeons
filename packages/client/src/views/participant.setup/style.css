@@ -25,13 +25,23 @@ input {
 
   color: #ff0044;
 
-  background: rgb(139,155,180);
-  background: radial-gradient(circle, rgba(139,155,180,1) 9%, rgba(90,105,136,1) 51%, rgba(58,68,102,1) 100%); 
+  background: rgb(139, 155, 180);
+  background: radial-gradient(
+    circle,
+    rgba(139, 155, 180, 1) 9%,
+    rgba(90, 105, 136, 1) 51%,
+    rgba(58, 68, 102, 1) 100%
+  );
 }
 
 .setup.ready:active {
-  background: rgb(58,68,102);
-  background: radial-gradient(circle, rgba(58,68,102,1) 9%, rgba(58,68,102,1) 51%, rgba(90,105,136,1) 100%);
+  background: rgb(58, 68, 102);
+  background: radial-gradient(
+    circle,
+    rgba(58, 68, 102, 1) 9%,
+    rgba(58, 68, 102, 1) 51%,
+    rgba(90, 105, 136, 1) 100%
+  );
 }
 
 .setup.ready.active {
