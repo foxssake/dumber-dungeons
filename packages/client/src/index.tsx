@@ -3,27 +3,21 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { frontendRoutes } from '@dumber-dungeons/shared/src/api/frontend.routes';
 import { ThreeJS } from './views/threejs/threejs';
 import { LobbyView } from './views/lobby/lobby.view';
-import { Style } from './components/style';
 import globalStyle from './views/style.css';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorView } from './views/error/error.view';
+import { ExternalStyle } from './components/external.style';
 
 function getRootContainer(): Element {
   const container = document.querySelector('#root');
-  if (container) {
-    return container;
-  }
+  if (!container) throw new Error('Missing root!');
 
-  const element = document.createElement('div');
-  element.id = 'root';
-  document.body.appendChild(element);
-
-  return element;
+  return container;
 }
 
 createRoot(getRootContainer()).render(
   <>
-    <Style href={globalStyle} />
+    <ExternalStyle href={globalStyle} />
     <ErrorBoundary FallbackComponent={ErrorView}>
       <BrowserRouter>
         <Routes>

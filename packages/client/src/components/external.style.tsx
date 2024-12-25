@@ -5,7 +5,7 @@ import { useEffect, type JSX } from 'react';
  *
  * Can be used from anywhere in the DOM tree, will always append to <head>.
  */
-export function Style(props: { href: string }): JSX.Element {
+export function ExternalStyle(props: { href: string }): JSX.Element {
   useEffect(() => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
